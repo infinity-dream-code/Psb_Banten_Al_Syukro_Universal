@@ -730,8 +730,6 @@
 </div>
 
 
-
-
 <script>
 function showTab(tabName) {
     const tabs = ['kelengkapan', 'bantuan', 'biaya'];
@@ -984,13 +982,29 @@ document.addEventListener('DOMContentLoaded', function() {
             const provinsiId = this.value;
             kabupaten.innerHTML = '<option value="">-- Pilih Kabupaten/Kota --</option>';
             kecamatan.innerHTML = '<option value="">-- Pilih Kecamatan --</option>';
+            
+            kabupaten.disabled = true;
+            kecamatan.disabled = true;
+            
             if (provinsiId) {
                 fetch(`/api/provinsi/${provinsiId}/kabupaten`)
-                    .then(response => response.json())
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
                     .then(data => {
-                        data.forEach(item => {
-                            kabupaten.innerHTML += `<option value="${item.id}">${item.name}</option>`;
-                        });
+                        if (data && data.length > 0) {
+                            data.forEach(item => {
+                                kabupaten.innerHTML += `<option value="${item.id}">${item.name}</option>`;
+                            });
+                            kabupaten.disabled = false;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching kabupaten:', error);
+                        kabupaten.innerHTML = '<option value="">Error loading data</option>';
                     });
             }
         });
@@ -1000,13 +1014,27 @@ document.addEventListener('DOMContentLoaded', function() {
         kabupaten.addEventListener('change', function() {
             const kabupatenId = this.value;
             kecamatan.innerHTML = '<option value="">-- Pilih Kecamatan --</option>';
+            kecamatan.disabled = true;
+            
             if (kabupatenId) {
                 fetch(`/api/kabupaten/${kabupatenId}/kecamatan`)
-                    .then(response => response.json())
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
                     .then(data => {
-                        data.forEach(item => {
-                            kecamatan.innerHTML += `<option value="${item.id}">${item.name}</option>`;
-                        });
+                        if (data && data.length > 0) {
+                            data.forEach(item => {
+                                kecamatan.innerHTML += `<option value="${item.id}">${item.name}</option>`;
+                            });
+                            kecamatan.disabled = false;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching kecamatan:', error);
+                        kecamatan.innerHTML = '<option value="">Error loading data</option>';
                     });
             }
         });
@@ -1016,13 +1044,27 @@ document.addEventListener('DOMContentLoaded', function() {
         provinsiSekolah.addEventListener('change', function() {
             const provinsiId = this.value;
             kabupatenSekolah.innerHTML = '<option value="">-- Pilih Kabupaten/Kota --</option>';
+            kabupatenSekolah.disabled = true;
+            
             if (provinsiId) {
                 fetch(`/api/provinsi/${provinsiId}/kabupaten`)
-                    .then(response => response.json())
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
                     .then(data => {
-                        data.forEach(item => {
-                            kabupatenSekolah.innerHTML += `<option value="${item.id}">${item.name}</option>`;
-                        });
+                        if (data && data.length > 0) {
+                            data.forEach(item => {
+                                kabupatenSekolah.innerHTML += `<option value="${item.id}">${item.name}</option>`;
+                            });
+                            kabupatenSekolah.disabled = false;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching kabupaten sekolah:', error);
+                        kabupatenSekolah.innerHTML = '<option value="">Error loading data</option>';
                     });
             }
         });
@@ -1065,7 +1107,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 { selector: 'textarea[name="alamat_lengkap"]', label: 'Alamat Lengkap' },
                 { selector: 'select[name="id_provinsi"]', label: 'Provinsi' },
                 { selector: 'select[name="id_kabupaten"]', label: 'Kabupaten' },
-                { selector: 'select[name="id_kecamatan"]', label: 'Kecamatan' },
+                { selector: 'select[name="kecamatan_id"]', label: 'Kecamatan' },
                 { selector: 'input[name="dusun"]', label: 'Kelurahan/Desa' },
                 { selector: 'input[name="kode_pos"]', label: 'Kode Pos' },
                 { selector: 'input[name="ibu_nama"]', label: 'Nama Ibu' },
