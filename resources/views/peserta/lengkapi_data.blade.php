@@ -731,31 +731,162 @@
 
 
 <script>
-function showTab(tabName) {
-    const tabs = ['kelengkapan', 'bantuan', 'biaya'];
-    tabs.forEach(tab => {
-        const content = document.getElementById(tab + '-content');
-        const button = document.getElementById('tab-' + tab);
-        if (tab === tabName) {
-            content.classList.remove('hidden');
-            button.classList.add('active', 'border-blue-500', 'text-blue-600');
-            button.classList.remove('border-transparent', 'text-gray-500');
-        } else {
-            content.classList.add('hidden');
-            button.classList.remove('active', 'border-blue-500', 'text-blue-600');
-            button.classList.add('border-transparent', 'text-gray-500');
-        }
-    });
-}
-
-document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function() {
     const provinsi = document.getElementById('provinsi');
     const kabupaten = document.getElementById('kabupaten');
     const kecamatan = document.getElementById('kecamatan');
     const provinsiSekolah = document.getElementById('provinsi_sekolah');
     const kabupatenSekolah = document.getElementById('kabupaten_sekolah');
-    const form = document.querySelector('form[action*="lengkapi_data"]');
+    
+    // Store initial values
+    const initialValues = {
+        provinsi: provinsi ? provinsi.value : '',
+        kabupaten: kabupaten ? kabupaten.value : '',
+        kecamatan: kecamatan ? kecamatan.value : '',
+        provinsiSekolah: provinsiSekolah ? provinsiSekolah.value : '',
+        kabupatenSekolah: kabupatenSekolah ? kabupatenSekolah.value : ''
+    };
 
+    // Function to load kabupaten based on provinsi
+    function loadKabupaten(provinsiId, kabupatenSelect, selectedKabupatenId = null) {
+        if (!kabupatenSelect) return;
+        
+        // Reset kabupaten dropdown
+        kabupatenSelect.innerHTML = '<option value="">-- Pilih Kabupaten/Kota --</option>';
+        kabupatenSelect.disabled = true;
+        
+        // Reset kecamatan if this is for the main address form
+        if (kabupatenSelect.id === 'kabupaten' && kecamatan) {
+            kecamatan.innerHTML = '<option value="">-- Pilih Kecamatan --</option>';
+            kecamatan.disabled = true;
+        }
+        
+        if (provinsiId) {
+            // Add loading indicator
+            kabupatenSelect.innerHTML = '<option value="">Loading...</option>';
+            
+            fetch(`/api/provinsi/${provinsiId}/kabupaten`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    kabupatenSelect.innerHTML = '<option value="">-- Pilih Kabupaten/Kota --</option>';
+                    
+                    if (data && data.length > 0) {
+                        data.forEach(item => {
+                            const option = document.createElement('option');
+                            option.value = item.id;
+                            option.textContent = item.name;
+                            
+                            // Select the option if it matches the selected value
+                            if (selectedKabupatenId && item.id == selectedKabupatenId) {
+                                option.selected = true;
+                            }
+                            
+                            kabupatenSelect.appendChild(option);
+                        });
+                        kabupatenSelect.disabled = false;
+                        
+                        // If we have a selected kabupaten, trigger loading kecamatan
+                        if (selectedKabupatenId && kabupatenSelect.id === 'kabupaten') {
+                            loadKecamatan(selectedKabupatenId, kecamatan, initialValues.kecamatan);
+                        }
+                    } else {
+                        kabupatenSelect.innerHTML = '<option value="">Tidak ada data kabupaten</option>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching kabupaten:', error);
+                    kabupatenSelect.innerHTML = '<option value="">Error loading data</option>';
+                });
+        }
+    }
+
+    // Function to load kecamatan based on kabupaten
+    function loadKecamatan(kabupatenId, kecamatanSelect, selectedKecamatanId = null) {
+        if (!kecamatanSelect) return;
+        
+        // Reset kecamatan dropdown
+        kecamatanSelect.innerHTML = '<option value="">-- Pilih Kecamatan --</option>';
+        kecamatanSelect.disabled = true;
+        
+        if (kabupatenId) {
+            // Add loading indicator
+            kecamatanSelect.innerHTML = '<option value="">Loading...</option>';
+            
+            fetch(`/api/kabupaten/${kabupatenId}/kecamatan`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    kecamatanSelect.innerHTML = '<option value="">-- Pilih Kecamatan --</option>';
+                    
+                    if (data && data.length > 0) {
+                        data.forEach(item => {
+                            const option = document.createElement('option');
+                            option.value = item.id;
+                            option.textContent = item.name;
+                            
+                            // Select the option if it matches the selected value
+                            if (selectedKecamatanId && item.id == selectedKecamatanId) {
+                                option.selected = true;
+                            }
+                            
+                            kecamatanSelect.appendChild(option);
+                        });
+                        kecamatanSelect.disabled = false;
+                    } else {
+                        kecamatanSelect.innerHTML = '<option value="">Tidak ada data kecamatan</option>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching kecamatan:', error);
+                    kecamatanSelect.innerHTML = '<option value="">Error loading data</option>';
+                });
+        }
+    }
+
+    // Initialize dropdowns with existing data
+    if (initialValues.provinsi && kabupaten) {
+        loadKabupaten(initialValues.provinsi, kabupaten, initialValues.kabupaten);
+    }
+    
+    if (initialValues.provinsiSekolah && kabupatenSekolah) {
+        loadKabupaten(initialValues.provinsiSekolah, kabupatenSekolah, initialValues.kabupatenSekolah);
+    }
+
+    // Event listeners for main address form
+    if (provinsi) {
+        provinsi.addEventListener('change', function() {
+            const provinsiId = this.value;
+            loadKabupaten(provinsiId, kabupaten);
+        });
+    }
+
+    if (kabupaten) {
+        kabupaten.addEventListener('change', function() {
+            const kabupatenId = this.value;
+            loadKecamatan(kabupatenId, kecamatan);
+        });
+    }
+
+    // Event listeners for school address form
+    if (provinsiSekolah) {
+        provinsiSekolah.addEventListener('change', function() {
+            const provinsiId = this.value;
+            loadKabupaten(provinsiId, kabupatenSekolah);
+        });
+    }
+
+    // Rest of your existing validation code...
+    // [Keep all your existing validation functions and form submission logic]
+    
     function createErrorElement(inputElement, message) {
         const existingError = inputElement.parentNode.querySelector('.error-message');
         if (existingError) {
@@ -871,6 +1002,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return true;
     }
 
+    // NIK validation
     const nikInputs = [
         { selector: 'input[name="nik"]', label: 'NIK' },
         { selector: 'input[name="no_kk"]', label: 'No KK' },
@@ -895,6 +1027,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
+    // Email validation
     const emailInput = document.querySelector('input[name="email"]');
     if (emailInput) {
         emailInput.addEventListener('blur', function() {
@@ -902,6 +1035,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
+    // Phone validation
     const phoneInput = document.querySelector('input[name="no_hp"]');
     if (phoneInput) {
         phoneInput.addEventListener('input', function() {
@@ -913,6 +1047,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
+    // Photo validation
     const photoInput = document.querySelector('input[name="foto"]');
     if (photoInput) {
         photoInput.addEventListener('change', async function() {
@@ -923,6 +1058,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
+    // Document validation
     const docInputs = [
         { selector: 'input[name="dokumen_kk"]', maxSize: 4 },
         { selector: 'input[name="dokumen_ktp_ortu"]', maxSize: 4 },
@@ -938,6 +1074,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
+    // NISN validation
     const nisnInput = document.querySelector('input[name="nisn"]');
     if (nisnInput) {
         nisnInput.addEventListener('input', function() {
@@ -957,6 +1094,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
+    // Year validation
     const tahunLulusInput = document.querySelector('input[name="tahun_lulus"]');
     if (tahunLulusInput) {
         tahunLulusInput.addEventListener('input', function() {
@@ -977,99 +1115,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    if (provinsi) {
-        provinsi.addEventListener('change', function() {
-            const provinsiId = this.value;
-            kabupaten.innerHTML = '<option value="">-- Pilih Kabupaten/Kota --</option>';
-            kecamatan.innerHTML = '<option value="">-- Pilih Kecamatan --</option>';
-            
-            kabupaten.disabled = true;
-            kecamatan.disabled = true;
-            
-            if (provinsiId) {
-                fetch(`/api/provinsi/${provinsiId}/kabupaten`)
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        if (data && data.length > 0) {
-                            data.forEach(item => {
-                                kabupaten.innerHTML += `<option value="${item.id}">${item.name}</option>`;
-                            });
-                            kabupaten.disabled = false;
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error fetching kabupaten:', error);
-                        kabupaten.innerHTML = '<option value="">Error loading data</option>';
-                    });
-            }
-        });
-    }
-
-    if (kabupaten) {
-        kabupaten.addEventListener('change', function() {
-            const kabupatenId = this.value;
-            kecamatan.innerHTML = '<option value="">-- Pilih Kecamatan --</option>';
-            kecamatan.disabled = true;
-            
-            if (kabupatenId) {
-                fetch(`/api/kabupaten/${kabupatenId}/kecamatan`)
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        if (data && data.length > 0) {
-                            data.forEach(item => {
-                                kecamatan.innerHTML += `<option value="${item.id}">${item.name}</option>`;
-                            });
-                            kecamatan.disabled = false;
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error fetching kecamatan:', error);
-                        kecamatan.innerHTML = '<option value="">Error loading data</option>';
-                    });
-            }
-        });
-    }
-
-    if (provinsiSekolah) {
-        provinsiSekolah.addEventListener('change', function() {
-            const provinsiId = this.value;
-            kabupatenSekolah.innerHTML = '<option value="">-- Pilih Kabupaten/Kota --</option>';
-            kabupatenSekolah.disabled = true;
-            
-            if (provinsiId) {
-                fetch(`/api/provinsi/${provinsiId}/kabupaten`)
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        if (data && data.length > 0) {
-                            data.forEach(item => {
-                                kabupatenSekolah.innerHTML += `<option value="${item.id}">${item.name}</option>`;
-                            });
-                            kabupatenSekolah.disabled = false;
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error fetching kabupaten sekolah:', error);
-                        kabupatenSekolah.innerHTML = '<option value="">Error loading data</option>';
-                    });
-            }
-        });
-    }
-
+    // Form submission validation
+    const form = document.querySelector('form[action*="lengkapi_data"]');
     if (form) {
         form.addEventListener('submit', async function(e) {
             let isValid = true;
@@ -1086,6 +1133,7 @@ document.addEventListener('DOMContentLoaded', function() {
             `;
             submitBtn.disabled = true;
             
+            // Validate NIK fields
             nikInputs.forEach(item => {
                 const input = document.querySelector(item.selector);
                 if (input && !validateNIK(input, item.label)) {
@@ -1094,6 +1142,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
             
+            // Validate required fields
             const requiredFields = [
                 { selector: 'input[name="nama_peserta"]', label: 'Nama Peserta' },
                 { selector: 'select[name="gender"]', label: 'Gender' },
@@ -1125,6 +1174,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
             
+            // Additional validations
             if (emailInput && !validateEmail(emailInput)) {
                 isValid = false;
                 errors.push('Email tidak valid');
@@ -1149,6 +1199,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!isValid) {
                 e.preventDefault();
                 
+                // Show error summary
                 const errorSummary = document.createElement('div');
                 errorSummary.className = 'fixed top-4 right-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded shadow-lg z-50 max-w-md';
                 errorSummary.innerHTML = `
@@ -1178,6 +1229,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 }, 10000);
                 
+                // Scroll to first error
                 const firstError = document.querySelector('.error-message');
                 if (firstError) {
                     firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -1186,6 +1238,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
 </script>
     </div>
 </div>
