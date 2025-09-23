@@ -29,7 +29,7 @@ public function create(Request $request)
     $akuns = [];
     try {
         $client = new Client();
-        $response = $client->post('103.23.103.43/WS_PSB/WS_PSB_MASTER/index.php', [
+        $response = $client->post('10.99.23.111/WS_PSB/WS_PSB_MASTER/index.php', [
             'json' => [
                 'method' => 'getUAkun',
                 'token'  => '53c2f9aace5478a11815c65fcdb1a3dc29b60c3e102489384e3c1701f4355fa4'
@@ -110,7 +110,7 @@ public function edit($id)
     $akuns = [];
     try {
         $client = new \GuzzleHttp\Client();
-        $response = $client->post('103.23.103.43/WS_PSB/WS_PSB_MASTER/index.php', [
+        $response = $client->post('10.99.23.111/WS_PSB/WS_PSB_MASTER/index.php', [
             'json' => [
                 'method' => 'getUAkun',
                 'token'  => '53c2f9aace5478a11815c65fcdb1a3dc29b60c3e102489384e3c1701f4355fa4'
@@ -169,7 +169,7 @@ public function update(Request $request, $id)
     $akuns = [];
     try {
         $client = new \GuzzleHttp\Client();
-        $response = $client->post('103.23.103.43/WS_PSB/WS_PSB_MASTER/index.php', [
+        $response = $client->post('10.99.23.111/WS_PSB/WS_PSB_MASTER/index.php', [
             'json' => [
                 'method' => 'getUAkun',
                 'token'  => '53c2f9aace5478a11815c65fcdb1a3dc29b60c3e102489384e3c1701f4355fa4'
@@ -293,7 +293,7 @@ public function store(Request $request)
     $akuns = [];
     try {
         $client = new \GuzzleHttp\Client();
-        $response = $client->post('http://103.23.103.43/ws_psb_test/index.php', [
+        $response = $client->post('10.99.23.111/WS_PSB/WS_PSB_MASTER/index.php', [
             'json' => [
                 'method' => 'getUAkun',
                 'token'  => '53c2f9aace5478a11815c65fcdb1a3dc29b60c3e102489384e3c1701f4355fa4'
