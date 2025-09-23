@@ -231,7 +231,19 @@
             </div>
 
             {{-- Kabupaten --}}
-          
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Kabupaten/Kota *</label>
+                <select name="id_kabupaten" id="kabupaten"
+                    class="w-full px-4 py-3 border {{ empty($peserta->id_kabupaten) ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500' }}
+                    rounded-lg focus:ring-2 focus:border-transparent transition duration-200">
+                    <option value="">-- Pilih Kabupaten/Kota --</option>
+                    @foreach($kabupatenList as $kabupaten)
+                        <option value="{{ $kabupaten->id }}" {{ $peserta->id_kabupaten == $kabupaten->id ? 'selected' : '' }}>
+                            {{ $kabupaten->kota }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
 
             {{-- Kecamatan --}}
             <div>
