@@ -76,5 +76,15 @@ class DatabaseSeeder extends Seeder
     ['nama' => 'Tidak Ada Jurusan', 'created_at' => now(), 'updated_at' => now()],
 ]);
 
+DB::table('master_sumber_informasi')->insert([
+    ['nama' => 'KELUARGA', 'created_at' => now(), 'updated_at' => now()],
+    ['nama' => 'TEMAN', 'created_at' => now(), 'updated_at' => now()],
+    ['nama' => 'KORAN', 'created_at' => now(), 'updated_at' => now()],
+    ['nama' => 'TV', 'created_at' => now(), 'updated_at' => now()],
+    ['nama' => 'RADIO', 'created_at' => now(), 'updated_at' => now()],
+    ['nama' => 'MEDIA SOSIAL', 'created_at' => now(), 'updated_at' => now()],
+    ['nama' => 'AGENSI', 'created_at' => now(), 'updated_at' => now()],
+]);
+
     }
 }
