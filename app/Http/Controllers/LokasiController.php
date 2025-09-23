@@ -16,20 +16,21 @@ class LokasiController extends Controller
         ->get();
 }
 
-public function kabupaten(MasterProvinsi $provinsi)
+public function kabupaten($provinsi_id)
 {
-    return MasterKabupaten::where('pmb_ref_provinsi_id', $provinsi->id)
+    return MasterKabupaten::where('pmb_ref_provinsi_id', $provinsi_id)
         ->select('id', 'kota as name')
         ->orderByRaw('kota asc')
         ->get();
 }
 
-public function kecamatan(MasterKabupaten $kota)
+public function kecamatan($kabupaten_id)
 {
-    return MasterKecamatan::where('pmb_ref_kota_id', $kota->id)
+    return MasterKecamatan::where('pmb_ref_kota_id', $kabupaten_id)
         ->select('id', 'kecamatan as name')
         ->orderByRaw('kecamatan asc')
         ->get();
 }
+
 
 }
