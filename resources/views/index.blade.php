@@ -42,12 +42,12 @@
             <div class="flex justify-between items-center">
                 <div class="text-3xl font-bold text-pmb-green-700">DEMO PMB</div>
                 <div class="hidden md:flex space-x-8">
-                   <a href="/" 
+                   <a href="{{url('/')}}" 
    class="no-underline text-pmb-green-700 font-semibold border-b-2 border-pmb-green-700 pb-1">
    Home
 </a>
 
-<a href="/enroll" 
+<a href="{{url('/enroll')}}" 
    class="no-underline text-gray-600 hover:text-pmb-green-700 transition-colors">
    Pendaftaran
 </a>
@@ -55,7 +55,7 @@
                 </div>
              <div class="flex items-center space-x-2 text-gray-600 hover:text-pmb-green-700 transition-colors cursor-pointer">
     @if(Auth::check())
-        <a href="/pages/display/home" class="no-underline flex items-center space-x-1">
+        <a href="{{url('/pages/display/home')}}" class="no-underline flex items-center space-x-1">
             <span class="font-medium">Dashboard</span>
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
@@ -63,7 +63,7 @@
             </svg>
         </a>
     @else
-        <a href="/ServiceLogin" class="no-underline flex items-center space-x-1">
+        <a href="{{url('/ServiceLogin')}}" class="no-underline flex items-center space-x-1">
             <span class="font-medium">Masuk</span>
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
@@ -108,11 +108,11 @@
                     </div>
                     
                    <div class="flex flex-col sm:flex-row gap-4">
-    <a href="/enroll" 
+    <a href="{{url('/enroll')}}" 
        class="no-underline bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-4 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-300 text-center">
         Daftar Sekarang
     </a>
-    <a href="/ServiceLogin" 
+    <a href="{{url('/ServiceLogin')}}" 
        class="no-underline bg-blue-500 hover:bg-blue-400 text-white font-bold px-8 py-4 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-300 text-center">
         Login Pendaftar
     </a>

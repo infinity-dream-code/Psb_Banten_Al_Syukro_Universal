@@ -153,7 +153,7 @@
                                 <p class="font-semibold text-gray-800">Menu</p>
                             </div>
 
-                            <a href="/ServiceLogout" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors">
+                            <a href="{{url('/ServiceLogout')}}" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors">
                                 <i class="fas fa-user text-green-500 mr-3"></i>
                                 <span>Logout</span>
                             </a>

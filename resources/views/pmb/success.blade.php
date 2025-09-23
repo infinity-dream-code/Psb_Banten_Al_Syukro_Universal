@@ -46,10 +46,10 @@
                 <button onclick="window.print()" class="px-6 py-2 rounded-lg bg-green-700 text-white font-semibold hover:bg-green-800">
                     Cetak Info ini
                 </button>
-                <a href="/ServiceLogin" class="px-6 py-2 rounded-lg bg-blue-500 text-white font-semibold hover:bg-blue-600">
+                <a href="{{url('/ServiceLogin')}}" class="px-6 py-2 rounded-lg bg-blue-500 text-white font-semibold hover:bg-blue-600">
                     Login
                 </a>
-                <a href="/" class="px-6 py-2 rounded-lg bg-yellow-400 text-white font-semibold hover:bg-yellow-500">
+                <a href="{{url('/')}}" class="px-6 py-2 rounded-lg bg-yellow-400 text-white font-semibold hover:bg-yellow-500">
                     Home
                 </a>
             </div>

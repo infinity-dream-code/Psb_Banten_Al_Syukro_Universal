@@ -128,7 +128,7 @@
                 <nav class="mt-2 pb-4">
                     <ul class="space-y-1">
                         <li>
-                            <a href="/pages/display/home" class="flex items-center px-6 py-3 bg-green-700 border-l-4 border-white text-white font-medium">
+                            <a href="{{url('/pages/display/home')}}" class="flex items-center px-6 py-3 bg-green-700 border-l-4 border-white text-white font-medium">
                                 <i class="fas fa-bookmark mr-3 w-4 text-center"></i>
                                 <span class="text-sm font-semibold">DASHBOARD</span>
                             </a>
@@ -142,12 +142,12 @@
         <i class="fas fa-chevron-down text-xs transition-transform dropdown-arrow"></i>
     </button>
     <div id="masterdata-dropdown" class="dropdown-content bg-green-700">
-       <a href="/PmbMstPendaftarans/master-tahun-akademik" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors">Tahun Akademik</a>
-        <a href="/PmbMstPendaftarans/master-gelombang" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors">Gelombang</a>
-        <a href="/PmbMstPendaftarans/master-jalur" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors">Jalur</a>
-         <a href="/PmbMstPendaftarans/master-unit" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors">Unit</a>
-        <a href="/PmbMstPendaftarans/master-sekolah" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors">Sekolah</a>
-        <a href="/PmbMstPendaftarans/master-ujian" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors">Ujian</a>
+       <a href="{{url('/PmbMstPendaftarans/master-tahun-akademik')}}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors">Tahun Akademik</a>
+        <a href="{{url('/PmbMstPendaftarans/master-gelombang')}}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors">Gelombang</a>
+        <a href="{{url('/PmbMstPendaftarans/master-jalur')}}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors">Jalur</a>
+         <a href="{{url('/PmbMstPendaftarans/master-unit')}}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors">Unit</a>
+        <a href="{{url('/PmbMstPendaftarans/master-sekolah')}}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors">Sekolah</a>
+        <a href="{{url('/PmbMstPendaftarans/master-ujian')}}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors">Ujian</a>
     </div>
 </li>
 
@@ -162,7 +162,7 @@
                                 <i class="fas fa-chevron-down text-xs transition-transform dropdown-arrow"></i>
                             </button>
                             <div id="kelengkapan-dropdown" class="dropdown-content bg-green-700">
-                                <a href="/PmbMstPendaftarans/cek_berkas_pembayaran" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors">Berkas & Pembayaran</a>
+                                <a href="{{url('/PmbMstPendaftarans/cek_berkas_pembayaran')}}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors">Berkas & Pembayaran</a>
                             </div>
                         </li>
 
@@ -290,13 +290,13 @@
                                 <p class="font-semibold text-gray-800">Menu</p>
                             </div>
                            <!-- Settings -->
-<a href="/PmbMstPendaftarans/setting" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors">
+<a href="{{url('/PmbMstPendaftarans/setting')}}" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors">
     <i class="fas fa-cog text-blue-500 mr-3"></i>
     <span>Settings</span>
 </a>
 
 <!-- Logout -->
-<a href="/ServiceLogout" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors">
+<a href="{{url('/ServiceLogout')}}" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors">
     <i class="fas fa-user text-green-500 mr-3"></i>
     <span>Logout</span>
 </a>
