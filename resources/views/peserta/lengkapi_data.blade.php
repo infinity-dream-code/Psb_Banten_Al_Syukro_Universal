@@ -199,56 +199,70 @@
                     </div>
                 </div>
 
-                <div class="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
-                    <h2 class="text-xl font-semibold text-gray-800 border-b border-gray-200 pb-3 mb-6 flex items-center">
-                        Data Alamat
-                    </h2>
-                    
-                    <div class="space-y-6">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Alamat Lengkap *</label>
-                            <textarea name="alamat_lengkap" rows="3" class="w-full px-4 py-3 border {{ empty($peserta->alamat_lengkap) ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500' }} rounded-lg focus:ring-2 focus:border-transparent transition duration-200 resize-none" placeholder="Jalan/Gang/No. Rumah/RT/RW">{{ $peserta->alamat_lengkap }}</textarea>
-                        </div>
-                        
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Provinsi *</label>
-                                <select name="id_provinsi" id="provinsi" class="w-full px-4 py-3 border {{ empty($peserta->id_provinsi) ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500' }} rounded-lg focus:ring-2 focus:border-transparent transition duration-200">
-                                    <option value="">-- Pilih Provinsi --</option>
-                                    @foreach($provinsiList as $provinsi)
-                                        <option value="{{ $provinsi->id }}" {{ $peserta->id_provinsi == $provinsi->id ? 'selected' : '' }}>
-                                            {{ $provinsi->Provinsi }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                           <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2">Kabupaten/Kota *</label>
-        <select name="id_kabupaten" id="kabupaten" class="w-full px-4 py-3 border {{ empty($peserta->id_kabupaten) ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500' }} rounded-lg focus:ring-2 focus:border-transparent transition duration-200">
-            <option value="">-- Pilih Kabupaten/Kota --</option>
-            @if($peserta->id_provinsi)
-                @foreach($kabupatenList as $kabupaten)
-                    <option value="{{ $kabupaten->id }}" {{ $peserta->id_kabupaten == $kabupaten->id ? 'selected' : '' }}>
-                        {{ $kabupaten->kota }}
-                    </option>
-                @endforeach
-            @endif
-        </select>
-    </div>
-    <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2">Kecamatan *</label>
-        <select name="kecamatan_id" id="kecamatan" class="w-full px-4 py-3 border {{ empty($peserta->kecamatan_id) ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500' }} rounded-lg focus:ring-2 focus:border-transparent transition duration-200">
-    <option value="">-- Pilih Kecamatan --</option>
-    @if($peserta->id_kabupaten)
-        @foreach($kecamatanList as $kecamatan)
-            <option value="{{ $kecamatan->id }}" {{ $peserta->kecamatan_id == $kecamatan->id ? 'selected' : '' }}>
-                {{ $kecamatan->kecamatan }}
-            </option>
-        @endforeach
-    @endif
-</select>
+               <div class="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+    <h2 class="text-xl font-semibold text-gray-800 border-b border-gray-200 pb-3 mb-6 flex items-center">
+        Data Alamat
+    </h2>
 
+    <div class="space-y-6">
+        {{-- Alamat --}}
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Alamat Lengkap *</label>
+            <textarea name="alamat_lengkap" rows="3"
+                class="w-full px-4 py-3 border {{ empty($peserta->alamat_lengkap) ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500' }}
+                rounded-lg focus:ring-2 focus:border-transparent transition duration-200 resize-none"
+                placeholder="Jalan/Gang/No. Rumah/RT/RW">{{ $peserta->alamat_lengkap }}</textarea>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {{-- Provinsi --}}
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Provinsi *</label>
+                <select name="id_provinsi" id="provinsi"
+                    class="w-full px-4 py-3 border {{ empty($peserta->id_provinsi) ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500' }}
+                    rounded-lg focus:ring-2 focus:border-transparent transition duration-200">
+                    <option value="">-- Pilih Provinsi --</option>
+                    @foreach($provinsiList as $provinsi)
+                        <option value="{{ $provinsi->id }}" {{ $peserta->id_provinsi == $provinsi->id ? 'selected' : '' }}>
+                            {{ $provinsi->Provinsi }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            {{-- Kabupaten --}}
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Kabupaten/Kota *</label>
+                <select name="id_kabupaten" id="kabupaten"
+                    class="w-full px-4 py-3 border {{ empty($peserta->id_kabupaten) ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500' }}
+                    rounded-lg focus:ring-2 focus:border-transparent transition duration-200">
+                    <option value="">-- Pilih Kabupaten/Kota --</option>
+                    @foreach($kabupatenList as $kabupaten)
+                        <option value="{{ $kabupaten->id }}" {{ $peserta->id_kabupaten == $kabupaten->id ? 'selected' : '' }}>
+                            {{ $kabupaten->kota }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            {{-- Kecamatan --}}
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Kecamatan *</label>
+                <select name="kecamatan_id" id="kecamatan"
+                    class="w-full px-4 py-3 border {{ empty($peserta->kecamatan_id) ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500' }}
+                    rounded-lg focus:ring-2 focus:border-transparent transition duration-200">
+                    <option value="">-- Pilih Kecamatan --</option>
+                    @foreach($kecamatanList as $kecamatan)
+                        <option value="{{ $kecamatan->id }}" {{ $peserta->kecamatan_id == $kecamatan->id ? 'selected' : '' }}>
+                            {{ $kecamatan->kecamatan }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
     </div>
+</div>
+
 
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Kelurahan/Desa *</label>
