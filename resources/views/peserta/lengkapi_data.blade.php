@@ -215,50 +215,50 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {{-- Provinsi --}}
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Provinsi *</label>
-                <select name="id_provinsi" id="provinsi"
-                    class="w-full px-4 py-3 border {{ empty($peserta->id_provinsi) ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500' }}
-                    rounded-lg focus:ring-2 focus:border-transparent transition duration-200">
-                    <option value="">-- Pilih Provinsi --</option>
-                    @foreach($provinsiList as $provinsi)
-                        <option value="{{ $provinsi->id }}" {{ $peserta->id_provinsi == $provinsi->id ? 'selected' : '' }}>
-                            {{ $provinsi->Provinsi }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
+        {{-- Provinsi --}}
+<div>
+    <label class="block text-sm font-medium text-gray-700 mb-2">Provinsi *</label>
+    <select name="id_provinsi" id="provinsi"
+        class="w-full px-4 py-3 border {{ empty($peserta->id_provinsi) ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500' }}
+        rounded-lg focus:ring-2 focus:border-transparent transition duration-200">
+        <option value="">-- Pilih Provinsi --</option>
+        @foreach($provinsiList as $provinsi)
+            <option value="{{ $provinsi->id }}" {{ $peserta->id_provinsi == $provinsi->id ? 'selected' : '' }}>
+                {{ $provinsi->Provinsi }}
+            </option>
+        @endforeach
+    </select>
+</div>
 
-            {{-- Kabupaten --}}
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Kabupaten/Kota *</label>
-                <select name="id_kabupaten" id="kabupaten"
-                    class="w-full px-4 py-3 border {{ empty($peserta->id_kabupaten) ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500' }}
-                    rounded-lg focus:ring-2 focus:border-transparent transition duration-200">
-                    <option value="">-- Pilih Kabupaten/Kota --</option>
-                    @foreach($kabupatenList as $kabupaten)
-                        <option value="{{ $kabupaten->id }}" {{ $peserta->id_kabupaten == $kabupaten->id ? 'selected' : '' }}>
-                            {{ $kabupaten->kota }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
+{{-- Kabupaten --}}
+<div>
+    <label class="block text-sm font-medium text-gray-700 mb-2">Kabupaten/Kota *</label>
+    <select name="id_kabupaten" id="kabupaten"
+        class="w-full px-4 py-3 border {{ empty($peserta->id_kabupaten) ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500' }}
+        rounded-lg focus:ring-2 focus:border-transparent transition duration-200">
+        <option value="">-- Pilih Kabupaten/Kota --</option>
+        @foreach($kabupatenList as $kabupaten)
+            <option value="{{ $kabupaten->id }}" {{ $peserta->id_kabupaten == $kabupaten->id ? 'selected' : '' }}>
+                {{ $kabupaten->kota }}
+            </option>
+        @endforeach
+    </select>
+</div>
 
-            {{-- Kecamatan --}}
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Kecamatan *</label>
-                <select name="kecamatan_id" id="kecamatan"
-                    class="w-full px-4 py-3 border {{ empty($peserta->kecamatan_id) ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500' }}
-                    rounded-lg focus:ring-2 focus:border-transparent transition duration-200">
-                    <option value="">-- Pilih Kecamatan --</option>
-                    @foreach($kecamatanList as $kecamatan)
-                        <option value="{{ $kecamatan->id }}" {{ $peserta->kecamatan_id == $kecamatan->id ? 'selected' : '' }}>
-                            {{ $kecamatan->kecamatan }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
+{{-- Kecamatan --}}
+<div>
+    <label class="block text-sm font-medium text-gray-700 mb-2">Kecamatan *</label>
+    <select name="kecamatan_id" id="kecamatan"
+        class="w-full px-4 py-3 border {{ empty($peserta->kecamatan_id) ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500' }}
+        rounded-lg focus:ring-2 focus:border-transparent transition duration-200">
+        <option value="">-- Pilih Kecamatan --</option>
+        @foreach($kecamatanList as $kecamatan)
+            <option value="{{ $kecamatan->id }}" {{ $peserta->kecamatan_id == $kecamatan->id ? 'selected' : '' }}>
+                {{ $kecamatan->kecamatan }}
+            </option>
+        @endforeach
+    </select>
+</div>
 
 
                             <div>
@@ -730,6 +730,8 @@
 </div>
 
 
+
+
 <script>
 function showTab(tabName) {
     const tabs = ['kelengkapan', 'bantuan', 'biaya'];
@@ -982,29 +984,13 @@ document.addEventListener('DOMContentLoaded', function() {
             const provinsiId = this.value;
             kabupaten.innerHTML = '<option value="">-- Pilih Kabupaten/Kota --</option>';
             kecamatan.innerHTML = '<option value="">-- Pilih Kecamatan --</option>';
-            
-            kabupaten.disabled = true;
-            kecamatan.disabled = true;
-            
             if (provinsiId) {
                 fetch(`/api/provinsi/${provinsiId}/kabupaten`)
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                        return response.json();
-                    })
+                    .then(response => response.json())
                     .then(data => {
-                        if (data && data.length > 0) {
-                            data.forEach(item => {
-                                kabupaten.innerHTML += `<option value="${item.id}">${item.name}</option>`;
-                            });
-                            kabupaten.disabled = false;
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error fetching kabupaten:', error);
-                        kabupaten.innerHTML = '<option value="">Error loading data</option>';
+                        data.forEach(item => {
+                            kabupaten.innerHTML += `<option value="${item.id}">${item.name}</option>`;
+                        });
                     });
             }
         });
@@ -1014,27 +1000,13 @@ document.addEventListener('DOMContentLoaded', function() {
         kabupaten.addEventListener('change', function() {
             const kabupatenId = this.value;
             kecamatan.innerHTML = '<option value="">-- Pilih Kecamatan --</option>';
-            kecamatan.disabled = true;
-            
             if (kabupatenId) {
                 fetch(`/api/kabupaten/${kabupatenId}/kecamatan`)
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                        return response.json();
-                    })
+                    .then(response => response.json())
                     .then(data => {
-                        if (data && data.length > 0) {
-                            data.forEach(item => {
-                                kecamatan.innerHTML += `<option value="${item.id}">${item.name}</option>`;
-                            });
-                            kecamatan.disabled = false;
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error fetching kecamatan:', error);
-                        kecamatan.innerHTML = '<option value="">Error loading data</option>';
+                        data.forEach(item => {
+                            kecamatan.innerHTML += `<option value="${item.id}">${item.name}</option>`;
+                        });
                     });
             }
         });
@@ -1044,27 +1016,13 @@ document.addEventListener('DOMContentLoaded', function() {
         provinsiSekolah.addEventListener('change', function() {
             const provinsiId = this.value;
             kabupatenSekolah.innerHTML = '<option value="">-- Pilih Kabupaten/Kota --</option>';
-            kabupatenSekolah.disabled = true;
-            
             if (provinsiId) {
                 fetch(`/api/provinsi/${provinsiId}/kabupaten`)
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                        return response.json();
-                    })
+                    .then(response => response.json())
                     .then(data => {
-                        if (data && data.length > 0) {
-                            data.forEach(item => {
-                                kabupatenSekolah.innerHTML += `<option value="${item.id}">${item.name}</option>`;
-                            });
-                            kabupatenSekolah.disabled = false;
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error fetching kabupaten sekolah:', error);
-                        kabupatenSekolah.innerHTML = '<option value="">Error loading data</option>';
+                        data.forEach(item => {
+                            kabupatenSekolah.innerHTML += `<option value="${item.id}">${item.name}</option>`;
+                        });
                     });
             }
         });
@@ -1107,7 +1065,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 { selector: 'textarea[name="alamat_lengkap"]', label: 'Alamat Lengkap' },
                 { selector: 'select[name="id_provinsi"]', label: 'Provinsi' },
                 { selector: 'select[name="id_kabupaten"]', label: 'Kabupaten' },
-                { selector: 'select[name="kecamatan_id"]', label: 'Kecamatan' },
+                { selector: 'select[name="id_kecamatan"]', label: 'Kecamatan' },
                 { selector: 'input[name="dusun"]', label: 'Kelurahan/Desa' },
                 { selector: 'input[name="kode_pos"]', label: 'Kode Pos' },
                 { selector: 'input[name="ibu_nama"]', label: 'Nama Ibu' },
