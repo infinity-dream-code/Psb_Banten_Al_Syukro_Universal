@@ -745,13 +745,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const provinsiSekolah = document.getElementById('provinsi_sekolah');
     const kabupatenSekolah = document.getElementById('kabupaten_sekolah');
     const form = document.querySelector('form[action*="lengkapi_data"]');
+    const baseUrl = "{{ url('/') }}";
 
     function createErrorElement(inputElement, message) {
         const existingError = inputElement.parentNode.querySelector('.error-message');
         if (existingError) {
             existingError.remove();
         }
-        
         const errorDiv = document.createElement('div');
         errorDiv.className = 'error-message text-red-600 text-sm mt-1 flex items-center';
         errorDiv.innerHTML = `
@@ -760,7 +760,6 @@ document.addEventListener('DOMContentLoaded', function() {
             </svg>
             ${message}
         `;
-        
         inputElement.parentNode.appendChild(errorDiv);
         inputElement.classList.remove('border-gray-300', 'focus:ring-blue-500');
         inputElement.classList.add('border-red-500', 'focus:ring-red-500');
@@ -771,7 +770,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (existingError) {
             existingError.remove();
         }
-        
         inputElement.classList.remove('border-red-500', 'focus:ring-red-500');
         inputElement.classList.add('border-gray-300', 'focus:ring-blue-500');
     }
@@ -789,18 +787,15 @@ document.addEventListener('DOMContentLoaded', function() {
     function validateFile(input, maxSizeMB = 2, allowedTypes = ['image/jpeg', 'image/jpg', 'image/png']) {
         const file = input.files[0];
         if (!file) return true;
-        
         if (!allowedTypes.includes(file.type)) {
             createErrorElement(input, `File harus berformat: ${allowedTypes.map(t => t.split('/')[1].toUpperCase()).join(', ')}`);
             return false;
         }
-        
         const maxSizeBytes = maxSizeMB * 1024 * 1024;
         if (file.size > maxSizeBytes) {
             createErrorElement(input, `Ukuran file maksimal ${maxSizeMB}MB`);
             return false;
         }
-        
         removeError(input);
         return true;
     }
@@ -808,13 +803,11 @@ document.addEventListener('DOMContentLoaded', function() {
     function validatePhotoDimensions(input) {
         const file = input.files[0];
         if (!file) return Promise.resolve(true);
-        
         return new Promise((resolve) => {
             const img = new Image();
             img.onload = function() {
                 const width = this.naturalWidth;
                 const height = this.naturalHeight;
-                
                 if (width !== height * 3 / 4) {
                     createErrorElement(input, 'Foto harus berukuran persis 3x4 (contoh: 300x400px)');
                     resolve(false);
@@ -878,7 +871,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 validateNIK(this, item.label);
             });
-            
             input.addEventListener('blur', function() {
                 validateNIK(this, item.label);
             });
@@ -897,7 +889,6 @@ document.addEventListener('DOMContentLoaded', function() {
         phoneInput.addEventListener('input', function() {
             this.value = this.value.replace(/\D/g, '');
         });
-        
         phoneInput.addEventListener('blur', function() {
             validatePhone(this);
         });
@@ -936,7 +927,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.value = this.value.slice(0, 10);
             }
         });
-        
         nisnInput.addEventListener('blur', function() {
             const value = this.value.trim();
             if (value && value.length !== 10) {
@@ -955,7 +945,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.value = this.value.slice(0, 4);
             }
         });
-        
         tahunLulusInput.addEventListener('blur', function() {
             const value = parseInt(this.value);
             const currentYear = new Date().getFullYear();
@@ -973,7 +962,7 @@ document.addEventListener('DOMContentLoaded', function() {
             kabupaten.innerHTML = '<option value="">-- Pilih Kabupaten/Kota --</option>';
             kecamatan.innerHTML = '<option value="">-- Pilih Kecamatan --</option>';
             if (provinsiId) {
-                fetch(`/api/provinsi/${provinsiId}/kabupaten`)
+                fetch(`${baseUrl}/api/provinsi/${provinsiId}/kabupaten`)
                     .then(response => response.json())
                     .then(data => {
                         data.forEach(item => {
@@ -989,7 +978,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const kabupatenId = this.value;
             kecamatan.innerHTML = '<option value="">-- Pilih Kecamatan --</option>';
             if (kabupatenId) {
-                fetch(`/api/kabupaten/${kabupatenId}/kecamatan`)
+                fetch(`${baseUrl}/api/kabupaten/${kabupatenId}/kecamatan`)
                     .then(response => response.json())
                     .then(data => {
                         data.forEach(item => {
@@ -1005,7 +994,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const provinsiId = this.value;
             kabupatenSekolah.innerHTML = '<option value="">-- Pilih Kabupaten/Kota --</option>';
             if (provinsiId) {
-                fetch(`/api/provinsi/${provinsiId}/kabupaten`)
+                fetch(`${baseUrl}/api/provinsi/${provinsiId}/kabupaten`)
                     .then(response => response.json())
                     .then(data => {
                         data.forEach(item => {
@@ -1020,7 +1009,6 @@ document.addEventListener('DOMContentLoaded', function() {
         form.addEventListener('submit', async function(e) {
             let isValid = true;
             const errors = [];
-            
             const submitBtn = form.querySelector('button[type="submit"]');
             const originalText = submitBtn.innerHTML;
             submitBtn.innerHTML = `
@@ -1094,7 +1082,6 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if (!isValid) {
                 e.preventDefault();
-                
                 const errorSummary = document.createElement('div');
                 errorSummary.className = 'fixed top-4 right-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded shadow-lg z-50 max-w-md';
                 errorSummary.innerHTML = `
@@ -1117,13 +1104,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                 `;
                 document.body.appendChild(errorSummary);
-                
                 setTimeout(() => {
                     if (errorSummary.parentNode) {
                         errorSummary.remove();
                     }
                 }, 10000);
-                
                 const firstError = document.querySelector('.error-message');
                 if (firstError) {
                     firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
