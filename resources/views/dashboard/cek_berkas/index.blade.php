@@ -140,17 +140,43 @@
 <script>
     const baseUrl = "{{ url('/') }}"; 
 
-    function openModal(id) {
-        fetch(`${baseUrl}/api/peserta/${id}`)
-            .then(res => res.text())
-            .then(html => {
-                document.getElementById('modalContent').innerHTML = html;
-                document.getElementById('detailModal').classList.remove('hidden');
+    async function openModal(id) {
+        const modalContent = document.getElementById('modalContent');
+        const modal = document.getElementById('detailModal');
+
+        modalContent.innerHTML = `
+            <div class="text-center py-6 text-gray-500">Memuat data...</div>
+        `;
+        modal.classList.remove('hidden');
+
+        try {
+            const res = await fetch(`${baseUrl}/api/peserta/${id}`, {
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest"
+                }
             });
+
+            if (!res.ok) {
+                throw new Error(`HTTP error! Status: ${res.status}`);
+            }
+
+            const html = await res.text();
+            modalContent.innerHTML = html;
+
+        } catch (err) {
+            modalContent.innerHTML = `
+                <div class="text-center py-6 text-red-600">
+                    Gagal memuat data peserta.<br>
+                    <small>${err.message}</small>
+                </div>
+            `;
+        }
     }
+
     function closeModal() {
         document.getElementById('detailModal').classList.add('hidden');
     }
 </script>
+
 
 @endsection
