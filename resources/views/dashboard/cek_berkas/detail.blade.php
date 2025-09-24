@@ -151,14 +151,15 @@
     <td class="border border-gray-300 px-3 py-2">14</td>
     <td class="border border-gray-300 px-3 py-2 font-medium">Upload KTP</td>
     <td class="border border-gray-300 px-3 py-2">
-        @if($peserta->dokumen_ktp_ortu)
-            <a href="{{ Storage::url($peserta->dokumen_ktp_ortu) }}" 
-               download="ktp-{{ Str::slug($peserta->nama_peserta, '-') }}-{{ $peserta->no_pendaftaran }}.{{ pathinfo($peserta->dokumen_ktp_ortu, PATHINFO_EXTENSION) }}"
-               class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm inline-flex items-center gap-1 transition-colors">
-                <i class="fas fa-download"></i>
-                Download
-            </a>
-        @else
+      @if($peserta->dokumen_ktp_ortu)
+    <a href="{{ asset(Storage::url($peserta->dokumen_ktp_ortu)) }}" 
+       download="ktp-{{ Str::slug($peserta->nama_peserta, '-') }}-{{ $peserta->no_pendaftaran }}.{{ pathinfo($peserta->dokumen_ktp_ortu, PATHINFO_EXTENSION) }}"
+       class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm inline-flex items-center gap-1 transition-colors">
+        <i class="fas fa-download"></i>
+        Download
+    </a>
+@endif
+
             <span class="text-gray-500 text-sm">Tidak ada file</span>
         @endif
     </td>
@@ -168,14 +169,15 @@
     <td class="border border-gray-300 px-3 py-2">15</td>
     <td class="border border-gray-300 px-3 py-2 font-medium">Upload KK</td>
     <td class="border border-gray-300 px-3 py-2">
-        @if($peserta->dokumen_kk)
-            <a href="{{ Storage::url($peserta->dokumen_kk) }}" 
-               download="kk-{{ Str::slug($peserta->nama_peserta, '-') }}-{{ $peserta->no_pendaftaran }}.{{ pathinfo($peserta->dokumen_kk, PATHINFO_EXTENSION) }}"
-               class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm inline-flex items-center gap-1 transition-colors">
-                <i class="fas fa-download"></i>
-                Download
-            </a>
-        @else
+      @if($peserta->dokumen_kk)
+    <a href="{{ asset(Storage::url($peserta->dokumen_kk)) }}" 
+       download="kk-{{ Str::slug($peserta->nama_peserta, '-') }}-{{ $peserta->no_pendaftaran }}.{{ pathinfo($peserta->dokumen_kk, PATHINFO_EXTENSION) }}"
+       class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm inline-flex items-center gap-1 transition-colors">
+        <i class="fas fa-download"></i>
+        Download
+    </a>
+@endif
+
             <span class="text-gray-500 text-sm">Tidak ada file</span>
         @endif
     </td>
@@ -185,14 +187,15 @@
     <td class="border border-gray-300 px-3 py-2">16</td>
     <td class="border border-gray-300 px-3 py-2 font-medium">Upload AKTE</td>
     <td class="border border-gray-300 px-3 py-2">
-        @if($peserta->dokumen_akte_kelahiran)
-            <a href="{{ Storage::url($peserta->dokumen_akte_kelahiran) }}" 
-               download="akte-{{ Str::slug($peserta->nama_peserta, '-') }}-{{ $peserta->no_pendaftaran }}.{{ pathinfo($peserta->dokumen_akte_kelahiran, PATHINFO_EXTENSION) }}"
-               class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm inline-flex items-center gap-1 transition-colors">
-                <i class="fas fa-download"></i>
-                Download
-            </a>
-        @else
+      @if($peserta->dokumen_akte_kelahiran)
+    <a href="{{ asset(Storage::url($peserta->dokumen_akte_kelahiran)) }}" 
+       download="akte-{{ Str::slug($peserta->nama_peserta, '-') }}-{{ $peserta->no_pendaftaran }}.{{ pathinfo($peserta->dokumen_akte_kelahiran, PATHINFO_EXTENSION) }}"
+       class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm inline-flex items-center gap-1 transition-colors">
+        <i class="fas fa-download"></i>
+        Download
+    </a>
+@endif
+
             <span class="text-gray-500 text-sm">Tidak ada file</span>
         @endif
     </td>
@@ -211,9 +214,10 @@
                             {{-- Foto Siswa --}}
                             <div class="mb-6 flex justify-center">
                                 @if($peserta->foto)
-                                    <img src="{{ Storage::url($peserta->foto) }}" 
-                                         alt="Foto {{ $peserta->nama_peserta }}" 
-                                         class="w-48 h-60 object-cover rounded border-2 border-gray-300 shadow-sm">
+                                  <img src="{{ asset(Storage::url($peserta->foto)) }}" 
+     alt="Foto {{ $peserta->nama_peserta }}" 
+     class="w-48 h-60 object-cover rounded border-2 border-gray-300 shadow-sm">
+
                                 @else
                                     <div class="w-48 h-60 bg-gray-100 rounded border-2 border-gray-300 flex items-center justify-center">
                                         <i class="fas fa-user text-6xl text-gray-400"></i>

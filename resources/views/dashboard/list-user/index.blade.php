@@ -107,12 +107,11 @@
         <div id="modalContent" class="mt-6"></div>
     </div>
 </div>
-
 <script>
 document.querySelectorAll('.lihat-btn').forEach(btn => {
     btn.addEventListener('click', function() {
         let id = this.dataset.id;
-        fetch(`/PmbMstPendaftarans/users/${id}/detail`)
+        fetch("{{ url('PmbMstPendaftarans/users') }}/" + id + "/detail")
             .then(res => res.text())
             .then(html => {
                 document.getElementById('modalContent').innerHTML = html;
@@ -120,9 +119,11 @@ document.querySelectorAll('.lihat-btn').forEach(btn => {
             });
     });
 });
+
 document.getElementById('closeModal').addEventListener('click', function() {
     document.getElementById('detailModal').classList.add('hidden');
 });
 </script>
+
 
 @endsection

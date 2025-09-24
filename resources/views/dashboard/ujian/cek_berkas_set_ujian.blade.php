@@ -241,14 +241,15 @@
             peserta_ids: selectedIds,
             ujian: ujianData
         };
-        fetch('/PmbMstPendaftarans/Set-Ujian', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
-            body: JSON.stringify(parameterData)
-        })
+       fetch("{{ url('PmbMstPendaftarans/Set-Ujian') }}", {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+    },
+    body: JSON.stringify(parameterData)
+})
+
         .then(res => res.json())
         .then(data => {
             alert('Parameter ujian berhasil disimpan!');
