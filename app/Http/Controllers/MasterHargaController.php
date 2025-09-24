@@ -96,8 +96,7 @@ public function edit($id)
         ->get();
 
     $today = now()->toDateString();
-    $gelombangs = MasterGelombang::whereDate('start', '<=', $today)
-        ->whereDate('end', '>=', $today)
+    $gelombangs = MasterGelombang::whereDate('end', '>=', $today)
         ->orderBy('tahun')
         ->orderBy('gelombang')
         ->get();

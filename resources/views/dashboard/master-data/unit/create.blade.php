@@ -3,6 +3,17 @@
 @section('content')
 <div class="p-6">
     <h1 class="text-xl font-bold text-gray-800 mb-4">Tambah Unit</h1>
+@if(session('error'))
+    <div class="p-3 mb-4 text-sm text-red-700 bg-red-100 rounded-lg">
+        {{ session('error') }}
+    </div>
+@endif
+
+@if(session('success'))
+    <div class="p-3 mb-4 text-sm text-green-700 bg-green-100 rounded-lg">
+        {{ session('success') }}
+    </div>
+@endif
 
     <form action="{{ route('master.unit.store') }}" method="POST" class="bg-white shadow rounded-lg p-6">
         @csrf

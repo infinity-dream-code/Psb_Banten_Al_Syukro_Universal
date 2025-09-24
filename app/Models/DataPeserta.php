@@ -118,7 +118,7 @@ class DataPeserta extends Model
     $gel = MasterGelombang::find($idGelombang);
     $tahun = substr($gel->tahun, -2);
     $gelombang = $gel->gelombang;
-    $unit = $idFakultas % 10;
+    $unit = $idFakultas;
     $prefix = $tahun . $gelombang . $unit;
 
     $last = \App\Models\User::where('username', 'like', $prefix . '%')
