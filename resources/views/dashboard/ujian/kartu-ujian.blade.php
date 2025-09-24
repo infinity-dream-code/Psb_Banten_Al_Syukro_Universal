@@ -103,7 +103,7 @@
 
         <tr>
             <td>Lokasi</td>
-            <td colspan="3">PSB {{ $peserta->fakultas }}</td>
+            <td colspan="3"> {{ $peserta->fakultas }}</td>
         </tr>
     </tbody>
 </table>
