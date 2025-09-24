@@ -137,37 +137,36 @@
                                             </div>
                                         </td>
                                     </tr>
-                                  <tr class="hover:bg-gray-50">
+                              <tr class="hover:bg-gray-50">
     <td class="border border-gray-300 px-3 py-2">14</td>
     <td class="border border-gray-300 px-3 py-2 font-medium">Upload KTP</td>
     <td class="border border-gray-300 px-3 py-2">
-      @if($peserta->dokumen_ktp_ortu)
-    <a href="{{ asset(Storage::url($peserta->dokumen_ktp_ortu)) }}" 
-       download="ktp-{{ Str::slug($peserta->nama_peserta, '-') }}-{{ $peserta->no_pendaftaran }}.{{ pathinfo($peserta->dokumen_ktp_ortu, PATHINFO_EXTENSION) }}"
-       class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm inline-flex items-center gap-1 transition-colors">
-        <i class="fas fa-download"></i>
-        Download
-    </a>
-@endif
-
+        @if($peserta->dokumen_ktp_ortu)
+            <a href="{{ asset(\Storage::url($peserta->dokumen_ktp_ortu)) }}" 
+               download="ktp-{{ \Str::slug($peserta->nama_peserta, '-') }}-{{ $peserta->no_pendaftaran }}.{{ pathinfo($peserta->dokumen_ktp_ortu, PATHINFO_EXTENSION) }}"
+               class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm inline-flex items-center gap-1 transition-colors">
+                <i class="fas fa-download"></i>
+                Download
+            </a>
+        @else
             <span class="text-gray-500 text-sm">Tidak ada file</span>
         @endif
     </td>
 </tr>
 
+
 <tr class="hover:bg-gray-50">
     <td class="border border-gray-300 px-3 py-2">15</td>
     <td class="border border-gray-300 px-3 py-2 font-medium">Upload KK</td>
     <td class="border border-gray-300 px-3 py-2">
-      @if($peserta->dokumen_kk)
-    <a href="{{ asset(Storage::url($peserta->dokumen_kk)) }}" 
-       download="kk-{{ Str::slug($peserta->nama_peserta, '-') }}-{{ $peserta->no_pendaftaran }}.{{ pathinfo($peserta->dokumen_kk, PATHINFO_EXTENSION) }}"
-       class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm inline-flex items-center gap-1 transition-colors">
-        <i class="fas fa-download"></i>
-        Download
-    </a>
-@endif
-
+        @if($peserta->dokumen_kk)
+            <a href="{{ asset(\Storage::url($peserta->dokumen_kk)) }}" 
+               download="kk-{{ \Str::slug($peserta->nama_peserta, '-') }}-{{ $peserta->no_pendaftaran }}.{{ pathinfo($peserta->dokumen_kk, PATHINFO_EXTENSION) }}"
+               class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm inline-flex items-center gap-1 transition-colors">
+                <i class="fas fa-download"></i>
+                Download
+            </a>
+        @else
             <span class="text-gray-500 text-sm">Tidak ada file</span>
         @endif
     </td>
@@ -177,15 +176,14 @@
     <td class="border border-gray-300 px-3 py-2">16</td>
     <td class="border border-gray-300 px-3 py-2 font-medium">Upload AKTE</td>
     <td class="border border-gray-300 px-3 py-2">
-      @if($peserta->dokumen_akte_kelahiran)
-    <a href="{{ asset(Storage::url($peserta->dokumen_akte_kelahiran)) }}" 
-       download="akte-{{ Str::slug($peserta->nama_peserta, '-') }}-{{ $peserta->no_pendaftaran }}.{{ pathinfo($peserta->dokumen_akte_kelahiran, PATHINFO_EXTENSION) }}"
-       class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm inline-flex items-center gap-1 transition-colors">
-        <i class="fas fa-download"></i>
-        Download
-    </a>
-@endif
-
+        @if($peserta->dokumen_akte_kelahiran)
+            <a href="{{ asset(\Storage::url($peserta->dokumen_akte_kelahiran)) }}" 
+               download="akte-{{ \Str::slug($peserta->nama_peserta, '-') }}-{{ $peserta->no_pendaftaran }}.{{ pathinfo($peserta->dokumen_akte_kelahiran, PATHINFO_EXTENSION) }}"
+               class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm inline-flex items-center gap-1 transition-colors">
+                <i class="fas fa-download"></i>
+                Download
+            </a>
+        @else
             <span class="text-gray-500 text-sm">Tidak ada file</span>
         @endif
     </td>

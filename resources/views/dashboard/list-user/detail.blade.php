@@ -208,21 +208,19 @@
                         <div class="text-center">
                             <h4 class="text-lg font-semibold text-gray-800 mb-4">Photo Siswa</h4>
                             
-                            {{-- Foto Siswa --}}
-                            <div class="mb-6 flex justify-center">
-                              @if($peserta->foto)
-    <img src="{{ asset('storage/'.$peserta->foto) }}" 
-         alt="Foto {{ $peserta->nama_peserta }}" 
-         class="w-48 h-60 object-cover rounded border-2 border-gray-300 shadow-sm">
-@else
-    <span class="text-gray-500 italic">Tidak ada foto</span>
-@endif
+                           {{-- Foto Siswa --}}
+<div class="mb-6 flex justify-center">
+    @if($peserta->foto)
+        <img src="{{ asset('storage/'.$peserta->foto) }}" 
+             alt="Foto {{ $peserta->nama_peserta }}" 
+             class="w-48 h-60 object-cover rounded border-2 border-gray-300 shadow-sm">
+    @else
+        <div class="w-48 h-60 bg-gray-100 rounded border-2 border-gray-300 flex items-center justify-center">
+            <i class="fas fa-user text-6xl text-gray-400"></i>
+        </div>
+    @endif
+</div>
 
-                                    <div class="w-48 h-60 bg-gray-100 rounded border-2 border-gray-300 flex items-center justify-center">
-                                        <i class="fas fa-user text-6xl text-gray-400"></i>
-                                    </div>
-                                @endif
-                            </div>
                             
                             {{-- Status Kelengkapan --}}
                             <div class="mb-6">
