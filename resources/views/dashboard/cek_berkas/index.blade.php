@@ -138,8 +138,10 @@
 </div>
 
 <script>
+    const baseUrl = "{{ url('/') }}"; 
+
     function openModal(id) {
-        fetch(`/api/peserta/${id}`)
+        fetch(`${baseUrl}/api/peserta/${id}`)
             .then(res => res.text())
             .then(html => {
                 document.getElementById('modalContent').innerHTML = html;
@@ -150,4 +152,5 @@
         document.getElementById('detailModal').classList.add('hidden');
     }
 </script>
+
 @endsection
