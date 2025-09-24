@@ -94,7 +94,8 @@ document.getElementById('btnCetak').addEventListener('click', function() {
         return;
     }
     let ids = selected.join(',');
-    window.open(`/PmbMstPendaftarans/cetak_kartu/${ids}`, '_blank');
+ window.open("{{ url('PmbMstPendaftarans/cetak_kartu') }}/" + ids, '_blank');
+
 });
 </script>
 @endsection
