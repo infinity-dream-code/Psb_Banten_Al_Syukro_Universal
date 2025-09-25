@@ -10,6 +10,11 @@
             </a>
         </div>
         <div class="p-6">
+            @if($peserta->status_ujian === 'LULUS')
+                <div class="mb-4 p-4 bg-green-100 border border-green-300 text-green-800 rounded-lg">
+                    Peserta ini sudah <strong>LULUS</strong>. Hanya Nama dan Nomor HP yang bisa diedit.
+                </div>
+            @endif
             <form action="{{ route('peserta.update', $peserta->id) }}" method="POST" class="space-y-6">
                 @csrf
                 @method('PUT')
@@ -28,7 +33,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Jalur</label>
-                        <select name="id_jalur" id="id_jalur" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                        <select name="id_jalur" id="id_jalur" class="w-full px-3 py-2 border border-gray-300 rounded-lg" {{ $peserta->status_ujian === 'LULUS' ? 'disabled' : '' }}>
                             <option value="">-- Pilih Jalur --</option>
                             @foreach($jalurs as $j)
                                 <option value="{{ $j->id_jalur }}" {{ $peserta->id_jalur == $j->id_jalur ? 'selected' : '' }}>
@@ -39,7 +44,7 @@
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Gelombang</label>
-                        <select name="id_gelombang" id="id_gelombang" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                        <select name="id_gelombang" id="id_gelombang" class="w-full px-3 py-2 border border-gray-300 rounded-lg" {{ $peserta->status_ujian === 'LULUS' ? 'disabled' : '' }}>
                             <option value="">-- Pilih Gelombang --</option>
                             @foreach($gelombangs as $g)
                                 <option value="{{ $g['id_gelombang'] }}" {{ $peserta->id_gelombang == $g['id_gelombang'] ? 'selected' : '' }}>
@@ -53,7 +58,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Fakultas</label>
-                        <select name="id_fakultas" id="id_fakultas" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                        <select name="id_fakultas" id="id_fakultas" class="w-full px-3 py-2 border border-gray-300 rounded-lg" {{ $peserta->status_ujian === 'LULUS' ? 'disabled' : '' }}>
                             <option value="">-- Pilih Fakultas --</option>
                             @foreach($fakultas as $f)
                                 <option value="{{ $f->id_fakultas }}" {{ $peserta->id_fakultas == $f->id_fakultas ? 'selected' : '' }}>
@@ -64,7 +69,7 @@
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Program Studi</label>
-                        <select name="id_prodi" id="id_prodi" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                        <select name="id_prodi" id="id_prodi" class="w-full px-3 py-2 border border-gray-300 rounded-lg" {{ $peserta->status_ujian === 'LULUS' ? 'disabled' : '' }}>
                             <option value="">-- Pilih Program Studi --</option>
                             @foreach($prodis as $p)
                                 <option value="{{ $p->id_prodi }}" {{ $peserta->id_prodi == $p->id_prodi ? 'selected' : '' }}>

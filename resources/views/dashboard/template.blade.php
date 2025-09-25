@@ -293,11 +293,11 @@
                             <div class="px-4 py-2 border-b border-gray-100">
                                 <p class="font-semibold text-gray-800">Menu</p>
                             </div>
-                            <a href="/PmbMstPendaftarans/setting" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors">
+                            <a href="{{url('/PmbMstPendaftarans/setting')}}" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors">
                                 <i class="fas fa-cog text-blue-500 mr-3"></i>
                                 <span>Settings</span>
                             </a>
-                            <a href="/ServiceLogout" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors">
+                            <a href="{{url('/ServiceLogout')}}" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors">
                                 <i class="fas fa-user text-green-500 mr-3"></i>
                                 <span>Logout</span>
                             </a>

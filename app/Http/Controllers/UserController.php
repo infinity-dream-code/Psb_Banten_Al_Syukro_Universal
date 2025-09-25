@@ -180,7 +180,7 @@ public function updatepeserta(Request $request, $id)
         'no_hp'        => 'required|string|max:20',
     ];
 
-    if ($peserta->status_pembayaran_registrasi == 0) {
+    if ($peserta->status_pembayaran_registrasi == 0 && $peserta->status_ujian !== 'LULUS') {
         $rules = array_merge($rules, [
             'id_gelombang' => 'required',
             'id_jalur'     => 'required',
@@ -194,7 +194,7 @@ public function updatepeserta(Request $request, $id)
     $peserta->nama_peserta = $request->nama_peserta;
     $peserta->no_hp = $request->no_hp;
 
-    if ($peserta->status_pembayaran_registrasi == 0) {
+    if ($peserta->status_pembayaran_registrasi == 0 && $peserta->status_ujian !== 'LULUS') {
         $peserta->id_gelombang = $request->id_gelombang;
         $peserta->id_jalur     = $request->id_jalur;
         $peserta->id_fakultas  = $request->id_fakultas;
