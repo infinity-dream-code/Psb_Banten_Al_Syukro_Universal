@@ -63,7 +63,6 @@
             overflow-y: auto;
         }
         
-        /* Desktop styles */
         @media (min-width: 1024px) {
             .main-content {
                 margin-left: 256px;
@@ -76,7 +75,6 @@
             }
         }
         
-        /* Mobile styles */
         @media (max-width: 1023px) {
             .sidebar {
                 transform: translateX(-100%);
@@ -90,7 +88,6 @@
             }
         }
         
-        /* Overlay for mobile */
         .sidebar-overlay {
             position: fixed;
             top: 0;
@@ -110,7 +107,6 @@
     </style>
 </head>
 <body class="bg-gray-50">
-    <!-- Sidebar Overlay for Mobile -->
     <div id="sidebar-overlay" class="sidebar-overlay lg:hidden"></div>
     
     <div class="flex min-h-screen">
@@ -128,33 +124,30 @@
                 <nav class="mt-2 pb-4">
                     <ul class="space-y-1">
                         <li>
-                            <a href="{{url('/pages/display/home')}}" class="flex items-center px-6 py-3 bg-green-700 border-l-4 border-white text-white font-medium">
+                            <a href="{{url('/pages/display/home')}}" class="menu-item flex items-center px-6 py-3 text-white font-medium" data-menu="dashboard">
                                 <i class="fas fa-bookmark mr-3 w-4 text-center"></i>
                                 <span class="text-sm font-semibold">DASHBOARD</span>
                             </a>
                         </li>
-                         <li>
-    <button class="w-full flex items-center justify-between px-6 py-3 text-white font-medium dropdown-toggle hover:bg-green-700 transition-colors" data-target="masterdata-dropdown">
-        <div class="flex items-center">
-            <i class="fas fa-database mr-3 w-4 text-center"></i>
-            <span class="text-sm font-semibold">MASTER DATA</span>
-        </div>
-        <i class="fas fa-chevron-down text-xs transition-transform dropdown-arrow"></i>
-    </button>
-    <div id="masterdata-dropdown" class="dropdown-content bg-green-700">
-       <a href="{{url('/PmbMstPendaftarans/master-tahun-akademik')}}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors">Tahun Akademik</a>
-        <a href="{{url('/PmbMstPendaftarans/master-gelombang')}}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors">Gelombang</a>
-        <a href="{{url('/PmbMstPendaftarans/master-jalur')}}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors">Jalur</a>
-         <a href="{{url('/PmbMstPendaftarans/master-unit')}}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors">Unit</a>
-        <a href="{{url('/PmbMstPendaftarans/master-sekolah')}}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors">Sekolah</a>
-        <a href="{{url('/PmbMstPendaftarans/master-ujian')}}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors">Ujian</a>
-    </div>
-</li>
-
-
-
                         <li>
-                            <button class="w-full flex items-center justify-between px-6 py-3 text-white font-medium dropdown-toggle hover:bg-green-700 transition-colors" data-target="kelengkapan-dropdown">
+                            <button class="menu-item w-full flex items-center justify-between px-6 py-3 text-white font-medium dropdown-toggle hover:bg-green-700 transition-colors" data-target="masterdata-dropdown" data-menu="masterdata">
+                                <div class="flex items-center">
+                                    <i class="fas fa-database mr-3 w-4 text-center"></i>
+                                    <span class="text-sm font-semibold">MASTER DATA</span>
+                                </div>
+                                <i class="fas fa-chevron-down text-xs transition-transform dropdown-arrow"></i>
+                            </button>
+                            <div id="masterdata-dropdown" class="dropdown-content bg-green-700">
+                               <a href="{{ url('/PmbMstPendaftarans/master-tahun-akademik') }}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" data-menu="masterdata">Tahun Akademik</a>
+<a href="{{ url('/PmbMstPendaftarans/master-gelombang') }}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" data-menu="masterdata">Gelombang</a>
+<a href="{{ url('/PmbMstPendaftarans/master-jalur') }}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" data-menu="masterdata">Jalur</a>
+<a href="{{ url('/PmbMstPendaftarans/master-unit') }}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" data-menu="masterdata">Unit</a>
+<a href="{{ url('/PmbMstPendaftarans/master-sekolah') }}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" data-menu="masterdata">Sekolah</a>
+<a href="{{ url('/PmbMstPendaftarans/master-ujian') }}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" data-menu="masterdata">Ujian</a>
+</div>
+                        </li>
+                        <li>
+                            <button class="menu-item w-full flex items-center justify-between px-6 py-3 text-white font-medium dropdown-toggle hover:bg-green-700 transition-colors" data-target="kelengkapan-dropdown" data-menu="kelengkapan">
                                 <div class="flex items-center">
                                     <i class="fas fa-folder mr-3 w-4 text-center"></i>
                                     <span class="text-sm font-semibold">KELENGKAPAN</span>
@@ -162,14 +155,15 @@
                                 <i class="fas fa-chevron-down text-xs transition-transform dropdown-arrow"></i>
                             </button>
                             <div id="kelengkapan-dropdown" class="dropdown-content bg-green-700">
-                                <a href="{{url('/PmbMstPendaftarans/cek_berkas_pembayaran')}}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors">Berkas & Pembayaran</a>
-                            </div>
+                                <a href="{{ url('/PmbMstPendaftarans/cek_berkas_pembayaran') }}" 
+   class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" 
+   data-menu="kelengkapan">
+   Berkas & Pembayaran
+</a>
+ </div>
                         </li>
-
-
-
                         <li>
-                            <button class="w-full flex items-center justify-between px-6 py-3 text-white font-medium dropdown-toggle hover:bg-green-700 transition-colors" data-target="ujian-dropdown">
+                            <button class="menu-item w-full flex items-center justify-between px-6 py-3 text-white font-medium dropdown-toggle hover:bg-green-700 transition-colors" data-target="ujian-dropdown" data-menu="ujian">
                                 <div class="flex items-center">
                                     <i class="fas fa-clipboard mr-3 w-4 text-center"></i>
                                     <span class="text-sm font-semibold">UJIAN</span>
@@ -177,14 +171,27 @@
                                 <i class="fas fa-chevron-down text-xs transition-transform dropdown-arrow"></i>
                             </button>
                             <div id="ujian-dropdown" class="dropdown-content bg-green-700">
-                                <a href="{{url('PmbMstPendaftarans/cek_berkas_set_ujian')}}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors">Set Kartu Ujian</a>
-                                <a href="{{url('PmbMstPendaftarans/cetak_kartu_ujian_reguler')}}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors">Cetak Kartu Ujian</a>
-                                <a href="{{url('PmbMstPendaftarans/edit_jadwal_ujian')}}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors">Edit Jadwal Ujian</a>
-                            </div>
-                        </li>
+                               <a href="{{ url('PmbMstPendaftarans/cek_berkas_set_ujian') }}" 
+   class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" 
+   data-menu="ujian">
+   Set Kartu Ujian
+</a>
 
+<a href="{{ url('PmbMstPendaftarans/cetak_kartu_ujian_reguler') }}" 
+   class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" 
+   data-menu="ujian">
+   Cetak Kartu Ujian
+</a>
+
+<a href="{{ url('PmbMstPendaftarans/edit_jadwal_ujian') }}" 
+   class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" 
+   data-menu="ujian">
+   Edit Jadwal Ujian
+</a>
+</div>
+                        </li>
                         <li>
-                            <button class="w-full flex items-center justify-between px-6 py-3 text-white font-medium dropdown-toggle hover:bg-green-700 transition-colors" data-target="kelulusan-dropdown">
+                            <button class="menu-item w-full flex items-center justify-between px-6 py-3 text-white font-medium dropdown-toggle hover:bg-green-700 transition-colors" data-target="kelulusan-dropdown" data-menu="kelulusan">
                                 <div class="flex items-center">
                                     <i class="fas fa-user-friends mr-3 w-4 text-center"></i>
                                     <span class="text-sm font-semibold">KELULUSAN</span>
@@ -192,12 +199,11 @@
                                 <i class="fas fa-chevron-down text-xs transition-transform dropdown-arrow"></i>
                             </button>
                             <div id="kelulusan-dropdown" class="dropdown-content bg-green-700">
-                                <a href="{{url('PmbMstPendaftarans/set_kelulusan')}}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors">Set Kelulusan</a>
+                                <a href="{{url('PmbMstPendaftarans/set_kelulusan')}}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" data-menu="kelulusan">Set Kelulusan</a>
                             </div>
                         </li>
-
                         <li>
-                            <button class="w-full flex items-center justify-between px-6 py-3 text-white font-medium dropdown-toggle hover:bg-green-700 transition-colors" data-target="registrasi-dropdown">
+                            <button class="menu-item w-full flex items-center justify-between px-6 py-3 text-white font-medium dropdown-toggle hover:bg-green-700 transition-colors" data-target="registrasi-dropdown" data-menu="registrasi">
                                 <div class="flex items-center">
                                     <i class="fas fa-user-plus mr-3 w-4 text-center"></i>
                                     <span class="text-sm font-semibold">REGISTRASI</span>
@@ -205,16 +211,12 @@
                                 <i class="fas fa-chevron-down text-xs transition-transform dropdown-arrow"></i>
                             </button>
                             <div id="registrasi-dropdown" class="dropdown-content bg-green-700">
-                                <a href="{{url('PmbMstPendaftarans/registrasi-lunas')}}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors">Registrasi Lunas</a>
-                                 <a href="{{url('PmbMstPendaftarans/registrasi-cekstatus')}}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors">Cek Status</a>
-                                
+                                <a href="{{url('PmbMstPendaftarans/registrasi-lunas')}}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" data-menu="registrasi">Registrasi Lunas</a>
+                                <a href="{{url('PmbMstPendaftarans/registrasi-cekstatus')}}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" data-menu="registrasi">Cek Status</a>
                             </div>
                         </li>
-
-                      
-
                         <li>
-                            <button class="w-full flex items-center justify-between px-6 py-3 text-white font-medium dropdown-toggle hover:bg-green-700 transition-colors" data-target="report-dropdown">
+                            <button class="menu-item w-full flex items-center justify-between px-6 py-3 text-white font-medium dropdown-toggle hover:bg-green-700 transition-colors" data-target="report-dropdown" data-menu="report">
                                 <div class="flex items-center">
                                     <i class="fas fa-chart-line mr-3 w-4 text-center"></i>
                                     <span class="text-sm font-semibold">REPORT</span>
@@ -222,21 +224,19 @@
                                 <i class="fas fa-chevron-down text-xs transition-transform dropdown-arrow"></i>
                             </button>
                             <div id="report-dropdown" class="dropdown-content bg-green-700">
-<a href="{{ route('report.rekapJumlahPendaftar') }}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors">Rekap Jumlah Pendaftar</a>
-<a href="{{ route('report.rekapLunasPendaftaran') }}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors">Rekap Lunas Pendaftaran</a>
-<a href="{{ route('report.rekapLunasRegistrasi') }}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors">Rekap Lunas Registrasi</a>
-<a href="{{ route('report.siswaProvinsi') }}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors">Siswa Per Provinsi</a>
-<a href="{{ route('report.siswaKota') }}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors">Siswa Per Kota</a>
-<a href="{{ route('report.siswaProdi') }}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors">Siswa Per Prodi</a>
-<a href="{{ route('report.siswaSekolah') }}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors">Siswa Per Sekolah Asal</a>
-<a href="{{ route('report.exportDetailBiaya') }}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors">Export Detail Biaya</a>
-<a href="{{ route('report.exportAll') }}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors">Export All</a>
-
+                                <a href="{{ route('report.rekapJumlahPendaftar') }}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" data-menu="report">Rekap Jumlah Pendaftar</a>
+                                <a href="{{ route('report.rekapLunasPendaftaran') }}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" data-menu="report">Rekap Lunas Pendaftaran</a>
+                                <a href="{{ route('report.rekapLunasRegistrasi') }}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" data-menu="report">Rekap Lunas Registrasi</a>
+                                <a href="{{ route('report.siswaProvinsi') }}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" data-menu="report">Siswa Per Provinsi</a>
+                                <a href="{{ route('report.siswaKota') }}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" data-menu="report">Siswa Per Kota</a>
+                                <a href="{{ route('report.siswaProdi') }}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" data-menu="report">Siswa Per Prodi</a>
+                                <a href="{{ route('report.siswaSekolah') }}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" data-menu="report">Siswa Per Sekolah Asal</a>
+                                <a href="{{ route('report.exportDetailBiaya') }}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" data-menu="report">Export Detail Biaya</a>
+                                <a href="{{ route('report.exportAll') }}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" data-menu="report">Export All</a>
                             </div>
                         </li>
-
                         <li>
-                            <button class="w-full flex items-center justify-between px-6 py-3 text-white font-medium dropdown-toggle hover:bg-green-700 transition-colors" data-target="group-dropdown">
+                            <button class="menu-item w-full flex items-center justify-between px-6 py-3 text-white font-medium dropdown-toggle hover:bg-green-700 transition-colors" data-target="group-dropdown" data-menu="group">
                                 <div class="flex items-center">
                                     <i class="fas fa-users mr-3 w-4 text-center"></i>
                                     <span class="text-sm font-semibold">GROUP & PENGGUNA</span>
@@ -244,12 +244,11 @@
                                 <i class="fas fa-chevron-down text-xs transition-transform dropdown-arrow"></i>
                             </button>
                             <div id="group-dropdown" class="dropdown-content bg-green-700">
-                                <a href="{{url('PmbMstPendaftarans/users')}}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors">Users</a>
+                                <a href="{{url('PmbMstPendaftarans/users')}}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" data-menu="group">Users</a>
                             </div>
                         </li>
-
                         <li>
-                            <button class="w-full flex items-center justify-between px-6 py-3 text-white font-medium dropdown-toggle hover:bg-green-700 transition-colors" data-target="edit-dropdown">
+                            <button class="menu-item w-full flex items-center justify-between px-6 py-3 text-white font-medium dropdown-toggle hover:bg-green-700 transition-colors" data-target="edit-dropdown" data-menu="edit">
                                 <div class="flex items-center">
                                     <i class="fas fa-edit mr-3 w-4 text-center"></i>
                                     <span class="text-sm font-semibold">EDIT</span>
@@ -257,7 +256,7 @@
                                 <i class="fas fa-chevron-down text-xs transition-transform dropdown-arrow"></i>
                             </button>
                             <div id="edit-dropdown" class="dropdown-content bg-green-700">
-                                <a href="{{url('PmbMstPendaftarans/list-user')}}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors">List Pendaftar</a>
+                                <a href="{{url('PmbMstPendaftarans/list-user')}}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" data-menu="edit">List Pendaftar</a>
                             </div>
                         </li>
                     </ul>
@@ -269,14 +268,19 @@
             <header class="bg-white shadow-sm border-b border-gray-200 px-4 py-4 lg:px-6">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
-                        <!-- Hamburger Menu Button (Mobile Only) -->
                         <button id="hamburger-btn" class="hamburger-btn lg:hidden text-gray-600 hover:text-gray-800 p-2 mr-3">
                             <i class="fas fa-bars text-xl"></i>
                         </button>
                         
                         <div>
                             <h1 class="text-xl font-semibold text-gray-800">Dashboard</h1>
-                           
+                            <p class="text-sm text-gray-500">
+                                @if($activeGelombang)
+                                    Periode Gelombang {{ $activeGelombang->gelombang }} {{ $activeGelombang->tahun_akademik }}
+                                @else
+                                    Tidak ada gelombang aktif
+                                @endif
+                            </p>
                         </div>
                     </div>
                     
@@ -289,19 +293,14 @@
                             <div class="px-4 py-2 border-b border-gray-100">
                                 <p class="font-semibold text-gray-800">Menu</p>
                             </div>
-                           <!-- Settings -->
-<a href="{{url('/PmbMstPendaftarans/setting')}}" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors">
-    <i class="fas fa-cog text-blue-500 mr-3"></i>
-    <span>Settings</span>
-</a>
-
-<!-- Logout -->
-<a href="{{url('/ServiceLogout')}}" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors">
-    <i class="fas fa-user text-green-500 mr-3"></i>
-    <span>Logout</span>
-</a>
-
-                            
+                            <a href="/PmbMstPendaftarans/setting" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors">
+                                <i class="fas fa-cog text-blue-500 mr-3"></i>
+                                <span>Settings</span>
+                            </a>
+                            <a href="/ServiceLogout" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors">
+                                <i class="fas fa-user text-green-500 mr-3"></i>
+                                <span>Logout</span>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -312,7 +311,101 @@
     </div>
 <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        // User menu functionality
+        function setActiveMenu() {
+            const currentPath = window.location.pathname;
+            const menuItems = document.querySelectorAll('.menu-item');
+            const subMenuItems = document.querySelectorAll('.dropdown-content a');
+            const dropdownButtons = document.querySelectorAll('.dropdown-toggle');
+            const dropdowns = document.querySelectorAll('.dropdown-content');
+            const arrows = document.querySelectorAll('.dropdown-arrow');
+            
+            // Reset semua menu ke state tidak active
+            menuItems.forEach(item => {
+                item.classList.remove('bg-green-700', 'border-l-4', 'border-white');
+            });
+            
+            dropdownButtons.forEach(button => {
+                button.classList.remove('bg-green-700', 'border-l-4', 'border-white');
+            });
+            
+            dropdowns.forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+            
+            arrows.forEach(arrow => {
+                arrow.style.transform = 'rotate(0deg)';
+            });
+            
+            let activeFound = false;
+            
+            // Cek sub-menu dulu (menu di dalam dropdown) - dengan pencocokan yang lebih ketat
+            subMenuItems.forEach(item => {
+                const href = item.getAttribute('href');
+                if (href) {
+                    let cleanHref = href.split('?')[0];
+                    
+                    if (cleanHref.includes('{{') && cleanHref.includes('}}')) {
+                        cleanHref = cleanHref.replace(/\{\{url\('([^']+)'\)\}\}/g, '$1');
+                        cleanHref = cleanHref.replace(/\{\{[^}]+\}\}/g, '');
+                    }
+                    
+                    // Pencocokan yang lebih tepat - harus sama persis atau path mengandung bagian unik dari href
+                    if (currentPath === cleanHref || 
+                        (cleanHref.length > 10 && currentPath.includes(cleanHref)) ||
+                        (cleanHref.includes('cek_berkas_set_ujian') && currentPath.includes('cek_berkas_set_ujian')) ||
+                        (cleanHref.includes('cetak_kartu_ujian_reguler') && currentPath.includes('cetak_kartu_ujian_reguler')) ||
+                        (cleanHref.includes('edit_jadwal_ujian') && currentPath.includes('edit_jadwal_ujian')) ||
+                        (cleanHref.includes('set_kelulusan') && currentPath.includes('set_kelulusan')) ||
+                        (cleanHref.includes('registrasi-lunas') && currentPath.includes('registrasi-lunas')) ||
+                        (cleanHref.includes('registrasi-cekstatus') && currentPath.includes('registrasi-cekstatus'))
+                    ) {
+                        const menuType = item.getAttribute('data-menu');
+                        if (menuType) {
+                            const dropdown = document.getElementById(`${menuType}-dropdown`);
+                            const button = document.querySelector(`[data-target="${menuType}-dropdown"]`);
+                            const arrow = button?.querySelector('.dropdown-arrow');
+                            
+                            if (dropdown) {
+                                dropdown.classList.add('active');
+                            }
+                            if (button) {
+                                button.classList.add('bg-green-700', 'border-l-4', 'border-white');
+                            }
+                            if (arrow) {
+                                arrow.style.transform = 'rotate(180deg)';
+                            }
+                            activeFound = true;
+                            return; // Keluar dari loop jika sudah ketemu
+                        }
+                    }
+                }
+            });
+            
+            // Kalau tidak ketemu di sub-menu, cek menu utama (tapi skip dashboard)
+            if (!activeFound) {
+                menuItems.forEach(item => {
+                    const href = item.getAttribute('href');
+                    const menuType = item.getAttribute('data-menu');
+                    if (href && menuType !== 'dashboard') {
+                        const cleanHref = href.split('?')[0];
+                        if (currentPath === cleanHref) {
+                            item.classList.add('bg-green-700', 'border-l-4', 'border-white');
+                            activeFound = true;
+                            return; // Keluar dari loop jika sudah ketemu
+                        }
+                    }
+                });
+            }
+            
+            // Dashboard hanya active jika benar-benar di halaman dashboard dan tidak ada menu lain yang active
+            if (!activeFound && currentPath === '/pages/display/home') {
+                const dashboardMenu = document.querySelector('[data-menu="dashboard"]');
+                if (dashboardMenu) {
+                    dashboardMenu.classList.add('bg-green-700', 'border-l-4', 'border-white');
+                }
+            }
+        }
+
         const userMenuBtn = document.getElementById('user-menu-btn');
         const userMenu = document.getElementById('user-menu');
 
@@ -327,7 +420,6 @@
             }
         });
 
-        // Mobile sidebar functionality
         const hamburgerBtn = document.getElementById('hamburger-btn');
         const sidebar = document.getElementById('sidebar');
         const sidebarOverlay = document.getElementById('sidebar-overlay');
@@ -345,30 +437,18 @@
         hamburgerBtn.addEventListener('click', toggleSidebar);
         sidebarOverlay.addEventListener('click', closeSidebar);
 
-        // Close sidebar on window resize if screen becomes large
         window.addEventListener('resize', () => {
             if (window.innerWidth >= 1024) {
                 closeSidebar();
             }
         });
 
-        // Dropdown functionality
         document.querySelectorAll('.dropdown-toggle').forEach(button => {
             button.addEventListener('click', () => {
                 const targetId = button.getAttribute('data-target');
                 const dropdown = document.getElementById(targetId);
                 const arrow = button.querySelector('.dropdown-arrow');
                 
-                document.querySelectorAll('.dropdown-content').forEach(content => {
-                    if (content.id !== targetId) {
-                        content.classList.remove('active');
-                        const otherArrow = document.querySelector(`[data-target="${content.id}"] .dropdown-arrow`);
-                        if (otherArrow) {
-                            otherArrow.style.transform = 'rotate(0deg)';
-                        }
-                    }
-                });
-
                 dropdown.classList.toggle('active');
                 
                 if (dropdown.classList.contains('active')) {
@@ -379,7 +459,39 @@
             });
         });
 
-        // Chart functionality (if needed)
+        document.querySelectorAll('a[data-menu], button[data-menu]').forEach(item => {
+            item.addEventListener('click', function() {
+                const menuType = this.getAttribute('data-menu');
+                if (menuType) {
+                    localStorage.setItem('activeMenu', menuType);
+                }
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setActiveMenu();
+            
+            const savedActiveMenu = localStorage.getItem('activeMenu');
+            if (savedActiveMenu) {
+                const menuItems = document.querySelectorAll(`[data-menu="${savedActiveMenu}"]`);
+                menuItems.forEach(item => {
+                    if (item.tagName === 'BUTTON' && item.classList.contains('dropdown-toggle')) {
+                        const targetId = item.getAttribute('data-target');
+                        const dropdown = document.getElementById(targetId);
+                        const arrow = item.querySelector('.dropdown-arrow');
+                        
+                        if (dropdown) {
+                            dropdown.classList.add('active');
+                        }
+                        if (arrow) {
+                            arrow.style.transform = 'rotate(180deg)';
+                        }
+                        item.classList.add('bg-green-700', 'border-l-4', 'border-white');
+                    }
+                });
+            }
+        });
+
         if (document.getElementById('statisticsChart')) {
             const ctx = document.getElementById('statisticsChart').getContext('2d');
             const chart = new Chart(ctx, {
