@@ -274,13 +274,6 @@
                         
                         <div>
                             <h1 class="text-xl font-semibold text-gray-800">Dashboard</h1>
-                            <p class="text-sm text-gray-500">
-                                @if($activeGelombang)
-                                    Periode Gelombang {{ $activeGelombang->gelombang }} {{ $activeGelombang->tahun_akademik }}
-                                @else
-                                    Tidak ada gelombang aktif
-                                @endif
-                            </p>
                         </div>
                     </div>
                     
