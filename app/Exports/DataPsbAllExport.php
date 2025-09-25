@@ -126,10 +126,10 @@ class DataPsbAllExport implements FromCollection, WithHeadings
                 'Jumlah Saudara Kandung' => $p->jml_saudara_kandung ?? '-',
                 'Saudara Kandung Sekolah di YYS' => $p->jml_saudara_yayasan ?? '-',
                 'Kata Kunci' => $p->nama_sumber ?? '-',
-                'Bayar Pendaftaran' => $p->status_paid == 1 ? 'Lunas' : 'Belum Lunas',
-                'Bayar Registrasi' => $bayarRegistrasi,
-                'Nominal Registrasi' => $masterHarga ? $masterHarga->harga_registrasi : '-',
-                'Detail Biaya' => $masterHarga ? json_encode($masterHarga->detail) : '-',
+                'Bayar Registrasi' => $p->status_paid == 1 ? 'Lunas' : 'Belum Lunas',
+                'Bayar Registrasi Daftar Ulang' => $bayarRegistrasi,
+                'Nominal Registrasi Daftar Ulang' => $masterHarga ? $masterHarga->harga_registrasi : '-',
+                'Detail Biaya Daftar Ulang' => $masterHarga ? json_encode($masterHarga->detail) : '-',
                 'Password Login' => $p->user->plain_password ?? '-',
 
             ];
@@ -149,7 +149,7 @@ class DataPsbAllExport implements FromCollection, WithHeadings
             'Nama Sekolah','Tahun Lulus','No Ijazah','No SKHUN','No Ujian Nas.','No Kartu Kel. Sejahtera',
             'No Kartu Perlindungan Nas.','Alasan Sekolah Layak PIP','No. KIP','Nama Pada KIP','Als. Menolak KIP',
             'No. Reg Akta Lahir','Jumlah Saudara Kandung','Saudara Kandung Sekolah di YYS','Kata Kunci',
-            'Bayar Pendaftaran','Bayar Registrasi','Nominal Registrasi','Detail Biaya','Password Login'
+            'Bayar Registrasi','Bayar Registrasi Daftar Ulang','Nominal Registrasi Daftar Ulang','Detail Biaya Registrasi Daftar Ulang','Password Login'
         ];
     }
 }

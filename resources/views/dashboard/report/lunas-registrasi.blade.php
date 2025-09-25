@@ -52,7 +52,7 @@
                     <th class="border px-3 py-2">Jurusan</th>
                     <th class="border px-3 py-2">Jalur</th>
                     <th class="border px-3 py-2">Asal Sekolah</th>
-                    <th class="border px-3 py-2">Jurusan Sekolah</th>
+                    <th class="border px-3 py-2">Jurusan Sekolah Asal</th>
                     <th class="border px-3 py-2">No HP</th>
                     <th class="border px-3 py-2">Tanggal Bayar</th>
                 </tr>

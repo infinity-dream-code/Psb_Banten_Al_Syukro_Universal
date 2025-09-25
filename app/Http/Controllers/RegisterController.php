@@ -439,52 +439,37 @@ public function cekStatusIndex(Request $request)
 }
 
 public function index()
-    {
-        $today = Carbon::today();
+{
+    $today = now()->toDateString();
 
-        $jalurs = MasterHarga::with('jalur')
-            ->where('active', 1)
-            ->whereHas('gelombang', function($q) use ($today) {
-                $q->whereDate('end', '>=', $today);
-            })
-            ->get()
-            ->pluck('jalur')
-            ->unique('id')
-            ->filter();
+    $jalurs = MasterHarga::where('active', 1)
+        ->whereHas('gelombang', function ($q) use ($today) {
+            $q->whereDate('start', '<=', $today)
+              ->whereDate('end', '>=', $today);
+        })
+        ->select('id_jalur', 'nama_jalur')
+        ->distinct()
+        ->get();
 
-        $gelombangs = MasterHarga::with('gelombang')
-            ->where('active', 1)
-            ->whereHas('gelombang', function($q) use ($today) {
-                $q->whereDate('end', '>=', $today);
-            })
-            ->get()
-            ->pluck('gelombang')
-            ->unique('id')
-            ->filter();
+    $gelombangs   = collect();
+    $fakultas     = collect();
+    $prodis       = collect();
+    $jurusans     = MasterJurusanSekolah::orderBy('nama')->get();
+    $pekerjaans   = MasterPekerjaanOrtu::orderBy('id')->get();
+    $penghasilans = MasterPenghasilanOrtu::orderBy('id')->get();
 
-        $fakultas = MasterHarga::with('fakultas')
-            ->where('active', 1)
-            ->whereHas('gelombang', function($q) use ($today) {
-                $q->whereDate('end', '>=', $today);
-            })
-            ->get()
-            ->pluck('fakultas')
-            ->unique('id')
-            ->filter();
+    return view('auth.register', compact(
+        'jalurs',
+        'gelombangs',
+        'fakultas',
+        'prodis',
+        'jurusans',
+        'pekerjaans',
+        'penghasilans'
+    ));
+}
 
-        $jurusans = MasterJurusanSekolah::orderBy('nama')->get();
-        $pekerjaans = MasterPekerjaanOrtu::orderBy('id')->get();
-        $penghasilans = MasterPenghasilanOrtu::orderBy('id')->get();
 
-        return view('auth.register', compact(
-            'jalurs',
-            'gelombangs',
-            'fakultas',
-            'jurusans',
-            'pekerjaans',
-            'penghasilans'
-        ));
-    }
    public function getProdi($fakultasId)
 {
     $prodis = MasterHarga::with('prodi')

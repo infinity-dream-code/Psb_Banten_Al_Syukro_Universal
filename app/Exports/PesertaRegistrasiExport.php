@@ -99,11 +99,11 @@ class PesertaRegistrasiExport implements FromCollection, WithHeadings
     public function headings(): array
     {
         return [
-            'No','No Pendaftaran','Gelombang','Jalur','Fakultas/Unit','Prodi','Nama Peserta',
+            'No','No Pendaftaran','Gelombang','Jalur','Sekolah Di Tuju','Jurusan','Nama Peserta',
             'NIK','Tempat Lahir','Tanggal Lahir','NISN','No Akta Lahir','Gender','Agama',
             'Kewarganegaraan','Email','No HP','Alamat Lengkap','Alamat Sekolah','Dusun',
             'Kecamatan','Kabupaten','Provinsi','Kode Pos','Nama Sekolah','Kota Sekolah',
-            'Provinsi Sekolah','Jurusan','Tahun Lulus','Status Sekolah','Ibu Nama',
+            'Provinsi Sekolah','Jurusan Sekolah Asal','Tahun Lulus','Status Sekolah','Ibu Nama',
             'Ibu Tanggal Lahir','Ibu NIK','Ibu Alamat','Ibu Suku','Ibu Pendidikan',
             'Ibu Pekerjaan','Ibu Penghasilan','Ibu No Tlp','Ayah Nama','Ayah Tanggal Lahir',
             'Ayah NIK','Ayah Alamat','Ayah Suku','Ayah Pendidikan','Ayah Pekerjaan',

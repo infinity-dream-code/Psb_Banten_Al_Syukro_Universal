@@ -28,7 +28,7 @@
 
         <input type="text" name="search" value="{{ request('search') }}" 
             class="w-64 px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
-            placeholder="Cari nama, VA, prodi, fakultas...">
+            placeholder="Cari nama, VA, Jurusan, Sekolah...">
 
         <button type="submit" 
             class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Cari</button>

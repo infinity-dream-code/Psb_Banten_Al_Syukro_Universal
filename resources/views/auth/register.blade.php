@@ -152,42 +152,36 @@
                         
                         <div class="space-y-6">
                             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                                <div>
-                                    <label class="block label-text mb-2">Jalur Pendaftaran <span class="required">*</span></label>
-                                    <select name="jenis_pendaftaran" id="jalur" required class="form-input">
-                                        <option value="">PILIH JALUR PENDAFTARAN</option>
-                                        @foreach($jalurs as $j)
-                                            <option value="{{ $j->id }}">{{ $j->nama }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="block label-text mb-2">Gelombang <span class="required">*</span></label>
-                                    <select name="gelombang" id="gelombang" required class="form-input">
-                                        <option value="">PILIH GELOMBANG</option>
-                                        @foreach($gelombangs as $g)
-                                            <option value="{{ $g->id }}">Gelombang {{ $g->gelombang }} - {{ $g->tahun }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+                             <div>
+            <label class="block label-text mb-2">Jalur Pendaftaran <span class="required">*</span></label>
+            <select name="id_jalur" id="jalur" required class="form-input">
+                <option value="">PILIH JALUR PENDAFTARAN</option>
+                @foreach($jalurs as $j)
+                    <option value="{{ $j->id_jalur }}">{{ $j->nama_jalur }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div>
+            <label class="block label-text mb-2">Gelombang <span class="required">*</span></label>
+            <select name="id_gelombang" id="gelombang" required class="form-input" disabled>
+                <option value="">PILIH GELOMBANG</option>
+            </select>
+        </div>
                             </div>
 
                             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                                <div>
-                                    <label class="block label-text mb-2">Pilihan Sekolah Dan Jurusan <span class="required">*</span></label>
-                                    <select name="fakultas" id="fakultas" required class="form-input">
-                                        <option value="">PILIH Sekolah</option>
-                                        @foreach($fakultas as $f)
-                                            <option value="{{ $f->id }}">{{ $f->fakultas }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="block label-text mb-2">Jurusan <span class="required">*</span></label>
-                                    <select name="prodi" id="prodi" required disabled class="form-input">
-                                        <option value="">PILIH Jurusan</option>
-                                    </select>
-                                </div>
+                                 <div>
+            <label class="block label-text mb-2">Sekolah <span class="required">*</span></label>
+            <select name="id_fakultas" id="fakultas" required class="form-input" disabled>
+                <option value="">PILIH SEKOLAH</option>
+            </select>
+        </div>
+                               <div>
+            <label class="block label-text mb-2">Jurusan <span class="required">*</span></label>
+            <select name="id_prodi" id="prodi" required class="form-input" disabled>
+                <option value="">PILIH JURUSAN</option>
+            </select>
+        </div>
                             </div>
                         </div>
                     </div>

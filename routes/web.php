@@ -136,9 +136,6 @@ Route::get('/PmbMstPendaftarans/cetak_info_enroll/{nama}/{no_pendaftaran}/{jalur
 
     Route::get('PmbMstPendaftarans/users/{id}/detail', [UserController::class, 'showuser']);
 
-    Route::get('get-gelombang-by-jalur/{id_jalur}', [UserController::class, 'getGelombangByJalur']);
-Route::get('get-fakultas-by-jalur-gelombang/{id_jalur}/{id_gelombang}', [UserController::class, 'getFakultasByJalurGelombang']);
-Route::get('get-prodi-by-jalur-gelombang-fakultas/{id_jalur}/{id_gelombang}/{id_fakultas}', [UserController::class, 'getProdiByJalurGelombangFakultas']);
 //master unit/fakultas
 Route::get('/PmbMstPendaftarans/master-unit', [MasterBiayaPendaftaranController::class, 'index'])->name('master.unit');
 Route::get('/PmbMstPendaftarans/master-unit/add', [MasterBiayaPendaftaranController::class, 'create'])->name('master.unit.add');
@@ -260,3 +257,7 @@ Route::get('/api/peserta/{id}', [PembayaranController::class, 'detail'])
 Route::get('/api/provinsi', [LokasiController::class, 'provinsi'])->name('api.provinsi');
 Route::get('/api/provinsi/{provinsi}/kabupaten', [LokasiController::class, 'kabupaten'])->name('api.kabupaten');
 Route::get('/api/kabupaten/{kota}/kecamatan', [LokasiController::class, 'kecamatan'])->name('api.kecamatan');
+
+Route::get('get-gelombang-by-jalur/{id_jalur}', [UserController::class, 'getGelombangByJalur']);
+Route::get('get-fakultas-by-jalur-gelombang/{id_jalur}/{id_gelombang}', [UserController::class, 'getFakultasByJalurGelombang']);
+Route::get('get-prodi-by-jalur-gelombang-fakultas/{id_jalur}/{id_gelombang}/{id_fakultas}', [UserController::class, 'getProdiByJalurGelombangFakultas']);

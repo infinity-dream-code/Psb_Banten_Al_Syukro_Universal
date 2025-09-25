@@ -39,10 +39,10 @@
                 <th>No</th>
                 <th>No Pendaftaran</th>
                 <th>Nama</th>
-                <th>Program</th>
+                <th>Jurusan</th>
                 <th>Jalur</th>
                 <th>Sekolah Asal</th>
-                <th>Jurusan Sekolah</th>
+                <th>Jurusan Sekolah Asal</th>
                 <th>No HP</th>
                 <th>Tgl Bayar Registrasi Ulang</th>
             </tr>

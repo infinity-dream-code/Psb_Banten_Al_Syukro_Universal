@@ -15,7 +15,7 @@
     @endif
 
     <div class="flex justify-between items-center mb-4">
-        <h1 class="text-xl font-semibold">Cek Status Registrasi</h1>
+        <h1 class="text-xl font-semibold">Cek Status Registrasi Daftar Ulang</h1>
     </div>
 
     <div class="mb-4 flex flex-wrap gap-2 items-center">
@@ -42,7 +42,7 @@
             <div class="relative">
                 <input type="text" id="liveSearchInput" value="{{ request('search') }}"
                     class="w-64 px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                    placeholder="Cari nama, VA, prodi, fakultas...">
+                    placeholder="Cari nama, VA, Jurusan, Sekolah...">
                 <input type="hidden" name="search" id="searchHidden">
             </div>
 
