@@ -29,7 +29,7 @@
     </form>
 
     <div class="flex justify-between items-center mb-3">
-        <h2 class="text-lg font-semibold">Data Peserta Lunas Registrasi</h2>
+        <h2 class="text-lg font-semibold">Data Peserta Lunas Registrasi Daftar Ulang</h2>
         @if(count($peserta) > 0)
             @php
                 $ids = $peserta->pluck('id')->join(',');
@@ -49,7 +49,7 @@
                     <th class="border px-3 py-2">#</th>
                     <th class="border px-3 py-2">No Pendaftaran</th>
                     <th class="border px-3 py-2">Nama Peserta</th>
-                    <th class="border px-3 py-2">Program</th>
+                    <th class="border px-3 py-2">Jurusan</th>
                     <th class="border px-3 py-2">Jalur</th>
                     <th class="border px-3 py-2">Asal Sekolah</th>
                     <th class="border px-3 py-2">Jurusan Sekolah</th>

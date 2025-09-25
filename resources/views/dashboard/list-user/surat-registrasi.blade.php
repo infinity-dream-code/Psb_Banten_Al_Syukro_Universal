@@ -181,8 +181,11 @@
                 <div class="school-info">
                     <div class="school-title">PANITIA PENERIMAAN SISWA BARU (PSB)</div>
                     <div class="school-name">{{ $peserta->fakultas }}</div>
-                    <div class="address">49MC+6VC, Koto Panjang Ikua Koto, Kec. Koto Tangah, Kota Padang, Sumatera Barat</div>
-                    <div class="website-email">Website : https://psb.shinealfalah.smartpayment.id || Email :</div>
+                    <div class="address">Kota Semarang</div>
+                   <div class="website-email">
+    Website : {{ url('/') }} || Email :
+</div>
+
                 </div>
             </div>
             <div class="document-title">
@@ -225,12 +228,12 @@
                     <tr>
                         <td class="label"></td>
                         <td class="colon"></td>
-                        <td class="value">Penempatan : <strong>{{ $peserta->fakultas ?? '-' }}</strong></td>
+                        <td class="value">Sekolah : <strong>{{ $peserta->fakultas ?? '-' }}</strong></td>
                     </tr>
                     <tr>
                         <td class="label"></td>
                         <td class="colon"></td>
-                        <td class="value">Program : <strong>{{ $peserta->prodi ?? '-' }}</strong></td>
+                        <td class="value">Jurusan : <strong>{{ $peserta->prodi ?? '-' }}</strong></td>
                     </tr>
                     <tr>
                         <td class="label"></td>

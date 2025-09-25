@@ -49,10 +49,10 @@
                     <th class="border px-3 py-2">#</th>
                     <th class="border px-3 py-2">No Pendaftaran</th>
                     <th class="border px-3 py-2">Nama Peserta</th>
-                    <th class="border px-3 py-2">Program</th>
+                    <th class="border px-3 py-2">Jurusan</th>
                     <th class="border px-3 py-2">Jalur</th>
                     <th class="border px-3 py-2">Tanggal</th>
-                    <th class="border px-3 py-2 text-right">Biaya</th>
+                    <th class="border px-3 py-2 text-right">Biaya Registrasi</th>
                 </tr>
             </thead>
             <tbody>

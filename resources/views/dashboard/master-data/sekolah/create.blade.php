@@ -2,16 +2,16 @@
 
 @section('content')
 <div class="p-6">
-    <h1 class="text-xl font-bold text-gray-800 mb-4">Tambah Master Sekolah</h1>
+    <h1 class="text-xl font-bold text-gray-800 mb-4">Tambah Master Jurusan</h1>
 
     <form action="{{ route('master.sekolah.store') }}" method="POST" class="bg-white shadow rounded-lg p-6">
         @csrf
         <div class="mb-4">
-            <label for="id_fakultas" class="block text-sm font-medium text-gray-700 mb-2">Unit</label>
+            <label for="id_fakultas" class="block text-sm font-medium text-gray-700 mb-2">Sekolah</label>
             <select name="id_fakultas" id="id_fakultas"
                     class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-green-500 focus:border-green-500 text-sm"
                     required>
-                <option value="">-- Pilih Unit --</option>
+                <option value="">-- Pilih Sekolah --</option>
                 @foreach ($fakultas as $f)
                     <option value="{{ $f->id }}" {{ old('id_fakultas') == $f->id ? 'selected' : '' }}>
                         {{ $f->fakultas }}
@@ -21,7 +21,7 @@
         </div>
 
         <div class="mb-4">
-            <label for="nama" class="block text-sm font-medium text-gray-700 mb-2">Nama Sekolah</label>
+            <label for="nama" class="block text-sm font-medium text-gray-700 mb-2">Nama Jurusan</label>
             <input type="text" id="nama" name="nama" 
                    value="{{ old('nama') }}"
                    class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-green-500 focus:border-green-500 text-sm"

@@ -37,9 +37,11 @@
 
             <div class="border-t pt-4">
                 <p class="text-sm text-red-600 font-medium">
-                    NB: Simpanlah informasi penting ini. Gunakan Username dan Password untuk login pada alamat
-                    <a href="https://pmb.demo.smartpayment.co.id/ServiceLogin" class="text-blue-600 underline">pmb.demo.smartpayment.co.id/ServiceLogin</a>
-                </p>
+    NB: Simpanlah informasi penting ini. Gunakan Username dan Password untuk login pada alamat
+    <a href="{{ url('ServiceLogin') }}" class="text-blue-600 underline" target="_blank">
+        {{ parse_url(url('/'), PHP_URL_HOST) }}/ServiceLogin
+    </a>
+</p>
             </div>
 
             <div class="flex gap-3">
@@ -65,13 +67,22 @@
             <div>
                 <h3 class="text-lg font-semibold mb-2">Ketentuan</h3>
                 <ul class="list-disc ml-6 text-gray-700 space-y-2">
-                    <li>Nomor virtual akun di atas adalah nomor rekening virtual di bank Muamalat Indonesia bagi pendaftar yang digunakan untuk melakukan pembayaran biaya Pendaftaran DEMO PMB.</li>
-                    <li>Nomor virtual account juga digunakan untuk pembayaran sekolah bagi calon mahasiswa yang dinyatakan DITERIMA seleksi masuk di DEMO PMB, maka mohon dicatat dan diingat-ingat nomor tersebut.</li>
-                    <li>Petunjuk pembayaran dapat anda lihat disini <a href="https://pmb.demo.smartpayment.co.id/guide" class="text-blue-600 underline">https://pmb.demo.smartpayment.co.id/guide</a></li>
-                    <li>Bila anda sudah berhasil membayar, maka anda dapat login pada alamat 
-                        <a href="https://pmb.demo.smartpayment.co.id/ServiceLogin" class="text-blue-600 underline">pmb.demo.smartpayment.co.id/ServiceLogin</a>
-                        untuk melihat status pembayaran.
-                    </li>
+                    <li>Nomor virtual akun di atas adalah nomor rekening virtual di bank Muamalat Indonesia bagi pendaftar yang digunakan untuk melakukan pembayaran biaya Pendaftaran DEMO PSB.</li>
+                    <li>Nomor virtual account juga digunakan untuk pembayaran sekolah bagi calon mahasiswa yang dinyatakan DITERIMA seleksi masuk di DEMO PSB, maka mohon dicatat dan diingat-ingat nomor tersebut.</li>
+                   <li>
+    Petunjuk pembayaran dapat anda lihat di HOME PAGE 
+    <a href="{{ url('/') }}" class="text-blue-600 underline" target="_blank">
+        {{ parse_url(url('/'), PHP_URL_HOST) }}/guide
+    </a>
+</li>
+<li>
+    Bila anda sudah berhasil membayar, maka anda dapat login pada alamat 
+    <a href="{{ url('ServiceLogin') }}" class="text-blue-600 underline" target="_blank">
+        {{ parse_url(url('/'), PHP_URL_HOST) }}/ServiceLogin
+    </a>
+    untuk melihat status pembayaran.
+</li>
+
                 </ul>
             </div>
 

@@ -5,16 +5,23 @@
     <div class="bg-white shadow-lg rounded-lg">
         <div class="flex justify-between items-center px-6 py-4 border-b border-gray-200">
             <h3 class="text-xl font-semibold text-gray-800">Edit Data Peserta</h3>
-            <a href="{{ url('PmbMstPendaftarans/cek_berkas_pembayaran') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition-colors flex items-center gap-2">
+            <a href="{{ url('PmbMstPendaftarans/list-user') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition-colors flex items-center gap-2">
                 <i class="fas fa-arrow-left"></i> Kembali
             </a>
         </div>
         <div class="p-6">
-            @if($peserta->status_ujian === 'LULUS')
-                <div class="mb-4 p-4 bg-green-100 border border-green-300 text-green-800 rounded-lg">
-                    Peserta ini sudah <strong>LULUS</strong>. Hanya Nama dan Nomor HP yang bisa diedit.
+            @php
+                $isLulus = (strtoupper($peserta->status_ujian) === 'LULUS');
+                $disabledClass = $isLulus ? 'bg-gray-100 text-gray-500 cursor-not-allowed' : '';
+                $disabledAttr = $isLulus ? 'disabled readonly' : '';
+            @endphp
+
+            @if($isLulus)
+                <div class="mb-4 p-4 bg-yellow-100 border border-yellow-300 text-yellow-800 rounded-lg">
+                    Peserta ini sudah <strong>LULUS</strong>. Hanya Nama dan Nomor HP yang akan diperbarui, perubahan Jalur, Gelombang, Fakultas, dan Prodi akan diabaikan.
                 </div>
             @endif
+            
             <form action="{{ route('peserta.update', $peserta->id) }}" method="POST" class="space-y-6">
                 @csrf
                 @method('PUT')
@@ -33,7 +40,9 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Jalur</label>
-                        <select name="id_jalur" id="id_jalur" class="w-full px-3 py-2 border border-gray-300 rounded-lg" {{ $peserta->status_ujian === 'LULUS' ? 'disabled' : '' }}>
+                        <select name="id_jalur" id="id_jalur" 
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg {{ $disabledClass }}"
+                                {{ $disabledAttr }}>
                             <option value="">-- Pilih Jalur --</option>
                             @foreach($jalurs as $j)
                                 <option value="{{ $j->id_jalur }}" {{ $peserta->id_jalur == $j->id_jalur ? 'selected' : '' }}>
@@ -41,10 +50,15 @@
                                 </option>
                             @endforeach
                         </select>
+                        @if($isLulus)
+                            <input type="hidden" name="id_jalur" value="{{ $peserta->id_jalur }}">
+                        @endif
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Gelombang</label>
-                        <select name="id_gelombang" id="id_gelombang" class="w-full px-3 py-2 border border-gray-300 rounded-lg" {{ $peserta->status_ujian === 'LULUS' ? 'disabled' : '' }}>
+                        <select name="id_gelombang" id="id_gelombang" 
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg {{ $disabledClass }}"
+                                {{ $disabledAttr }}>
                             <option value="">-- Pilih Gelombang --</option>
                             @foreach($gelombangs as $g)
                                 <option value="{{ $g['id_gelombang'] }}" {{ $peserta->id_gelombang == $g['id_gelombang'] ? 'selected' : '' }}>
@@ -52,13 +66,18 @@
                                 </option>
                             @endforeach
                         </select>
+                        @if($isLulus)
+                            <input type="hidden" name="id_gelombang" value="{{ $peserta->id_gelombang }}">
+                        @endif
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Fakultas</label>
-                        <select name="id_fakultas" id="id_fakultas" class="w-full px-3 py-2 border border-gray-300 rounded-lg" {{ $peserta->status_ujian === 'LULUS' ? 'disabled' : '' }}>
+                        <select name="id_fakultas" id="id_fakultas" 
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg {{ $disabledClass }}"
+                                {{ $disabledAttr }}>
                             <option value="">-- Pilih Fakultas --</option>
                             @foreach($fakultas as $f)
                                 <option value="{{ $f->id_fakultas }}" {{ $peserta->id_fakultas == $f->id_fakultas ? 'selected' : '' }}>
@@ -66,10 +85,15 @@
                                 </option>
                             @endforeach
                         </select>
+                        @if($isLulus)
+                            <input type="hidden" name="id_fakultas" value="{{ $peserta->id_fakultas }}">
+                        @endif
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Program Studi</label>
-                        <select name="id_prodi" id="id_prodi" class="w-full px-3 py-2 border border-gray-300 rounded-lg" {{ $peserta->status_ujian === 'LULUS' ? 'disabled' : '' }}>
+                        <select name="id_prodi" id="id_prodi" 
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg {{ $disabledClass }}"
+                                {{ $disabledAttr }}>
                             <option value="">-- Pilih Program Studi --</option>
                             @foreach($prodis as $p)
                                 <option value="{{ $p->id_prodi }}" {{ $peserta->id_prodi == $p->id_prodi ? 'selected' : '' }}>
@@ -77,12 +101,15 @@
                                 </option>
                             @endforeach
                         </select>
+                        @if($isLulus)
+                            <input type="hidden" name="id_prodi" value="{{ $peserta->id_prodi }}">
+                        @endif
                     </div>
                 </div>
 
                 <div class="flex space-x-3 pt-4">
                     <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg flex items-center gap-2"><i class="fas fa-save"></i> Simpan</button>
-                    <a href="{{ url('PmbMstPendaftarans/cek_berkas_pembayaran') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg flex items-center gap-2"><i class="fas fa-times"></i> Batal</a>
+                    <a href="{{ url('PmbMstPendaftarans/list-user') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg flex items-center gap-2"><i class="fas fa-times"></i> Batal</a>
                 </div>
             </form>
         </div>
@@ -92,6 +119,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 $(function() {
+    @if(!$isLulus)
     $('#id_jalur').on('change', function() {
         let jalurId = $(this).val();
         $('#id_gelombang').empty().append('<option value="">-- Pilih Gelombang --</option>');
@@ -133,6 +161,9 @@ $(function() {
             });
         }
     });
+    @else
+    $('#id_jalur, #id_gelombang, #id_fakultas, #id_prodi').prop('disabled', true).addClass('cursor-not-allowed');
+    @endif
 });
 </script>
 @endsection

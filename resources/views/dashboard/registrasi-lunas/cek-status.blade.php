@@ -63,8 +63,8 @@
                     <th class="border px-3 py-2">#</th>
                     <th class="border px-3 py-2">Nama</th>
                     <th class="border px-3 py-2">No. Pend (VA)</th>
-                    <th class="border px-3 py-2">Fakultas</th>
-                    <th class="border px-3 py-2">Prodi</th>
+                    <th class="border px-3 py-2">Sekolah</th>
+                    <th class="border px-3 py-2">Jurusan</th>
                     <th class="border px-3 py-2">Jalur</th>
                     <th class="border px-3 py-2">Status Daful</th>
                     <th class="border px-3 py-2"><input type="checkbox" id="checkAll"></th>

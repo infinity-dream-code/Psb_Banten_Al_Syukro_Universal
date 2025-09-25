@@ -2,14 +2,14 @@
 
 @section('content')
 <div class="p-6">
-    <h1 class="text-xl font-bold text-gray-800 mb-4">Edit Unit</h1>
+    <h1 class="text-xl font-bold text-gray-800 mb-4">Edit Sekolah</h1>
 
     <form action="{{ route('master.unit.update', $biaya->id) }}" method="POST" class="bg-white shadow rounded-lg p-6">
         @csrf
         @method('PUT')
 
         <div class="mb-4">
-            <label for="fakultas" class="block text-sm font-medium text-gray-700 mb-2">Nama Unit</label>
+            <label for="fakultas" class="block text-sm font-medium text-gray-700 mb-2">Nama Sekolah</label>
             <input type="text" id="fakultas" name="fakultas" 
                    value="{{ old('fakultas', $biaya->fakultas) }}"
                    class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-green-500 focus:border-green-500 text-sm"

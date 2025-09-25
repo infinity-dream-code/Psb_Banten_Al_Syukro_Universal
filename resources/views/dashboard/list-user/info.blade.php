@@ -52,7 +52,7 @@
             </div>
           <div class="logo"><img src="{{ asset('logo.png') }}" alt="Logo PSB Shine Al-Falah"></div>
                 
-            <div class="address">49MC+6VC, Koto Panjang Ikua Koto, Kec. Koto Tangah, Kota Padang, Sumatera Barat</div>
+            <div class="address">kota semarang</div>
             <div class="school-title">PANITIA PENERIMAAN SISWA BARU PSB {{ $peserta->fakultas }}</div>
         </div>
         <div class="content">
@@ -62,14 +62,16 @@
                 <tr><td class="label">Nomor pendaftaran (Username)</td><td class="value">{{ $peserta->no_pendaftaran }}</td></tr>
                 <tr><td class="label">Password</td><td class="value">{{ $user->plain_password }}</td></tr>
                 <tr><td class="label">Virtual Akun</td><td class="value">{{ $peserta->va_number }}</td></tr>
-                <tr><td class="label">Unit</td><td class="value">{{ $peserta->fakultas ?? '-' }}</td></tr>
-                <tr><td class="label">Program</td><td class="value">{{ $peserta->prodi ?? '-' }}</td></tr>
+                <tr><td class="label">Sekolah</td><td class="value">{{ $peserta->fakultas ?? '-' }}</td></tr>
+                <tr><td class="label">Jurusan</td><td class="value">{{ $peserta->prodi ?? '-' }}</td></tr>
                 <tr><td class="label">Jenis Pendaftaran</td><td class="value">{{ $peserta->jalur ?? '-' }}</td></tr>
             </table>
             <div class="login-info">
                 Gunakan Nomor pendaftaran (Username) dan password untuk login pada URL di bawah ini<br>
-                <a href="https://psb.shinealfalah.smartpayment.id/ServiceLogin">https://psb.shinealfalah.smartpayment.id/ServiceLogin</a>
-            </div>
+                <a href="{{ url('ServiceLogin') }}" class="no-underline text-pmb-green-600 hover:text-pmb-green-700" target="_blank">
+    {{ parse_url(url('/'), PHP_URL_HOST) }}/ServiceLogin
+</a>
+ </div>
             <div class="payment-title">Petunjuk Pembayaran</div>
             <div class="payment-intro">
                 <strong>Biaya Pendaftaran sebesar Rp. {{ number_format($biayaPendaftaran,0,',','.') }},- dibayarkan non tunai (langsung ke nomor virtual akun diatas) dengan cara berikut ini :</strong>

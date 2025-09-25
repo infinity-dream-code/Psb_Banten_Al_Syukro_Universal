@@ -70,7 +70,7 @@
 </td>
 
     <td style="border:none; padding-left:30px; vertical-align:middle; text-align:left; font-size:14px;">
-    <p><strong>UNIT:</strong> {{ $peserta->fakultas }}</p>
+    <p><strong>Sekolah:</strong> {{ $peserta->fakultas }}</p>
     <p><strong>NAMA:</strong> {{ $peserta->nama_peserta }}</p>
     <p><strong>ASAL:</strong> {{ $peserta->nama_sekolah ?? '-' }}</p>
 </td>
@@ -103,7 +103,7 @@
 
         <tr>
             <td>Lokasi</td>
-            <td colspan="3"> {{ $peserta->fakultas }}</td>
+            <td colspan="3"> Semarang </td>
         </tr>
     </tbody>
 </table>

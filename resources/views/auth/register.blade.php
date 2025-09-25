@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Pendaftaran Mahasiswa Baru - DEMO PMB</title>
+    <title>Form Pendaftaran Siswa Baru - DEMO PSB</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
@@ -118,8 +118,8 @@
         <div class="container mx-auto px-4 max-w-6xl">
             <div class="form-section mb-8 overflow-hidden">
                 <div class="section-header text-white px-8 py-8 text-center">
-                    <h1 class="text-3xl font-bold mb-2">DEMO PMB</h1>
-                    <p class="text-green-100 text-lg">Form Pendaftaran Mahasiswa Baru</p>
+                    <h1 class="text-3xl font-bold mb-2">DEMO PSB</h1>
+                    <p class="text-green-100 text-lg">Form Pendaftaran Siswa Baru</p>
                     <div class="mt-4 w-20 h-1 bg-white/30 mx-auto rounded-full"></div>
                 </div>
             </div>
@@ -148,14 +148,14 @@
                         <h3 class="text-lg font-semibold">Pilihan</h3>
                     </div>
                     <div class="p-6">
-                        <h4 class="blue-title mb-6">Jalur & Fakultas & Prodi Studi</h4>
+                        <h4 class="blue-title mb-6">Jalur & Sekolah & Jurusan</h4>
                         
                         <div class="space-y-6">
                             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                                 <div>
-                                    <label class="block label-text mb-2">Jenis Pendaftaran <span class="required">*</span></label>
+                                    <label class="block label-text mb-2">Jalur Pendaftaran <span class="required">*</span></label>
                                     <select name="jenis_pendaftaran" id="jalur" required class="form-input">
-                                        <option value="">PILIH JENIS PENDAFTARAN</option>
+                                        <option value="">PILIH JALUR PENDAFTARAN</option>
                                         @foreach($jalurs as $j)
                                             <option value="{{ $j->id }}">{{ $j->nama }}</option>
                                         @endforeach
@@ -174,18 +174,18 @@
 
                             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                                 <div>
-                                    <label class="block label-text mb-2">Pilihan Unit Dan Sekolah <span class="required">*</span></label>
+                                    <label class="block label-text mb-2">Pilihan Sekolah Dan Jurusan <span class="required">*</span></label>
                                     <select name="fakultas" id="fakultas" required class="form-input">
-                                        <option value="">PILIH Unit</option>
+                                        <option value="">PILIH Sekolah</option>
                                         @foreach($fakultas as $f)
                                             <option value="{{ $f->id }}">{{ $f->fakultas }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div>
-                                    <label class="block label-text mb-2">Sekolah <span class="required">*</span></label>
+                                    <label class="block label-text mb-2">Jurusan <span class="required">*</span></label>
                                     <select name="prodi" id="prodi" required disabled class="form-input">
-                                        <option value="">PILIH PRODI</option>
+                                        <option value="">PILIH Jurusan</option>
                                     </select>
                                 </div>
                             </div>
@@ -505,7 +505,7 @@
             if (fakultasSelect && prodiSelect) {
                 fakultasSelect.addEventListener('change', function() {
                     const fakultasId = this.value;
-                    prodiSelect.innerHTML = '<option value="">PILIH PRODI</option>';
+                    prodiSelect.innerHTML = '<option value="">PILIH Jurusan</option>';
                     prodiSelect.disabled = true;
                     
                     if (fakultasId) {

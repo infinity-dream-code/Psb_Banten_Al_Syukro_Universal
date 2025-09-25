@@ -46,7 +46,7 @@
                         </div>
                         <div class="bg-white p-5 border border-gray-200 rounded-b-lg shadow-sm">
                             <p class="text-gray-700 mb-4 leading-relaxed">
-                                Silahkan bagi seluruh calon mahasiswa yang telah mendaftar dapat bertanya pada link dibawah ini :
+                                Silahkan bagi seluruh calon siswa yang telah mendaftar dapat bertanya pada link dibawah ini :
                             </p>
                             <p class="text-blue-600 font-semibold mb-4">Gabung Group disini</p>
                             <p class="text-gray-700 mb-4 leading-relaxed">

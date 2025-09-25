@@ -65,7 +65,7 @@
                         <th class="border px-3 py-2">Nama Siswa</th>
                         <th class="border px-3 py-2">No Tlp/HP</th>
                         <th class="border px-3 py-2">Asal Sekolah</th>
-                        <th class="border px-3 py-2">Program</th>
+                        <th class="border px-3 py-2">Jurusan</th>
                         <th class="border px-3 py-2">Kota/Kab</th>
                         <th class="border px-3 py-2">Tanggal</th>
                     </tr>

@@ -41,7 +41,7 @@
                 <th>No Pendaftaran</th>
                 <th>Nama</th>
                 <th>No Tlpn/HP</th>
-                <th>Program</th>
+                <th>Jurusan</th>
                 <th>Kab/Kota</th>
                 <th>Tanggal</th>
             </tr>
@@ -66,7 +66,7 @@
     @if($page+1 == $chunks->count())
     <div class="footer-info">
         <div style="text-align:left; float:left;">
-            <div>Padang, {{ $today }}</div>
+            <div>Semarang, {{ $today }}</div>
             <div>Petugas PSB</div>
             <div style="margin-top:80px;"><strong>Admin</strong></div>
         </div>

@@ -47,8 +47,8 @@
                             <h4 class="text-lg font-semibold text-gray-800 mb-3">Pilihan Sekolah</h4>
                             <div class="space-y-2">
                                 <p><span class="font-medium">Pilihan :</span></p>
-                                <p class="ml-4">{{ $peserta->fakultas ?? 'MAS AL-FALAH KURIKULUM MERDEKA' }}</p>
-                                <p class="mt-3"><span class="font-medium">Program :</span></p>
+                                <p class="ml-4">{{ $peserta->fakultas ?? '-' }}</p>
+                                <p class="mt-3"><span class="font-medium">Jurusan :</span></p>
                                 <p class="ml-4">{{ $peserta->prodi ?? '-' }}</p>
                             </div>
                         </div>

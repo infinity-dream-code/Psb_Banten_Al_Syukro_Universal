@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Pendaftar Bayar Pendaftaran {{ $tahun }}</title>
+    <title>Daftar Pendaftar Lunas Registrasi {{ $tahun }}</title>
     <style>
         body { font-family: Arial, sans-serif; margin:0; padding:20px; background:#f5f5f5; }
         .container { background:white; max-width:800px; margin:0 auto; padding:30px; box-shadow:0 0 10px rgba(0,0,0,0.1); }
@@ -31,7 +31,7 @@
         </div>
 
     <div class="date-print">Cetak: {{ $today }}</div>
-    <div class="title-section">Daftar Pendaftar Bayar Pendaftaran<br>{{ $tahun }}</div>
+    <div class="title-section">Daftar Pendaftar Lunas Registrasi<br>{{ $tahun }}</div>
 
     <table>
         <thead>
@@ -39,9 +39,9 @@
                 <th>No</th>
                 <th>No Pendaftaran</th>
                 <th>Nama</th>
-                <th>Program</th>
+                <th>Jurusan</th>
                 <th>Tanggal</th>
-                <th>Biaya</th>
+                <th>Biaya Registrasi</th>
             </tr>
         </thead>
         <tbody>
@@ -63,7 +63,7 @@
     @if($page+1 == $chunks->count())
     <div class="footer-info">
         <div style="text-align:left; float:left;">
-            <div>Padang, {{ $today }}</div>
+            <div>Semarang, {{ $today }}</div>
             <div>Petugas PSB</div>
             <div style="margin-top:80px;"><strong>Admin</strong></div>
         </div>

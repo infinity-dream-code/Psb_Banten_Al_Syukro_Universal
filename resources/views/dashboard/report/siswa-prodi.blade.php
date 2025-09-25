@@ -3,7 +3,7 @@
 
 <div class="bg-white p-6 shadow rounded-lg">
     <h1 class="text-2xl font-bold mb-6 text-gray-800">
-        Cama Per Program Studi Th Akademik {{ $tahunSekarang }}
+        Calon Siswa Per Jurusan Studi Th Akademik {{ $tahunSekarang }}
     </h1>
 
     <div class="overflow-x-auto">
@@ -11,7 +11,7 @@
             <thead class="bg-gray-100">
                 <tr>
                     <th class="border px-3 py-2">#</th>
-                    <th class="border px-3 py-2">Program Studi</th>
+                    <th class="border px-3 py-2">Jurusan</th>
                     <th class="border px-3 py-2">Tahun</th>
                     <th class="border px-3 py-2">Jumlah</th>
                 </tr>

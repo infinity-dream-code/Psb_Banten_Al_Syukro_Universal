@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PMB DEMO PMB</title>
+  <title>PSB DEMO</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50 min-h-screen flex items-center justify-center p-4">
@@ -13,7 +13,7 @@
     <div class="w-1/2 bg-gradient-to-br from-green-600 to-green-800 flex items-center justify-center p-12">
       <div class="flex items-center justify-center">
         <img src="https://demo.pmb.smartpayment.co.id/images/bg-logo.png" 
-             alt="PMB Demo Logo" 
+             alt="PSB Demo Logo" 
              class="max-w-full max-h-96 object-contain"
              onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
         <!-- Fallback illustration if image fails to load -->
@@ -69,7 +69,7 @@
     <!-- Right Section -->
     <div class="w-1/2 p-12 flex flex-col justify-center bg-gray-50">
       <div class="max-w-md mx-auto w-full">
-        <h1 class="text-3xl font-bold text-center text-gray-800 mb-2">PMB DEMO PMB</h1>
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-2">DEMO PSB</h1>
         <p class="text-center text-gray-400 mb-8 text-sm font-medium tracking-wider">FORM LOGIN</p>
         
         <form class="space-y-6" method="POST" action="{{ route('login') }}">

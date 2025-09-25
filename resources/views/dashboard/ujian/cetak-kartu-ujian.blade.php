@@ -38,8 +38,8 @@
                     <th class="border px-3 py-2">#</th>
                     <th class="border px-3 py-2">Nama Mahasiswa</th>
                     <th class="border px-3 py-2">No Pendaftaran</th>
-                    <th class="border px-3 py-2">Fakultas/Unit</th>
-                    <th class="border px-3 py-2">Prodi/Program</th>
+                    <th class="border px-3 py-2">Sekolah</th>
+                    <th class="border px-3 py-2">Unit</th>
                     <th class="border px-3 py-2">Jalur</th>
                     <th class="border px-3 py-2">Tahun Akademik</th>
                     <th class="border px-3 py-2 text-center"><input type="checkbox" id="checkAll"></th>

@@ -3,7 +3,7 @@
 
 <div class="bg-white p-6 shadow rounded-lg">
     <h1 class="text-2xl font-bold mb-6 text-gray-800">
-        Cama Per Kota/Kabupaten Th Akademik {{ $tahunSekarang }}
+        Calon siswa Per Kota/Kabupaten Th Akademik {{ $tahunSekarang }}
     </h1>
 
     <div class="overflow-x-auto">

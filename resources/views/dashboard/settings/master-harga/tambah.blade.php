@@ -32,23 +32,23 @@
                         </select>
                     </div>
                     <div>
-                        <label for="id_fakultas" class="block text-sm font-medium text-gray-700 mb-2">Fakultas <span class="text-red-500">*</span></label>
+                        <label for="id_fakultas" class="block text-sm font-medium text-gray-700 mb-2">Sekolah <span class="text-red-500">*</span></label>
                         <select id="id_fakultas" name="id_fakultas" required class="w-full px-3 py-2 border border-gray-300 rounded-lg">
-                            <option value="">-- Pilih Fakultas --</option>
+                            <option value="">-- Pilih Sekolah --</option>
                             @foreach($fakultas as $fak)
                                 <option value="{{ $fak->id }}">{{ $fak->fakultas }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div>
-                        <label for="id_prodi" class="block text-sm font-medium text-gray-700 mb-2">Program Studi <span class="text-red-500">*</span></label>
+                        <label for="id_prodi" class="block text-sm font-medium text-gray-700 mb-2">Jurusan<span class="text-red-500">*</span></label>
                         <select id="id_prodi" name="id_prodi" required class="w-full px-3 py-2 border border-gray-300 rounded-lg">
-                            <option value="">-- Pilih Program Studi --</option>
+                            <option value="">-- Pilih Jurusan --</option>
                         </select>
                     </div>
                 </div>
                 <div>
-                    <label for="harga_final" class="block text-sm font-medium text-gray-700 mb-2">Harga Pendaftaran <span class="text-red-500">*</span></label>
+                    <label for="harga_final" class="block text-sm font-medium text-gray-700 mb-2">Biaya Registrasi <span class="text-red-500">*</span></label>
                     <div class="relative">
                         <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">Rp</span>
                         <input type="text" id="harga_final" name="harga_final" placeholder="0" required class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg">

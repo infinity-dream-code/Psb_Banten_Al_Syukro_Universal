@@ -58,10 +58,10 @@
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">#</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nama Jalur</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Gelombang</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Fakultas</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Prodi</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Biaya Pendaftaran</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Biaya Daful</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Sekolah</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Jurusan</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Biaya Registrasi</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Biaya Daftar Ulang</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Aktif</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Aksi</th>
                             </tr>

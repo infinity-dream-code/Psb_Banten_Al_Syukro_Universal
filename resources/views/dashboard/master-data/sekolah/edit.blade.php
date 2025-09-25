@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="p-6">
-    <h1 class="text-xl font-bold text-gray-800 mb-4">Edit Master Sekolah</h1>
+    <h1 class="text-xl font-bold text-gray-800 mb-4">Edit Master Jurusan</h1>
 
     <div class="bg-white shadow rounded-lg p-6">
         <form action="{{ route('master.sekolah.update', $prodi->id) }}" method="POST">
@@ -10,7 +10,7 @@
             @method('PUT')
 
             <div class="mb-4">
-                <label for="id_fakultas" class="block text-sm font-medium text-gray-700 mb-2">Unit</label>
+                <label for="id_fakultas" class="block text-sm font-medium text-gray-700 mb-2">Sekolah</label>
                 <select name="id_fakultas" id="id_fakultas"
                         class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-green-500 focus:border-green-500 text-sm"
                         required>
@@ -23,7 +23,7 @@
             </div>
 
             <div class="mb-4">
-                <label for="nama" class="block text-sm font-medium text-gray-700 mb-2">Nama Sekolah</label>
+                <label for="nama" class="block text-sm font-medium text-gray-700 mb-2">Nama Jurusan</label>
                 <input type="text" id="nama" name="nama"
                        value="{{ old('nama', $prodi->nama) }}"
                        class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-green-500 focus:border-green-500 text-sm"

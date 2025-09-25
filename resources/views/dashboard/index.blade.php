@@ -15,7 +15,7 @@
         </span>
         <span class="ml-2 text-green-500 text-xs lg:text-sm font-medium">100%</span>
     </div>
-    <p class="text-gray-600 text-xs lg:text-sm leading-tight">Total Mahasiswa Mendaftar</p>
+    <p class="text-gray-600 text-xs lg:text-sm leading-tight">Total Siswa Mendaftar</p>
     @if($activeGelombang)
         <p class="text-xs text-blue-600">Gelombang {{ $activeGelombang->gelombang }}</p>
     @endif
@@ -57,7 +57,7 @@
                             @endif
                         </div>
                     </div>
-                    <p class="text-gray-600 text-xs lg:text-sm leading-tight">Total Mahasiswa di Nyatakan Lulus</p>
+                    <p class="text-gray-600 text-xs lg:text-sm leading-tight">Total Siswa di Nyatakan Lulus</p>
                 </div>
             </div>
         </div>
@@ -72,7 +72,7 @@
                         <span class="text-2xl lg:text-3xl font-bold text-gray-800">{{ $stats['total_registrasi'] }}</span>
                         <span class="ml-2 text-gray-400 text-xs lg:text-sm font-medium">{{ $stats['percent_registrasi'] }}%</span>
                     </div>
-                    <p class="text-gray-600 text-xs lg:text-sm leading-tight">Total Mahasiswa Registrasi</p>
+                    <p class="text-gray-600 text-xs lg:text-sm leading-tight">Total Siswa Registrasi</p>
                 </div>
             </div>
         </div>

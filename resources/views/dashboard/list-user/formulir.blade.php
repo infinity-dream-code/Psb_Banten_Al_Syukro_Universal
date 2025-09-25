@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cetak Formulir PSB Shine Al-Falah</title>
+    <title>Cetak Formulir PSB {{ $peserta->fakultas ?? '-' }}</title>
      <style>
         body {
             font-family: Arial, sans-serif;
@@ -281,7 +281,7 @@
     <div class="page">
         <div class="header">
             <div class="form-title">FORMULIR</div>
- <div class="logo"><img src="{{ asset('logo.png') }}" alt="Logo PSB Shine Al-Falah"></div>
+ <div class="logo"><img src="{{ asset('logo.png') }}" alt="#"></div>
             
             <div class="school-info">
                 <div class="school-title">PENERIMAAN SISWA BARU</div>
@@ -345,11 +345,11 @@
             </div>
         </div>
         <div class="section">
-            <div class="section-title">Biaya Pendaftaran dan Jadwal ujian</div>
+            <div class="section-title">Biaya Registrasi dan Jadwal ujian</div>
             <table class="cost-table">
                 <thead><tr><th class="number-col">No</th><th>Pilihan</th><th>Keterangan</th></tr></thead>
                 <tbody>
-                    <tr><td class="number-col">1</td><td>Pembayaran Pendaftaran</td><td>Rp. {{ number_format($biayaPendaftaran,0,',','.') }}</td></tr>
+                    <tr><td class="number-col">1</td><td>Biaya Pendaftaran</td><td>Rp. {{ number_format($biayaPendaftaran,0,',','.') }}</td></tr>
                     @foreach($ujian as $i => $u)
                         <tr><td class="number-col">{{ $i+2 }}</td><td>{{ $u->masterUjian->nama ?? '-' }}</td><td>{{ $u->tanggal ?? '-' }}</td></tr>
                     @endforeach
@@ -384,7 +384,7 @@
             <div class="logo"></div>
             <div class="school-info">
                 <div class="school-title">PENERIMAAN SISWA BARU</div>
-                <div class="school-year">PSB SHINE AL-FALAH {{ $peserta->gelombang ?? '-' }}</div>
+                <div class="school-year">PSB {{ $peserta->fakultas ?? '-' }} {{ $peserta->gelombang ?? '-' }}</div>
             </div>
         </div>
         <div class="section cost-section">

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DEMO PMB - Penerimaan Mahasiswa Baru 2025/2026</title>
+    <title>DEMO PSB - Penerimaan Siswa Baru 2025/2026</title>
     <script src="https://cdn.tailwindcss.com"></script>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -40,7 +40,7 @@
     <nav class="bg-white shadow-md sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 py-4">
             <div class="flex justify-between items-center">
-                <div class="text-3xl font-bold text-pmb-green-700">DEMO PMB</div>
+                <div class="text-3xl font-bold text-pmb-green-700">DEMO PSB</div>
                 <div class="hidden md:flex space-x-8">
                    <a href="{{url('/')}}" 
    class="no-underline text-pmb-green-700 font-semibold border-b-2 border-pmb-green-700 pb-1">
@@ -54,23 +54,34 @@
 
                 </div>
              <div class="flex items-center space-x-2 text-gray-600 hover:text-pmb-green-700 transition-colors cursor-pointer">
-    @if(Auth::check())
-        <a href="{{url('/pages/display/home')}}" class="no-underline flex items-center space-x-1">
+   @if(Auth::check())
+    @if(Auth::user()->role === 'admin')
+        <a href="{{ url('/pages/display/home') }}" class="no-underline flex items-center space-x-1">
             <span class="font-medium">Dashboard</span>
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                       d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>
         </a>
-    @else
-        <a href="{{url('/ServiceLogin')}}" class="no-underline flex items-center space-x-1">
-            <span class="font-medium">Masuk</span>
+    @elseif(Auth::user()->role === 'peserta')
+        <a href="{{ url('/pages/dashboard') }}" class="no-underline flex items-center space-x-1">
+            <span class="font-medium">Dashboard</span>
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                       d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>
         </a>
     @endif
+@else
+    <a href="{{ url('/ServiceLogin') }}" class="no-underline flex items-center space-x-1">
+        <span class="font-medium">Masuk</span>
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                  d="M13 7l5 5m0 0l-5 5m5-5H6" />
+        </svg>
+    </a>
+@endif
+
 </div>
 
 
@@ -84,7 +95,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DEMO PMB - Penerimaan Mahasiswa Baru 2025/2026</title>
+    <title>DEMO PSB - Penerimaan Siswa Baru 2025/2026</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="min-h-screen">
@@ -101,10 +112,10 @@
                         <div class="text-yellow-400 text-lg font-semibold mb-4 tracking-wide">Informasi</div>
                         <h1 class="text-5xl lg:text-6xl font-bold leading-tight mb-6">
                             <span class="block">Penerimaan</span>
-                            <span class="block">Mahasiswa Baru</span>
+                            <span class="block">Siswa Baru</span>
                             <span class="block text-4xl lg:text-5xl mt-2">2025/2026</span>
                         </h1>
-                        <div class="text-xl text-green-100 font-medium">DEMO PMB</div>
+                        <div class="text-xl text-green-100 font-medium">DEMO PSB</div>
                     </div>
                     
                    <div class="flex flex-col sm:flex-row gap-4">
@@ -184,8 +195,13 @@
                             <div class="flex items-start space-x-6">
                                 <div class="w-12 h-12 bg-pmb-green-600 text-white rounded-full flex items-center justify-center font-bold text-lg flex-shrink-0">1</div>
                                 <div>
-                                    <div class="text-gray-800 text-lg">Mendaftar melalui link: <a href="https://demo.pmb.smartpayment.co.id" class="no-underline text-pmb-green-600 hover:text-pmb-green-700" target="_blank">pmb.demo.smartpayment.co.id</a></div>
-                                </div>
+                                   <div class="text-gray-800 text-lg">
+    Mendaftar melalui link: 
+    <a href="{{ url('/') }}" class="no-underline text-pmb-green-600 hover:text-pmb-green-700" target="_blank">
+        {{ parse_url(url('/'), PHP_URL_HOST) }}
+    </a>
+</div>
+ </div>
                             </div>
                             
                             <div class="flex items-start space-x-6">
@@ -208,7 +224,7 @@
                     <div>
                         <div class="text-pmb-green-600 font-semibold mb-4 text-lg text-right">Tanggal</div>
                         <h2 class="text-4xl font-bold text-pmb-green-800 mb-10 text-right leading-tight">
-                            Penerimaan<br>Mahasiswa<br>Baru
+                            Penerimaan<br>Siswa<br>Baru
                         </h2>
                         
                      <div class="space-y-6">
@@ -236,7 +252,7 @@
       <section class="bg-pmb-green-700 py-24">
     <div class="max-w-6xl mx-auto px-6 text-center">
         <!-- Header -->
-        <div class="text-yellow-400 font-semibold mb-8 text-lg">Kenapa harus DEMO PMB?</div>
+        <div class="text-yellow-400 font-semibold mb-8 text-lg">Kenapa harus DEMO PSB?</div>
         
         <!-- Visi Section -->
         <h2 class="text-5xl font-bold text-white mb-8">Visi</h2>
@@ -367,75 +383,72 @@
                         </div>
 
                         <!-- Petunjuk Pembayaran -->
-                        <div id="content-pembayaran" class="tab-content hidden">
-                        
-                        <div class="card card-body p-4 bg-white shadow-sm rounded">
-    <p class="pb-3 fw-bold fs-5">
-        Pembayaran melalui Payment Point / Teller Muamalat:
-    </p>
-    <ol class="ps-3">
-        <li class="mb-2">Tunjukkan Nomor Pendaftaran / Virtual Akun (VA) anda ke teller</li>
-        <li class="mb-2">
-            Isi form pembayaran 
-            <span class="text-danger fw-bold">
-                (jumlah nominal pembayaran sesuai dengan informasi dari sistem PMB Online)
-            </span>
-        </li>
-        <li class="mb-2">Selesai</li>
-        <li class="mb-2">Simpan bukti struk sebagai bukti pembayaran yang sah</li>
-    </ol>
+                       <div id="content-pembayaran" class="tab-content hidden">
+    <div class="card card-body p-4 bg-white shadow-sm rounded">
+        <p class="pb-3 fw-bold fs-5">
+            Pembayaran melalui Payment Point / Teller Bank Muamalat:
+        </p>
+        <ol class="ps-3">
+            <li class="mb-2">Tunjukkan Nomor Pendaftaran / Virtual Akun (VA) Anda ke teller</li>
+            <li class="mb-2">
+                Isi form pembayaran 
+                <span class="text-danger fw-bold">
+                    (jumlah nominal pembayaran sesuai dengan informasi dari sistem PSB Online)
+                </span>
+            </li>
+            <li class="mb-2">Selesai</li>
+            <li class="mb-2">Simpan bukti struk sebagai bukti pembayaran yang sah</li>
+        </ol>
 
-    <p class="pb-3 fw-bold fs-5 mt-4">Pembayaran melalui ATM Muamalat:</p>
-    <ol class="ps-3">
-        <li class="mb-2">Masukan PIN</li>
-        <li class="mb-2">Pilih Menu "Pembayaran"</li>
-        <li class="mb-2">Pilih Menu "Universitas" kemudian cari kode universitas DEMO PMB</li>
-        <li class="mb-2">
-            Masukan "Nomor Pendaftaran / Virtual Akun (VA)" (10–11 digit angka)
-            <span class="text-danger fw-bold"> contoh: 12345678901 </span>
-        </li>
-        <li class="mb-2">Pilih daftar tagihan yang ingin dibayarkan (Tagihan Pendaftaran)</li>
-        <li class="mb-2">Selesai</li>
-        <li class="mb-2">Simpan Bukti Struk sebagai bukti pembayaran yang sah</li>
-    </ol>
+        <p class="pb-3 fw-bold fs-5 mt-4">Pembayaran melalui ATM Muamalat:</p>
+        <ol class="ps-3">
+            <li class="mb-2">Masukkan PIN</li>
+            <li class="mb-2">Pilih Menu "Pembayaran"</li>
+            <li class="mb-2">Pilih Menu "Sekolah/Institusi" kemudian cari kode PSB DEMO</li>
+            <li class="mb-2">
+                Masukkan "Nomor Pendaftaran / Virtual Akun (VA)" (10–11 digit angka)
+                <span class="text-danger fw-bold"> contoh: 12345678901 </span>
+            </li>
+            <li class="mb-2">Pilih daftar tagihan yang ingin dibayarkan (Tagihan Pendaftaran)</li>
+            <li class="mb-2">Selesai</li>
+            <li class="mb-2">Simpan bukti struk sebagai bukti pembayaran yang sah</li>
+        </ol>
 
-    <p class="pb-3 fw-bold fs-5 mt-4">
-        Pembayaran melalui Jaringan ATM BERSAMA, PRIMA (BCA, Mandiri, BNI, BRI, dll):
-    </p>
-    <ol class="ps-3">
-        <li class="mb-2">Masukan PIN</li>
-        <li class="mb-2">Pilih Menu "Transaksi Lainnya"</li>
-        <li class="mb-2">Pilih Menu "Transfer"</li>
-        <li class="mb-2">Pilih Menu "Ke Rek Bank Lain / Antar Bank Online"</li>
-        <li class="mb-2 lh-lg">
-            Masukan kode transaksi 751000 + Nomor Pendaftaran  
-            <span class="text-danger fw-bold"> contoh: 75100012345678901 </span>
-        </li>
-        <li class="mb-2">Masukan jumlah sesuai tagihan</li>
-        <li class="mb-2">Selesai</li>
-        <li class="mb-2">Simpan bukti struk sebagai bukti pembayaran yang sah</li>
-    </ol>
+        <p class="pb-3 fw-bold fs-5 mt-4">
+            Pembayaran melalui Jaringan ATM BERSAMA, PRIMA (BCA, Mandiri, BNI, BRI, dll):
+        </p>
+        <ol class="ps-3">
+            <li class="mb-2">Masukkan PIN</li>
+            <li class="mb-2">Pilih Menu "Transaksi Lainnya"</li>
+            <li class="mb-2">Pilih Menu "Transfer"</li>
+            <li class="mb-2">Pilih Menu "Ke Rek Bank Lain / Antar Bank Online"</li>
+            <li class="mb-2 lh-lg">
+                Masukkan kode transaksi 751000 + Nomor Pendaftaran  
+                <span class="text-danger fw-bold"> contoh: 75100012345678901 </span>
+            </li>
+            <li class="mb-2">Masukkan jumlah sesuai tagihan</li>
+            <li class="mb-2">Selesai</li>
+            <li class="mb-2">Simpan bukti struk sebagai bukti pembayaran yang sah</li>
+        </ol>
 
-    <p class="pb-3 fw-bold fs-5 mt-4">
-        Pembayaran melalui Internet Banking/Mobile Banking/SMS Banking (Realtime/Online Transfer):
-    </p>
-    <ol class="ps-3">
-        <li class="mb-2">Login ke Internet Banking</li>
-        <li class="mb-2">Pilih Menu "Transfer"</li>
-        <li class="mb-2">Pilih Menu "Ke Rek Bank Lain / Realtime Transfer"</li>
-        <li class="mb-2">Pilih “Seluruh Channel Bank” sebagai rekening tujuan</li>
-        <li class="mb-2 lh-lg">
-            Masukan kode transaksi 751000 + Nomor Pendaftaran 
-            <span class="text-danger fw-bold"> contoh: 75100012345678901 </span>
-        </li>
-        <li class="mb-2">Masukan jumlah sesuai tagihan</li>
-        <li class="mb-2">Selesai</li>
-        <li class="mb-2">Simpan bukti struk sebagai bukti pembayaran yang sah</li>
-    </ol>
+        <p class="pb-3 fw-bold fs-5 mt-4">
+            Pembayaran melalui Internet Banking/Mobile Banking/SMS Banking (Realtime/Online Transfer):
+        </p>
+        <ol class="ps-3">
+            <li class="mb-2">Login ke Internet Banking</li>
+            <li class="mb-2">Pilih Menu "Transfer"</li>
+            <li class="mb-2">Pilih Menu "Ke Rek Bank Lain / Realtime Transfer"</li>
+            <li class="mb-2">Pilih “Seluruh Channel Bank” sebagai rekening tujuan</li>
+            <li class="mb-2 lh-lg">
+                Masukkan kode transaksi 751000 + Nomor Pendaftaran 
+                <span class="text-danger fw-bold"> contoh: 75100012345678901 </span>
+            </li>
+            <li class="mb-2">Masukkan jumlah sesuai tagihan</li>
+            <li class="mb-2">Selesai</li>
+            <li class="mb-2">Simpan bukti struk sebagai bukti pembayaran yang sah</li>
+        </ol>
+    </div>
 </div>
-
-
-                        </div>
 
                         <!-- Persyaratan Daftar Ulang -->
                         <div id="content-daftar-ulang" class="tab-content hidden">
@@ -443,12 +456,12 @@
     <p class="pb-3 fw-bold fs-5">Syarat Daftar Ulang</p>
     <ol class="ps-3">
         <li class="mb-2">
-            Lulus tes seleksi dibuktikan dengan Surat Keputusan Panitia PMB
+            Lulus tes seleksi dibuktikan dengan Surat Keputusan Panitia PSB
         </li>
         <li class="mb-2">
             Membawa berkas sebagai berikut :
             <ol type="a" class="ps-3 mt-2">
-                <li class="mb-1">Surat Keterangan Lulus dari Panitia PMB</li>
+                <li class="mb-1">Surat Keterangan Lulus dari Panitia PSB</li>
                 <li class="mb-1">Scan KTP/KK</li>
                 <li class="mb-1">Scan Ijazah SMA/SMK/MA beserta Transkrip Nilai</li>
             </ol>
@@ -471,7 +484,7 @@
                     <div class="bg-gray-50 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow">
                         <div class="text-pmb-green-500 text-6xl mb-6 leading-none">"</div>
                         <p class="text-gray-700 text-lg leading-relaxed mb-8">
-                            Di DEMO PMB tidak hanya belajar ilmu agama, mengaji, dan menghafal Al-Qur'an saja, tapi juga belajar ilmu umum layaknya kampus biasa. DEMO PMB juga tempat untuk melatih mental, kedisiplinan, kemandirian, dan kreativitas kita. Di sini jugalah saya mendapatkan teman-teman yang baik dan saling mensupport, para asatidzah yang sabar dan memiliki banyak ilmu, karyawan yang ramah-tamah, dan lingkungan yang baik, kondusif untuk menghafal Al-Qur'an, dan jauh dari hiruk-pikuk duniawi. Dan suatu kebanggaan tersendiri bagi saya karena bisa menjadi mahasiswa DEMO PMB. Alhamdulillah 'alaa kulli haal.
+                            Di DEMO PSB tidak hanya belajar ilmu agama, mengaji, dan menghafal Al-Qur'an saja, tapi juga belajar ilmu umum layaknya kampus biasa. DEMO PSB juga tempat untuk melatih mental, kedisiplinan, kemandirian, dan kreativitas kita. Di sini jugalah saya mendapatkan teman-teman yang baik dan saling mensupport, para asatidzah yang sabar dan memiliki banyak ilmu, karyawan yang ramah-tamah, dan lingkungan yang baik, kondusif untuk menghafal Al-Qur'an, dan jauh dari hiruk-pikuk duniawi. Dan suatu kebanggaan tersendiri bagi saya karena bisa menjadi Siswa DEMO PSB. Alhamdulillah 'alaa kulli haal.
                         </p>
                         <div class="flex items-center space-x-4">
                             <div class="w-16 h-16 bg-pmb-green-100 rounded-full flex items-center justify-center">
@@ -489,7 +502,7 @@
                     <div class="bg-gray-50 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow">
                         <div class="text-pmb-green-500 text-6xl mb-6 leading-none">"</div>
                         <p class="text-gray-700 text-lg leading-relaxed mb-8">
-                            Sebuah pengalaman berarti bagi saya bisa mendapatkan kesempatan untuk menuntut ilmu di DEMO PMB. Ilmu akademik serta agama digali secara bersamaan dengan hafalan Al-Qur'an. Hal itu menjadi daya tarik tersendiri yang membantu saya berkembang untuk menjadi pribadi Qur'aniy dan berintelektual. Dengan banyak cerita dan pengalaman yang saya dapatkan di DEMO PMB, saya menjadi sadar bahwa ihtirom terhadap asatidz ialah kunci keberhasilan. Selain itu, DEMO PMB juga berhasil mengantarkan saya meraih impian-impian yang saya idamkan sejak dulu. Syukur Alhamdulillah, Allah telah menjadikan saya salah satu orang yang diberi kesempatan belajar di DEMO PMB, saya sangat bangga.
+                            Sebuah pengalaman berarti bagi saya bisa mendapatkan kesempatan untuk menuntut ilmu di DEMO PSB. Ilmu akademik serta agama digali secara bersamaan dengan hafalan Al-Qur'an. Hal itu menjadi daya tarik tersendiri yang membantu saya berkembang untuk menjadi pribadi Qur'aniy dan berintelektual. Dengan banyak cerita dan pengalaman yang saya dapatkan di DEMO PSB, saya menjadi sadar bahwa ihtirom terhadap asatidz ialah kunci keberhasilan. Selain itu, DEMO PSB juga berhasil mengantarkan saya meraih impian-impian yang saya idamkan sejak dulu. Syukur Alhamdulillah, Allah telah menjadikan saya salah satu orang yang diberi kesempatan belajar di DEMO PSB, saya sangat bangga.
                         </p>
                         <div class="flex items-center space-x-4">
                             <div class="w-16 h-16 bg-pmb-green-100 rounded-full flex items-center justify-center">

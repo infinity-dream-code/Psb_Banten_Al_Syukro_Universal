@@ -62,22 +62,69 @@ public function cetakFormulir($encoded)
     ));
 }
 
+public function updatepeserta(Request $request, $id)
+{
+    $peserta = DataPeserta::findOrFail($id);
+    $rules = [
+        'nama_peserta' => 'required|string|max:255',
+        'no_hp'        => 'required|string|max:20',
+    ];
+    
+    if (strtoupper($peserta->status_ujian) !== 'LULUS' && $peserta->status_pembayaran_registrasi == 0) {
+        $rules = array_merge($rules, [
+            'id_gelombang' => 'required',
+            'id_jalur'     => 'required',
+            'id_fakultas'  => 'required',
+            'id_prodi'     => 'required',
+        ]);
+    }
+    
+    $request->validate($rules);
+    $peserta->nama_peserta = $request->nama_peserta;
+    $peserta->no_hp = $request->no_hp;
+    
+    if (strtoupper($peserta->status_ujian) !== 'LULUS' && $peserta->status_pembayaran_registrasi == 0) {
+        $peserta->id_gelombang = $request->id_gelombang;
+        $peserta->id_jalur     = $request->id_jalur;
+        $peserta->id_fakultas  = $request->id_fakultas;
+        $peserta->id_prodi     = $request->id_prodi;
+        
+        $masterHarga = MasterHarga::where('id_jalur',$request->id_jalur)
+            ->where('id_gelombang',$request->id_gelombang)
+            ->where('id_fakultas',$request->id_fakultas)
+            ->where('id_prodi',$request->id_prodi)
+            ->first();
+        if ($masterHarga) {
+            $peserta->id_master_harga = $masterHarga->id;
+        }
+        
+        $jalur    = MasterJalur::find($request->id_jalur);
+        $gelombang= MasterGelombang::find($request->id_gelombang);
+        $fakultas = MasterFakultas::find($request->id_fakultas);
+        $prodi    = MasterProdi::find($request->id_prodi);
+        $peserta->jalur     = $jalur?->nama;
+        $peserta->gelombang = $gelombang ? "Gelombang ".$gelombang->gelombang." - ".$gelombang->tahun_akademik : null;
+        $peserta->fakultas  = $fakultas?->fakultas;
+        $peserta->prodi     = $prodi?->nama;
+    }
+    
+    $peserta->save();
+    return redirect()->route('users.list')->with('success','Data peserta berhasil diperbarui.');
+}
+
 public function editpeserta($id)
 {
     $peserta = DataPeserta::findOrFail($id);
-
     $jalurs = MasterHarga::select('id_jalur', 'nama_jalur')
         ->where('active', 1)
         ->distinct()
         ->get();
-
     $gelombangs = collect();
     $fakultas = collect();
     $prodis = collect();
-
+    
     if ($peserta->id_jalur) {
         $today = now()->toDateString();
-
         $gelombangs = MasterHarga::with('gelombang')
             ->where('active', 1)
             ->where('id_jalur', $peserta->id_jalur)
@@ -95,7 +142,7 @@ public function editpeserta($id)
                 ];
             });
     }
-
+    
     if ($peserta->id_jalur && $peserta->id_gelombang) {
         $fakultas = MasterHarga::where('active', 1)
             ->where('id_jalur', $peserta->id_jalur)
@@ -104,7 +151,7 @@ public function editpeserta($id)
             ->distinct()
             ->get();
     }
-
+    
     if ($peserta->id_jalur && $peserta->id_gelombang && $peserta->id_fakultas) {
         $prodis = MasterHarga::where('active', 1)
             ->where('id_jalur', $peserta->id_jalur)
@@ -114,7 +161,7 @@ public function editpeserta($id)
             ->distinct()
             ->get();
     }
-
+    
     return view('dashboard.list-user.edit', compact(
         'peserta',
         'jalurs',
@@ -123,7 +170,6 @@ public function editpeserta($id)
         'prodis'
     ));
 }
-
 
     public function getGelombangByJalur($id_jalur)
     {
@@ -170,62 +216,6 @@ public function editpeserta($id)
 
         return response()->json($prodi);
     }
-
-public function updatepeserta(Request $request, $id)
-{
-    $peserta = DataPeserta::findOrFail($id);
-
-    $rules = [
-        'nama_peserta' => 'required|string|max:255',
-        'no_hp'        => 'required|string|max:20',
-    ];
-
-    if ($peserta->status_pembayaran_registrasi == 0 && $peserta->status_ujian !== 'LULUS') {
-        $rules = array_merge($rules, [
-            'id_gelombang' => 'required',
-            'id_jalur'     => 'required',
-            'id_fakultas'  => 'required',
-            'id_prodi'     => 'required',
-        ]);
-    }
-
-    $request->validate($rules);
-
-    $peserta->nama_peserta = $request->nama_peserta;
-    $peserta->no_hp = $request->no_hp;
-
-    if ($peserta->status_pembayaran_registrasi == 0 && $peserta->status_ujian !== 'LULUS') {
-        $peserta->id_gelombang = $request->id_gelombang;
-        $peserta->id_jalur     = $request->id_jalur;
-        $peserta->id_fakultas  = $request->id_fakultas;
-        $peserta->id_prodi     = $request->id_prodi;
-
-        $masterHarga = MasterHarga::where('id_jalur',$request->id_jalur)
-            ->where('id_gelombang',$request->id_gelombang)
-            ->where('id_fakultas',$request->id_fakultas)
-            ->where('id_prodi',$request->id_prodi)
-            ->first();
-
-        if ($masterHarga) {
-            $peserta->id_master_harga = $masterHarga->id;
-        }
-
-        $jalur    = MasterJalur::find($request->id_jalur);
-        $gelombang= MasterGelombang::find($request->id_gelombang);
-        $fakultas = MasterFakultas::find($request->id_fakultas);
-        $prodi    = MasterProdi::find($request->id_prodi);
-
-        $peserta->jalur     = $jalur?->nama;
-        $peserta->gelombang = $gelombang ? "Gelombang ".$gelombang->gelombang." - ".$gelombang->tahun_akademik : null;
-        $peserta->fakultas  = $fakultas?->fakultas;
-        $peserta->prodi     = $prodi?->nama;
-    }
-
-    $peserta->save();
-
-    return redirect()->route('users.list')->with('success','Data peserta berhasil diperbarui.');
-}
-
 
 
 public function cetakInfoEnroll($nama, $no_pendaftaran, $jalur)

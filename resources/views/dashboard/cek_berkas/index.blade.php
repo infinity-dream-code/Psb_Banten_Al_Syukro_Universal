@@ -26,7 +26,7 @@
 
         <input type="text" name="search" value="{{ request('search') }}" 
             class="w-64 px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
-            placeholder="Cari nama, VA, prodi, fakultas...">
+            placeholder="Cari nama, VA, jurusan, sekolah...">
 
         <button type="submit" 
             class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Cari</button>
@@ -39,12 +39,13 @@
                     <th class="border px-3 py-2">#</th>
                     <th class="border px-3 py-2">Nama</th>
                     <th class="border px-3 py-2">No. Pend (VA)</th>
-                    <th class="border px-3 py-2">Fakultas</th>
-                    <th class="border px-3 py-2">Prodi</th>
+                    <th class="border px-3 py-2">Sekolah</th>
+                    <th class="border px-3 py-2">Jurusan</th>
                     <th class="border px-3 py-2">Jalur</th>
                     <th class="border px-3 py-2">Kelengkapan Isian</th>
                     <th class="border px-3 py-2">Upload</th>
                     <th class="border px-3 py-2">Bayar Pendaftaran</th>
+                    <th class="border px-3 py-2">Registrasi</th>
                     <th class="border px-3 py-2">Detail</th>
                 </tr>
             </thead>
@@ -106,6 +107,13 @@
                                 <span class="text-red-600 font-bold">✘</span>
                             @endif
                         </td>
+                        <td class="border px-3 py-2 text-center">
+                            @if($peserta->status_pembayaran_registrasi == 1)
+                                <span class="text-green-600 font-bold">✔</span>
+                            @else
+                                <span class="text-red-600 font-bold">✘</span>
+                            @endif
+                        </td>
                         <td class="border px-3 py-2">
                             <button onclick="openModal({{ $peserta->id }})"
                                 class="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600">
@@ -115,7 +123,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="10" class="text-center py-4">Tidak ada data</td>
+                        <td colspan="11" class="text-center py-4">Tidak ada data</td>
                     </tr>
                 @endforelse
             </tbody>
@@ -157,7 +165,7 @@
             });
 
             if (!res.ok) {
-                throw new Error(`HTTP error! Status: ${res.status}`);
+                throw new Error(\`HTTP error! Status: \${res.status}\`);
             }
 
             const html = await res.text();
@@ -177,6 +185,4 @@
         document.getElementById('detailModal').classList.add('hidden');
     }
 </script>
-
-
 @endsection
