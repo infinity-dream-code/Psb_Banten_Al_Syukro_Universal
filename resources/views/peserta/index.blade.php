@@ -149,12 +149,13 @@
                     <div class="hidden md:block w-32 text-right pr-6 flex-shrink-0">
                         <div class="text-red-500 font-medium text-lg mb-1">STEP 3</div>
                       <div class="text-gray-500 text-sm">
-    @if($peserta && $peserta->ujian->isNotEmpty())
+    @if($peserta?->ujian?->isNotEmpty() && $peserta->ujian->first()->tanggal)
         {{ $peserta->ujian->first()->tanggal->translatedFormat('j F Y') }}
     @else
         -
     @endif
 </div>
+
                     </div>
                     
                     <!-- Center - Circle -->
@@ -170,13 +171,14 @@
                         <!-- Mobile Date & Label -->
                         <div class="block md:hidden mb-4">
                             <div class="text-red-500 font-medium text-lg mb-1 ml-4">STEP 3</div>
-                          <div class="text-gray-500 text-sm ml-4">
-    @if($peserta && $peserta->ujian->isNotEmpty())
+                         <div class="text-gray-500 text-sm ml-4">
+    @if($peserta?->ujian?->isNotEmpty() && $peserta->ujian->first()?->tanggal)
         {{ $peserta->ujian->first()->tanggal->translatedFormat('j F Y') }}
     @else
         -
     @endif
 </div>
+
 
                         </div>
                         
@@ -213,9 +215,12 @@
                     <!-- Left Side - Date & Label (Desktop) -->
                     <div class="hidden md:block w-32 text-right pr-6 flex-shrink-0">
                         <div class="text-red-500 font-medium text-lg mb-1">STEP 4</div>
-                      <div class="text-gray-500 text-sm">
-    {{ $peserta?->relasiGelombang?->pengumuman?->translatedFormat('j F Y') ?? '-' }}
+                  <div class="text-gray-500 text-sm">
+    {{ $peserta?->relasiGelombang?->pengumuman
+        ? $peserta->relasiGelombang->pengumuman->translatedFormat('j F Y')
+        : '-' }}
 </div>
+
 
 
                     </div>
@@ -233,7 +238,7 @@
                         <div class="block md:hidden mb-4">
                             <div class="text-red-500 font-medium text-lg mb-1 ml-4">STEP 4</div>
                          <div class="text-gray-500 text-sm ml-4">
-    {{ $peserta?->relasiGelombang?->pengumuman?->translatedFormat('j F Y') ?? '-' }}
+    {{ optional($peserta?->relasiGelombang?->pengumuman)->translatedFormat('j F Y') ?? '-' }}
 </div>
 
 
