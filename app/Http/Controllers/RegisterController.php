@@ -29,112 +29,111 @@ class RegisterController extends Controller
 {
 
 
-    public function enroll(Request $request)
+  public function enroll(Request $request)
 {
     $request->validate([
-        'nisn' => 'nullable|digits:10|unique:data_peserta,nisn',
-        'gender' => 'required|in:L,P',
-        'nama' => 'required|string|max:100',
-        'gelombang' => 'required|integer',
-        'jenis_pendaftaran' => 'required|integer',
-        'prodi' => 'required|integer',
-        'fakultas' => 'required|integer',
+        'nisn'              => 'nullable|digits:10|unique:data_peserta,nisn',
+        'gender'            => 'required|in:L,P',
+        'nama'              => 'required|string|max:100',
+        'id_gelombang'      => 'required|integer',
+        'id_jalur'          => 'required|integer',
+        'id_prodi'          => 'required|integer',
+        'id_fakultas'       => 'required|integer',
     ]);
 
-    $noDaftar = DataPeserta::generateNoPendaftaran($request->gelombang, $request->prodi);
+    $noDaftar = DataPeserta::generateNoPendaftaran($request->id_gelombang, $request->id_prodi);
     $password = str_pad(random_int(0, 99999999), 8, '0', STR_PAD_LEFT);
 
     $user = User::create([
-        'nama' => $request->nama,
-        'username' => $noDaftar,
-        'password' => Hash::make($password),
+        'nama'           => $request->nama,
+        'username'       => $noDaftar,
+        'password'       => Hash::make($password),
         'plain_password' => $password,
-        'role' => 'peserta',
+        'role'           => 'peserta',
     ]);
 
-    $masterHarga = MasterHarga::where('id_fakultas', $request->fakultas)
-        ->where('id_gelombang', $request->gelombang)
-        ->where('id_jalur', $request->jenis_pendaftaran)
-        ->where('id_prodi', $request->prodi)
+    $masterHarga = MasterHarga::where('id_fakultas', $request->id_fakultas)
+        ->where('id_gelombang', $request->id_gelombang)
+        ->where('id_jalur', $request->id_jalur)
+        ->where('id_prodi', $request->id_prodi)
         ->firstOrFail();
 
     $vaNumber = '751000' . $noDaftar;
 
-    $gelombang = MasterGelombang::find($request->gelombang);
-    $jalur = MasterJalur::find($request->jenis_pendaftaran);
-    $fakultas = MasterFakultas::find($request->fakultas);
-    $prodi = MasterProdi::find($request->prodi);
+    $gelombang = MasterGelombang::find($request->id_gelombang);
+    $jalur     = MasterJalur::find($request->id_jalur);
+    $fakultas  = MasterFakultas::find($request->id_fakultas);
+    $prodi     = MasterProdi::find($request->id_prodi);
 
-    $provinsi = MasterProvinsi::find($request->provinsi_id);
-    $kabupaten = MasterKabupaten::find($request->kabupaten_id);
-    $kecamatan = MasterKecamatan::find($request->kecamatan_id);
-
+    $provinsi       = MasterProvinsi::find($request->provinsi_id);
+    $kabupaten      = MasterKabupaten::find($request->kabupaten_id);
+    $kecamatan      = MasterKecamatan::find($request->kecamatan_id);
     $provinsiSekolah = MasterProvinsi::find($request->provinsi_sekolah_id);
     $kabupatenSekolah = MasterKabupaten::find($request->kabupaten_sekolah_id);
-    $kotaSekolah = MasterKabupaten::find($request->kota_sekolah_id);
+    $kotaSekolah      = MasterKabupaten::find($request->kota_sekolah_id);
 
     $jurusanSekolah = MasterJurusanSekolah::find($request->jurusan_sekolah);
 
-    $pekerjaanIbu = MasterPekerjaanOrtu::find($request->pekerjaan_ibu);
-    $penghasilanIbu = MasterPenghasilanOrtu::find($request->penghasilan_ibu);
-
-    $pekerjaanAyah = MasterPekerjaanOrtu::find($request->pekerjaan_ayah);
+    $pekerjaanIbu    = MasterPekerjaanOrtu::find($request->pekerjaan_ibu);
+    $penghasilanIbu  = MasterPenghasilanOrtu::find($request->penghasilan_ibu);
+    $pekerjaanAyah   = MasterPekerjaanOrtu::find($request->pekerjaan_ayah);
     $penghasilanAyah = MasterPenghasilanOrtu::find($request->penghasilan_ayah);
 
     $peserta = DataPeserta::create([
-        'id_user' => $user->id,
-        'no_pendaftaran' => $noDaftar,
-        'nama_peserta' => $request->nama,
-        'tempat_lahir' => $request->tempat_lahir,
-        'tanggal_lahir' => $request->tanggal_lahir,
-        'nisn' => $request->nisn,
-        'id_gelombang' => $request->gelombang,
-        'gelombang' => $gelombang?->gelombang,
-        'id_jalur' => $request->jenis_pendaftaran,
-        'jalur' => $jalur?->nama,
-        'id_fakultas' => $request->fakultas,
-        'fakultas' => $fakultas?->fakultas,
-        'id_prodi' => $request->prodi,
-        'prodi' => $prodi?->nama,
-        'id_master_harga' => $masterHarga->id,
-        'gender' => $request->gender,
-        'status_paid' => 0,
-        'va_number' => $vaNumber,
-        'dusun' => $request->dusun,
-        'id_provinsi' => $request->provinsi_id,
-        'provinsi' => $provinsi?->Provinsi,
-        'id_kabupaten' => $request->kabupaten_id,
-        'kabupaten' => $kabupaten?->kota,
-        'id_kecamatan' => $request->kecamatan_id,
-        'kecamatan' => $kecamatan?->kecamatan,
-        'nama_sekolah' => $request->asal_sekolah,
+        'id_user'          => $user->id,
+        'no_pendaftaran'   => $noDaftar,
+        'nama_peserta'     => $request->nama,
+        'tempat_lahir'     => $request->tempat_lahir,
+        'tanggal_lahir'    => $request->tanggal_lahir,
+        'nisn'             => $request->nisn,
+        'id_gelombang'     => $request->id_gelombang,
+        'gelombang'        => $gelombang?->gelombang,
+        'id_jalur'         => $request->id_jalur,
+        'jalur'            => $jalur?->nama,
+        'id_fakultas'      => $request->id_fakultas,
+        'fakultas'         => $fakultas?->fakultas,
+        'id_prodi'         => $request->id_prodi,
+        'prodi'            => $prodi?->nama,
+        'id_master_harga'  => $masterHarga->id,
+        'gender'           => $request->gender,
+        'status_paid'      => 0,
+        'va_number'        => $vaNumber,
+        'dusun'            => $request->dusun,
+        'id_provinsi'      => $request->provinsi_id,
+        'provinsi'         => $provinsi?->Provinsi,
+        'id_kabupaten'     => $request->kabupaten_id,
+        'kabupaten'        => $kabupaten?->kota,
+        'id_kecamatan'     => $request->kecamatan_id,
+        'kecamatan'        => $kecamatan?->kecamatan,
+        'nama_sekolah'     => $request->asal_sekolah,
         'id_provinsi_sekolah' => $request->provinsi_sekolah_id,
-        'provinsi_sekolah' => $provinsiSekolah?->Provinsi,
-        'id_kabupaten_sekolah' => $request->kota_sekolah_id,
-        'kota_sekolah' => $kotaSekolah?->kota,
-        'jurusan' => $jurusanSekolah?->nama,
-        'id_jurusan' => $request->jurusan_sekolah,
-        'tahun_lulus' => $request->tahun_lulus,
-        'ibu_nama' => $request->nama_ibu,
+        'provinsi_sekolah'    => $provinsiSekolah?->Provinsi,
+        'id_kabupaten_sekolah'=> $request->kota_sekolah_id,
+        'kota_sekolah'        => $kotaSekolah?->kota,
+        'jurusan'          => $jurusanSekolah?->nama,
+        'id_jurusan'       => $request->jurusan_sekolah,
+        'tahun_lulus'      => $request->tahun_lulus,
+        'ibu_nama'         => $request->nama_ibu,
         'id_pekerjaan_ibu' => $request->pekerjaan_ibu,
-        'ibu_pekerjaan' => $pekerjaanIbu?->nama,
-        'id_penghasilan_ibu' => $request->penghasilan_ibu,
-        'ibu_penghasilan' => $penghasilanIbu?->nama,
-        'ibu_no_tlp' => $request->tlp_ibu,
-        'ayah_nama' => $request->nama_ayah,
-        'id_pekerjaan_ayah' => $request->pekerjaan_ayah,
-        'ayah_pekerjaan' => $pekerjaanAyah?->nama,
-        'id_penghasilan_ayah' => $request->penghasilan_ayah,
+        'ibu_pekerjaan'    => $pekerjaanIbu?->nama,
+        'id_penghasilan_ibu'=> $request->penghasilan_ibu,
+        'ibu_penghasilan'   => $penghasilanIbu?->nama,
+        'ibu_no_tlp'       => $request->tlp_ibu,
+        'ayah_nama'        => $request->nama_ayah,
+        'id_pekerjaan_ayah'=> $request->pekerjaan_ayah,
+        'ayah_pekerjaan'   => $pekerjaanAyah?->nama,
+        'id_penghasilan_ayah'=> $request->penghasilan_ayah,
         'ayah_penghasilan' => $penghasilanAyah?->nama,
-        'ayah_no_tlp' => $request->tlp_ayah,
+        'ayah_no_tlp'      => $request->tlp_ayah,
     ]);
 
-    $jwtKey = "53c2f9aace5478a11815c65fcdb1a3dc29b60c3e102489384e3c1701f4355fa4";
+    $jwtKey  = "53c2f9aace5478a11815c65fcdb1a3dc29b60c3e102489384e3c1701f4355fa4";
     $payload = ["nomor_pendaftaran" => $noDaftar];
-    $token = JWT::encode($payload, $jwtKey, 'HS256');
+    $token   = JWT::encode($payload, $jwtKey, 'HS256');
 
     return redirect()->route('pmb.success', $token)->with('password_plain', $password);
 }
+
 
 public function success($token)
 {
