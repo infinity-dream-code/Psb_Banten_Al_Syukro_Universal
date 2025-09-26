@@ -411,317 +411,321 @@
 
     @include('footer')
 
-    <script>
-        let correctAnswer = 0;
+   <script>
+let correctAnswer = 0;
 
-        function generateCaptcha() {
-            const num1 = Math.floor(Math.random() * 10) + 1;
-            const num2 = Math.floor(Math.random() * 10) + 1;
-            const operation = Math.random() > 0.5 ? '+' : '-';
-            
-            if (operation === '+') {
-                correctAnswer = num1 + num2;
-                document.getElementById('captchaQuestion').textContent = `${num1} + ${num2} =`;
-            } else {
-                if (num1 >= num2) {
-                    correctAnswer = num1 - num2;
-                    document.getElementById('captchaQuestion').textContent = `${num1} - ${num2} =`;
-                } else {
-                    correctAnswer = num2 - num1;
-                    document.getElementById('captchaQuestion').textContent = `${num2} - ${num1} =`;
-                }
-            }
-            
-            const captchaInput = document.getElementById('captchaInput');
-            const captchaError = document.getElementById('captchaError');
-            if (captchaInput) captchaInput.value = '';
-            if (captchaError) captchaError.classList.add('hidden');
+function generateCaptcha() {
+    const num1 = Math.floor(Math.random() * 10) + 1;
+    const num2 = Math.floor(Math.random() * 10) + 1;
+    const operation = Math.random() > 0.5 ? '+' : '-';
+    if (operation === '+') {
+        correctAnswer = num1 + num2;
+        document.getElementById('captchaQuestion').textContent = `${num1} + ${num2} =`;
+    } else {
+        if (num1 >= num2) {
+            correctAnswer = num1 - num2;
+            document.getElementById('captchaQuestion').textContent = `${num1} - ${num2} =`;
+        } else {
+            correctAnswer = num2 - num1;
+            document.getElementById('captchaQuestion').textContent = `${num2} - ${num1} =`;
         }
+    }
+    const captchaInput = document.getElementById('captchaInput');
+    const captchaError = document.getElementById('captchaError');
+    if (captchaInput) captchaInput.value = '';
+    if (captchaError) captchaError.classList.add('hidden');
+}
 
-        function showNotification(message, type) {
-            const bgColor = type === 'success' ? 'bg-green-500' : 'bg-red-500';
-            const notification = document.createElement('div');
-            notification.className = `fixed top-4 right-4 ${bgColor} text-white px-6 py-4 rounded-lg shadow-lg z-50 transform translate-x-0 transition-transform duration-300`;
-            notification.innerHTML = `
-                <div class="flex items-center">
-                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
-                    </svg>
-                    <span>${message}</span>
-                </div>
-            `;
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.style.transform = 'translateX(100%)';
-                setTimeout(() => document.body.removeChild(notification), 300);
-            }, 4000);
-        }
+function showNotification(message, type) {
+    const bgColor = type === 'success' ? 'bg-green-500' : 'bg-red-500';
+    const notification = document.createElement('div');
+    notification.className = `fixed top-4 right-4 ${bgColor} text-white px-6 py-4 rounded-lg shadow-lg z-50 transform translate-x-0 transition-transform duration-300`;
+    notification.innerHTML = `
+        <div class="flex items-center">
+            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+            </svg>
+            <span>${message}</span>
+        </div>
+    `;
+    document.body.appendChild(notification);
+    setTimeout(() => {
+        notification.style.transform = 'translateX(100%)';
+        setTimeout(() => document.body.removeChild(notification), 300);
+    }, 4000);
+}
 
-        function resetSelect(element, placeholder) {
-            if (!element) return;
-            element.innerHTML = `<option value="">${placeholder}</option>`;
-            element.disabled = true;
-        }
+function resetSelect(element, placeholder) {
+    if (!element) return;
+    element.innerHTML = `<option value="">${placeholder}</option>`;
+    element.disabled = true;
+}
 
-        function fillSelect(element, items, placeholder) {
-            resetSelect(element, placeholder);
-            items.forEach(item => {
-                const option = document.createElement('option');
-                option.value = item.id;
-                option.textContent = item.name;
-                element.appendChild(option);
-            });
-            element.disabled = false;
-        }
+function fillSelect(element, items, placeholder, keyId = 'id', keyName = 'name') {
+    resetSelect(element, placeholder);
+    items.forEach(item => {
+        const option = document.createElement('option');
+        option.value = item[keyId];
+        option.textContent = item[keyName].toUpperCase();
+        element.appendChild(option);
+    });
+    element.disabled = false;
+}
 
-        function fetchJson(url) {
-            return fetch(url, { headers: { 'Accept': 'application/json' } }).then(response => response.json());
-        }
+function fetchJson(url) {
+    return fetch(url, { headers: { 'Accept': 'application/json' } }).then(response => response.json());
+}
 
-        document.addEventListener('DOMContentLoaded', async function () {
-            generateCaptcha();
+document.addEventListener('DOMContentLoaded', async function () {
+    generateCaptcha();
 
-            const form = document.getElementById('enrollmentForm');
-            const captchaInput = document.getElementById('captchaInput');
-            const captchaError = document.getElementById('captchaError');
+    const form = document.getElementById('enrollmentForm');
+    const captchaInput = document.getElementById('captchaInput');
+    const captchaError = document.getElementById('captchaError');
 
-            const provinsi = document.getElementById('provinsi');
-            const kabupaten = document.getElementById('kabupaten');
-            const kecamatan = document.getElementById('kecamatan');
+    const provinsi = document.getElementById('provinsi');
+    const kabupaten = document.getElementById('kabupaten');
+    const kecamatan = document.getElementById('kecamatan');
 
-            const provinsiSekolah = document.getElementById('provinsiSekolah');
-            const kotaSekolah = document.getElementById('kotaSekolah');
+    const provinsiSekolah = document.getElementById('provinsiSekolah');
+    const kotaSekolah = document.getElementById('kotaSekolah');
 
-            const fakultasSelect = document.getElementById('fakultas');
-            const prodiSelect = document.getElementById('prodi');
+    const jalurSelect = document.getElementById('jalur');
+    const gelombangSelect = document.getElementById('gelombang');
+    const fakultasSelect = document.getElementById('fakultas');
+    const prodiSelect = document.getElementById('prodi');
 
-            if (fakultasSelect && prodiSelect) {
-                fakultasSelect.addEventListener('change', function() {
-                    const fakultasId = this.value;
-                    prodiSelect.innerHTML = '<option value="">PILIH Jurusan</option>';
-                    prodiSelect.disabled = true;
-                    
-                    if (fakultasId) {
-                        fetch("{{ url('enroll/prodi') }}/" + fakultasId, {
-                            headers: { "Accept": "application/json" }
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            data.forEach(prodi => {
-                                const option = document.createElement('option');
-                                option.value = prodi.id;
-                                option.textContent = prodi.nama.toUpperCase();
-                                prodiSelect.appendChild(option);
-                            });
-                            prodiSelect.disabled = false;
-                        })
-                        .catch(error => console.error('Error:', error));
-                    }
-                });
-            }
-
-            if (provinsi) {
-                try {
-                    const provinces = await fetchJson(`{{ route('api.provinsi') }}`);
-                    fillSelect(provinsi, provinces, 'Pilih provinsi');
-                    resetSelect(kabupaten, 'Pilih kota/kabupaten');
-                    resetSelect(kecamatan, 'Pilih kecamatan');
-                } catch (error) {
-                    resetSelect(provinsi, 'Gagal memuat provinsi');
-                    resetSelect(kabupaten, 'Pilih kota/kabupaten');
-                    resetSelect(kecamatan, 'Pilih kecamatan');
-                }
-
-                provinsi.addEventListener('change', async function(event) {
-                    const provinsiId = event.target.value;
-                    resetSelect(kabupaten, 'Pilih kota/kabupaten');
-                    resetSelect(kecamatan, 'Pilih kecamatan');
-                    
-                    if (!provinsiId) return;
-                    
-                    const url = `{{ route('api.kabupaten', ['provinsi' => '__ID__']) }}`.replace('__ID__', provinsiId);
-                    try {
-                        const kabupatens = await fetchJson(url);
-                        fillSelect(kabupaten, kabupatens, 'Pilih kota/kabupaten');
-                    } catch (error) {
-                        resetSelect(kabupaten, 'Gagal memuat kabupaten');
-                    }
-                });
-
-                if (kabupaten) {
-                    kabupaten.addEventListener('change', async function(event) {
-                        const kabupatenId = event.target.value;
-                        resetSelect(kecamatan, 'Pilih kecamatan');
-                        
-                        if (!kabupatenId) return;
-                        
-                        const url = `{{ route('api.kecamatan', ['kota' => '__ID__']) }}`.replace('__ID__', kabupatenId);
-                        try {
-                            const kecamatans = await fetchJson(url);
-                            fillSelect(kecamatan, kecamatans, 'Pilih kecamatan');
-                        } catch (error) {
-                            resetSelect(kecamatan, 'Gagal memuat kecamatan');
-                        }
-                    });
-                }
-            }
-
-            if (provinsiSekolah) {
-                try {
-                    const provinces = await fetchJson(`{{ route('api.provinsi') }}`);
-                    fillSelect(provinsiSekolah, provinces, 'Pilih provinsi');
-                    resetSelect(kotaSekolah, 'Pilih kota/kabupaten');
-                } catch (error) {
-                    resetSelect(provinsiSekolah, 'Gagal memuat provinsi');
-                    resetSelect(kotaSekolah, 'Pilih kota/kabupaten');
-                }
-
-                provinsiSekolah.addEventListener('change', async function(event) {
-                    const provinsiId = event.target.value;
-                    resetSelect(kotaSekolah, 'Pilih kota/kabupaten');
-                    
-                    if (!provinsiId) return;
-                    
-                    const url = `{{ route('api.kabupaten', ['provinsi' => '__ID__']) }}`.replace('__ID__', provinsiId);
-                    try {
-                        const kabupatens = await fetchJson(url);
-                        fillSelect(kotaSekolah, kabupatens, 'Pilih kota/kabupaten');
-                    } catch (error) {
-                        resetSelect(kotaSekolah, 'Gagal memuat kabupaten');
-                    }
-                });
-            }
-
-            if (form) {
-                form.addEventListener('submit', function(event) {
-                    const userAnswer = parseInt(captchaInput ? captchaInput.value : '');
-                    
-                    if (!captchaInput || userAnswer !== correctAnswer || isNaN(userAnswer)) {
-                        event.preventDefault();
-                        if (captchaError) captchaError.classList.remove('hidden');
-                        generateCaptcha();
-                        showNotification('Captcha tidak valid, silakan coba lagi', 'error');
-                        return false;
-                    }
-                    
-                    if (captchaError) captchaError.classList.add('hidden');
-
-                    const requiredFields = form.querySelectorAll('[required]');
-                    let allValid = true;
-                    let firstInvalidField = null;
-
-                    requiredFields.forEach(field => {
-                        if (!field.value.trim()) {
-                            field.classList.add('border-red-500', 'bg-red-50');
-                            field.classList.remove('border-gray-300');
-                            allValid = false;
-                            if (!firstInvalidField) firstInvalidField = field;
-                        } else {
-                            field.classList.remove('border-red-500', 'bg-red-50');
-                            field.classList.add('border-gray-300');
-                        }
-                    });
-
-                    if (!allValid) {
-                        event.preventDefault();
-                        showNotification('Mohon lengkapi semua field yang wajib diisi', 'error');
-                        if (firstInvalidField) {
-                            firstInvalidField.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                            firstInvalidField.focus();
-                        }
-                        return false;
-                    }
-
-                    const emailField = document.querySelector('[name="email"]');
-                    const phoneFields = [
-                        document.querySelector('[name="tlp_ibu"]'),
-                        document.querySelector('[name="tlp_ayah"]')
-                    ];
-                    const nisnField = document.querySelector('[name="nisn"]');
-
-                    if (emailField && emailField.value) {
-                        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                        if (!emailRegex.test(emailField.value)) {
-                            event.preventDefault();
-                            showNotification('Format email tidak valid!', 'error');
-                            emailField.focus();
-                            return false;
-                        }
-                    }
-
-                    phoneFields.forEach((field, index) => {
-                        if (field && field.value) {
-                            const phoneRegex = /^[0-9]{10,15}$/;
-                            if (!phoneRegex.test(field.value.replace(/\s+/g, ''))) {
-                                event.preventDefault();
-                                const fieldName = index === 0 ? 'Nomor telepon ibu' : 'Nomor telepon ayah';
-                                showNotification(`${fieldName} harus berisi 10-15 digit angka!`, 'error');
-                                field.focus();
-                                return false;
-                            }
-                        }
-                    });
-
-                    if (nisnField && nisnField.value) {
-                        const nisnRegex = /^[0-9]{10}$/;
-                        if (!nisnRegex.test(nisnField.value)) {
-                            event.preventDefault();
-                            showNotification('NISN harus berisi 10 digit angka!', 'error');
-                            nisnField.focus();
-                            return false;
-                        }
-                    }
-
-                    showNotification('Form sedang diproses...', 'success');
-                });
-            }
-
-            if (captchaInput) {
-                captchaInput.addEventListener('input', function() {
-                    const value = parseInt(this.value);
-                    if (captchaError) {
-                        if (this.value.trim() === '') {
-                            captchaError.classList.add('hidden');
-                            return;
-                        }
-                        if (value !== correctAnswer || isNaN(value)) {
-                            captchaError.classList.remove('hidden');
-                        } else {
-                            captchaError.classList.add('hidden');
-                        }
-                    }
-                });
-            }
-
-            document.addEventListener('input', function(event) {
-                if (event.target.hasAttribute('required')) {
-                    event.target.classList.remove('border-red-500', 'bg-red-50');
-                    event.target.classList.add('border-gray-300');
-                }
-            });
-
-            const phoneInputs = document.querySelectorAll('input[name="tlp_ibu"], input[name="tlp_ayah"]');
-            phoneInputs.forEach(input => {
-                input.addEventListener('input', function(event) {
-                    this.value = this.value.replace(/[^0-9]/g, '');
-                });
-            });
-
-            const nisnInput = document.querySelector('input[name="nisn"]');
-            if (nisnInput) {
-                nisnInput.addEventListener('input', function(event) {
-                    this.value = this.value.replace(/[^0-9]/g, '').substring(0, 10);
-                });
-            }
-
-            const tahunLulusInput = document.querySelector('input[name="tahun_lulus"]');
-            if (tahunLulusInput) {
-                tahunLulusInput.addEventListener('input', function(event) {
-                    this.value = this.value.replace(/[^0-9]/g, '').substring(0, 4);
+    if (jalurSelect && gelombangSelect) {
+        jalurSelect.addEventListener('change', function () {
+            const jalurId = this.value;
+            resetSelect(gelombangSelect, 'PILIH GELOMBANG');
+            resetSelect(fakultasSelect, 'PILIH SEKOLAH');
+            resetSelect(prodiSelect, 'PILIH JURUSAN');
+            if (jalurId) {
+                fetch("{{ url('get-gelombang-by-jalur') }}/" + jalurId)
+                .then(res => res.json())
+                .then(data => {
+                    fillSelect(gelombangSelect, data, 'PILIH GELOMBANG', 'id_gelombang', 'nama_gelombang');
                 });
             }
         });
-    </script>
+    }
+
+    if (gelombangSelect && fakultasSelect) {
+        gelombangSelect.addEventListener('change', function () {
+            const jalurId = jalurSelect.value;
+            const gelombangId = this.value;
+            resetSelect(fakultasSelect, 'PILIH SEKOLAH');
+            resetSelect(prodiSelect, 'PILIH JURUSAN');
+            if (jalurId && gelombangId) {
+                fetch("{{ url('get-fakultas-by-jalur-gelombang') }}/" + jalurId + "/" + gelombangId)
+                .then(res => res.json())
+                .then(data => {
+                    fillSelect(fakultasSelect, data, 'PILIH SEKOLAH', 'id_fakultas', 'nama_fakultas');
+                });
+            }
+        });
+    }
+
+    if (fakultasSelect && prodiSelect) {
+        fakultasSelect.addEventListener('change', function () {
+            const jalurId = jalurSelect.value;
+            const gelombangId = gelombangSelect.value;
+            const fakultasId = this.value;
+            resetSelect(prodiSelect, 'PILIH JURUSAN');
+            if (jalurId && gelombangId && fakultasId) {
+                fetch("{{ url('get-prodi-by-jalur-gelombang-fakultas') }}/" + jalurId + "/" + gelombangId + "/" + fakultasId)
+                .then(res => res.json())
+                .then(data => {
+                    fillSelect(prodiSelect, data, 'PILIH JURUSAN', 'id_prodi', 'nama_prodi');
+                });
+            }
+        });
+    }
+
+    if (provinsi) {
+        try {
+            const provinces = await fetchJson(`{{ route('api.provinsi') }}`);
+            fillSelect(provinsi, provinces, 'Pilih provinsi');
+            resetSelect(kabupaten, 'Pilih kota/kabupaten');
+            resetSelect(kecamatan, 'Pilih kecamatan');
+        } catch (error) {
+            resetSelect(provinsi, 'Gagal memuat provinsi');
+            resetSelect(kabupaten, 'Pilih kota/kabupaten');
+            resetSelect(kecamatan, 'Pilih kecamatan');
+        }
+        provinsi.addEventListener('change', async function(event) {
+            const provinsiId = event.target.value;
+            resetSelect(kabupaten, 'Pilih kota/kabupaten');
+            resetSelect(kecamatan, 'Pilih kecamatan');
+            if (!provinsiId) return;
+            const url = `{{ route('api.kabupaten', ['provinsi' => '__ID__']) }}`.replace('__ID__', provinsiId);
+            try {
+                const kabupatens = await fetchJson(url);
+                fillSelect(kabupaten, kabupatens, 'Pilih kota/kabupaten');
+            } catch (error) {
+                resetSelect(kabupaten, 'Gagal memuat kabupaten');
+            }
+        });
+        if (kabupaten) {
+            kabupaten.addEventListener('change', async function(event) {
+                const kabupatenId = event.target.value;
+                resetSelect(kecamatan, 'Pilih kecamatan');
+                if (!kabupatenId) return;
+                const url = `{{ route('api.kecamatan', ['kota' => '__ID__']) }}`.replace('__ID__', kabupatenId);
+                try {
+                    const kecamatans = await fetchJson(url);
+                    fillSelect(kecamatan, kecamatans, 'Pilih kecamatan');
+                } catch (error) {
+                    resetSelect(kecamatan, 'Gagal memuat kecamatan');
+                }
+            });
+        }
+    }
+
+    if (provinsiSekolah) {
+        try {
+            const provinces = await fetchJson(`{{ route('api.provinsi') }}`);
+            fillSelect(provinsiSekolah, provinces, 'Pilih provinsi');
+            resetSelect(kotaSekolah, 'Pilih kota/kabupaten');
+        } catch (error) {
+            resetSelect(provinsiSekolah, 'Gagal memuat provinsi');
+            resetSelect(kotaSekolah, 'Pilih kota/kabupaten');
+        }
+        provinsiSekolah.addEventListener('change', async function(event) {
+            const provinsiId = event.target.value;
+            resetSelect(kotaSekolah, 'Pilih kota/kabupaten');
+            if (!provinsiId) return;
+            const url = `{{ route('api.kabupaten', ['provinsi' => '__ID__']) }}`.replace('__ID__', provinsiId);
+            try {
+                const kabupatens = await fetchJson(url);
+                fillSelect(kotaSekolah, kabupatens, 'Pilih kota/kabupaten');
+            } catch (error) {
+                resetSelect(kotaSekolah, 'Gagal memuat kabupaten');
+            }
+        });
+    }
+
+    if (form) {
+        form.addEventListener('submit', function(event) {
+            const userAnswer = parseInt(captchaInput ? captchaInput.value : '');
+            if (!captchaInput || userAnswer !== correctAnswer || isNaN(userAnswer)) {
+                event.preventDefault();
+                if (captchaError) captchaError.classList.remove('hidden');
+                generateCaptcha();
+                showNotification('Captcha tidak valid, silakan coba lagi', 'error');
+                return false;
+            }
+            if (captchaError) captchaError.classList.add('hidden');
+            const requiredFields = form.querySelectorAll('[required]');
+            let allValid = true;
+            let firstInvalidField = null;
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    field.classList.add('border-red-500', 'bg-red-50');
+                    field.classList.remove('border-gray-300');
+                    allValid = false;
+                    if (!firstInvalidField) firstInvalidField = field;
+                } else {
+                    field.classList.remove('border-red-500', 'bg-red-50');
+                    field.classList.add('border-gray-300');
+                }
+            });
+            if (!allValid) {
+                event.preventDefault();
+                showNotification('Mohon lengkapi semua field yang wajib diisi', 'error');
+                if (firstInvalidField) {
+                    firstInvalidField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    firstInvalidField.focus();
+                }
+                return false;
+            }
+            const emailField = document.querySelector('[name="email"]');
+            const phoneFields = [
+                document.querySelector('[name="tlp_ibu"]'),
+                document.querySelector('[name="tlp_ayah"]')
+            ];
+            const nisnField = document.querySelector('[name="nisn"]');
+            if (emailField && emailField.value) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(emailField.value)) {
+                    event.preventDefault();
+                    showNotification('Format email tidak valid!', 'error');
+                    emailField.focus();
+                    return false;
+                }
+            }
+            phoneFields.forEach((field, index) => {
+                if (field && field.value) {
+                    const phoneRegex = /^[0-9]{10,15}$/;
+                    if (!phoneRegex.test(field.value.replace(/\s+/g, ''))) {
+                        event.preventDefault();
+                        const fieldName = index === 0 ? 'Nomor telepon ibu' : 'Nomor telepon ayah';
+                        showNotification(`${fieldName} harus berisi 10-15 digit angka!`, 'error');
+                        field.focus();
+                        return false;
+                    }
+                }
+            });
+            if (nisnField && nisnField.value) {
+                const nisnRegex = /^[0-9]{10}$/;
+                if (!nisnRegex.test(nisnField.value)) {
+                    event.preventDefault();
+                    showNotification('NISN harus berisi 10 digit angka!', 'error');
+                    nisnField.focus();
+                    return false;
+                }
+            }
+            showNotification('Form sedang diproses...', 'success');
+        });
+    }
+
+    if (captchaInput) {
+        captchaInput.addEventListener('input', function() {
+            const value = parseInt(this.value);
+            if (captchaError) {
+                if (this.value.trim() === '') {
+                    captchaError.classList.add('hidden');
+                    return;
+                }
+                if (value !== correctAnswer || isNaN(value)) {
+                    captchaError.classList.remove('hidden');
+                } else {
+                    captchaError.classList.add('hidden');
+                }
+            }
+        });
+    }
+
+    document.addEventListener('input', function(event) {
+        if (event.target.hasAttribute('required')) {
+            event.target.classList.remove('border-red-500', 'bg-red-50');
+            event.target.classList.add('border-gray-300');
+        }
+    });
+
+    const phoneInputs = document.querySelectorAll('input[name="tlp_ibu"], input[name="tlp_ayah"]');
+    phoneInputs.forEach(input => {
+        input.addEventListener('input', function(event) {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+    });
+
+    const nisnInput = document.querySelector('input[name="nisn"]');
+    if (nisnInput) {
+        nisnInput.addEventListener('input', function(event) {
+            this.value = this.value.replace(/[^0-9]/g, '').substring(0, 10);
+        });
+    }
+
+    const tahunLulusInput = document.querySelector('input[name="tahun_lulus"]');
+    if (tahunLulusInput) {
+        tahunLulusInput.addEventListener('input', function(event) {
+            this.value = this.value.replace(/[^0-9]/g, '').substring(0, 4);
+        });
+    }
+});
+</script>
+
 </body>
 </html>
