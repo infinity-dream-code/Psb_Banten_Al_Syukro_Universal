@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="bg-white p-6 shadow rounded-lg">
-    <h1 class="text-2xl font-bold mb-6 text-gray-800">Rekap Lunas Registrasi</h1>
+    <h1 class="text-2xl font-bold mb-6 text-gray-800">Rekap Lunas Registrasi Daftar Ulang</h1>
 
     <form method="GET" action="{{ url()->current() }}" class="mb-6 flex gap-3">
         <select name="tahun" class="px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" onchange="this.form.submit()">
