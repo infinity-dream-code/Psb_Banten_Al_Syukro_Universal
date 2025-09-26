@@ -443,9 +443,8 @@ public function index()
 
     $jalurs = MasterHarga::where('active', 1)
         ->whereHas('gelombang', function ($q) use ($today) {
-            $q->whereDate('start', '<=', $today)
-              ->whereDate('end', '>=', $today);
-        })
+    $q->whereDate('end', '>=', $today);
+})
         ->select('id_jalur', 'nama_jalur')
         ->distinct()
         ->get();

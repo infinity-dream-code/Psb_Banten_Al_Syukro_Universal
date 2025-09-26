@@ -191,7 +191,7 @@
                                         <li>Baju warna putih (Bukan seragam SMA), berdasi hitam polos.</li>
                                         <li> ⁠Mahasiswi memakai jilbab putih dan Mahasiswa memakai peci hitam polos.</li>
                                        <li>Bukan foto selfie, tidak berkacamata.</li>
-                                        <li>⁠File berupa format .jpg dengan ukuran tidak lebih dari 1 MB, dimensi Foto 3x4 / 4x6.</li>
+                                        <li>⁠File berupa format .jpg dengan ukuran tidak lebih dari 2 MB, dimensi Foto 3x4 / 4x6.</li>
                                     </ol>
                                 </div>
                             </div>
@@ -791,7 +791,7 @@ document.addEventListener('DOMContentLoaded', function() {
             createErrorElement(input, `File harus berformat: ${allowedTypes.map(t => t.split('/')[1].toUpperCase()).join(', ')}`);
             return false;
         }
-        const maxSizeBytes = maxSizeMB * 1024 * 1024;
+        const maxSizeBytes = maxSizeMB * 2048 * 2048;
         if (file.size > maxSizeBytes) {
             createErrorElement(input, `Ukuran file maksimal ${maxSizeMB}MB`);
             return false;
