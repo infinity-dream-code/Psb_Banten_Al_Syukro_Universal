@@ -44,8 +44,8 @@
                     <th class="border px-3 py-2">Jalur</th>
                     <th class="border px-3 py-2">Kelengkapan Isian</th>
                     <th class="border px-3 py-2">Upload</th>
-                    <th class="border px-3 py-2">Bayar Pendaftaran</th>
-                    <th class="border px-3 py-2">Registrasi</th>
+                    <th class="border px-3 py-2">Status Bayar Pendaftaran</th>
+                    <th class="border px-3 py-2">Status Bayar Registrasi Daftar Ulang</th>
                     <th class="border px-3 py-2">Detail</th>
                 </tr>
             </thead>
@@ -146,43 +146,44 @@
 </div>
 
 <script>
-    const baseUrl = "{{ url('/') }}"; 
+const baseUrl = "{{ url('/') }}"; 
 
-    async function openModal(id) {
-        const modalContent = document.getElementById('modalContent');
-        const modal = document.getElementById('detailModal');
+window.openModal = async function(id) {
+    const modalContent = document.getElementById('modalContent');
+    const modal = document.getElementById('detailModal');
 
-        modalContent.innerHTML = `
-            <div class="text-center py-6 text-gray-500">Memuat data...</div>
-        `;
-        modal.classList.remove('hidden');
+    modalContent.innerHTML = `
+        <div class="text-center py-6 text-gray-500">Memuat data...</div>
+    `;
+    modal.classList.remove('hidden');
 
-        try {
-            const res = await fetch(`${baseUrl}/api/peserta/${id}`, {
-                headers: {
-                    "X-Requested-With": "XMLHttpRequest"
-                }
-            });
-
-            if (!res.ok) {
-                throw new Error(\`HTTP error! Status: \${res.status}\`);
+    try {
+        const res = await fetch(`${baseUrl}/api/peserta/${id}`, {
+            headers: {
+                "X-Requested-With": "XMLHttpRequest"
             }
+        });
 
-            const html = await res.text();
-            modalContent.innerHTML = html;
-
-        } catch (err) {
-            modalContent.innerHTML = `
-                <div class="text-center py-6 text-red-600">
-                    Gagal memuat data peserta.<br>
-                    <small>${err.message}</small>
-                </div>
-            `;
+        if (!res.ok) {
+            throw new Error(`HTTP error! Status: ${res.status}`);
         }
-    }
 
-    function closeModal() {
-        document.getElementById('detailModal').classList.add('hidden');
+        const html = await res.text();
+        modalContent.innerHTML = html;
+
+    } catch (err) {
+        modalContent.innerHTML = `
+            <div class="text-center py-6 text-red-600">
+                Gagal memuat data peserta.<br>
+                <small>${err.message}</small>
+            </div>
+        `;
     }
+}
+
+window.closeModal = function() {
+    document.getElementById('detailModal').classList.add('hidden');
+}
 </script>
+
 @endsection
