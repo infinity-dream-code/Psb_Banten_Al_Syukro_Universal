@@ -41,7 +41,7 @@ class RegisterController extends Controller
         'id_fakultas'       => 'required|integer',
     ]);
 
-    $noDaftar = DataPeserta::generateNoPendaftaran($request->id_gelombang, $request->id_prodi);
+   $noDaftar = DataPeserta::generateNoPendaftaran($request->id_gelombang);
     $password = str_pad(random_int(0, 99999999), 8, '0', STR_PAD_LEFT);
 
     $user = User::create([
