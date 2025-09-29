@@ -5,7 +5,7 @@
     <h1 class="text-xl font-bold text-gray-800 mb-4">Tambah Gelombang</h1>
 
     <div class="mb-4 p-4 rounded-lg bg-yellow-100 border border-yellow-400 text-yellow-800 text-sm">
-        Setiap tahun maksimal hanya boleh <strong>9 gelombang</strong>.
+        Setiap tahun maksimal hanya boleh <strong>10 gelombang</strong>.
     </div>
 
     <form action="{{ route('master.gelombang.store') }}" method="POST" class="bg-white shadow rounded-lg p-6">

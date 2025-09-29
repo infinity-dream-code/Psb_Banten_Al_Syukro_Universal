@@ -33,9 +33,9 @@ public function store(Request $request)
     $last = MasterGelombang::where('tahun', $tahun)->max('gelombang');
     $next = $last ? $last + 1 : 1;
 
-    if ($next > 9) {
+    if ($next > 10) {
         return redirect()->back()->withErrors([
-            'gelombang' => "Tahun {$tahun} sudah punya 9 gelombang, tidak bisa tambah lagi."
+            'gelombang' => "Tahun {$tahun} sudah punya 10 gelombang, tidak bisa tambah lagi."
         ])->withInput();
     }
 
@@ -52,6 +52,7 @@ public function store(Request $request)
     return redirect()->route('master.gelombang')
         ->with('success', "Gelombang ke-{$next} untuk tahun {$tahun} berhasil ditambahkan");
 }
+
 
 public function edit($id)
 {

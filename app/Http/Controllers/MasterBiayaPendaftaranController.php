@@ -20,17 +20,11 @@ class MasterBiayaPendaftaranController extends Controller
         return view('dashboard.master-data.unit.create');
     }
 
-     public function store(Request $request)
+  public function store(Request $request)
 {
     $request->validate([
         'fakultas' => 'required|string|max:255',
     ]);
-
-    $count = MasterFakultas::count();
-    if ($count >= 9) {
-        return redirect()->route('master.unit')
-            ->with('error', 'Jumlah maksimal unit (9) sudah tercapai.');
-    }
 
     MasterFakultas::create([
         'fakultas' => $request->fakultas,

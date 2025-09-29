@@ -113,13 +113,13 @@ class DataPeserta extends Model
         'pembekalan'            => 'datetime',
     ];
 
-  public static function generateNoPendaftaran($idGelombang, $idFakultas)
+  public static function generateNoPendaftaran($idGelombang)
 {
     $gel = MasterGelombang::find($idGelombang);
     $tahun = substr($gel->tahun, -2);
     $gelombang = $gel->gelombang;
-    $unit = $idFakultas;
-    $prefix = $tahun . $gelombang . $unit;
+    $gelombangCode = $gelombang - 1;
+    $prefix = '9' . $tahun . $gelombangCode;
 
     $last = \App\Models\User::where('username', 'like', $prefix . '%')
         ->orderBy('username', 'desc')
@@ -130,6 +130,7 @@ class DataPeserta extends Model
 
     return $prefix . $incrementStr;
 }
+
 
     public function ujian()
     {
