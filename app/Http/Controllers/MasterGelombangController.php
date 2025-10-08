@@ -13,6 +13,12 @@ class MasterGelombangController extends Controller
         return view('dashboard.master-data.gelombang.index', compact('gelombang'));
     }
 
+    public function index2()
+    {
+        $gelombangs = MasterGelombang::with('akademik')->paginate(10);
+        return view('dashboard.settings.gelombang.index', compact('gelombangs'));
+    }
+
     public function create()
     {
         $akademik = MasterAkademik::all();

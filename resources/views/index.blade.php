@@ -52,6 +52,24 @@
    Pendaftaran
 </a>
 
+<div class="relative inline-block ml-6 group">
+    <button class="no-underline text-gray-600 hover:text-pmb-green-700 transition-colors font-medium">
+        Brosur
+    </button>
+    <div class="absolute hidden group-hover:block hover:block bg-white border border-gray-200 shadow-lg rounded mt-2 min-w-[180px] z-50">
+        @forelse($brosurs as $b)
+            <a href="{{ asset('storage/'.$b->brosur) }}" 
+               download="{{ basename($b->brosur) }}"
+               class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 no-underline">
+               {{ basename($b->brosur) }}
+            </a>
+        @empty
+            <span class="block px-4 py-2 text-sm text-gray-400">Belum ada brosur</span>
+        @endforelse
+    </div>
+</div>
+
+
                 </div>
              <div class="flex items-center space-x-2 text-gray-600 hover:text-pmb-green-700 transition-colors cursor-pointer">
    @if(Auth::check())
@@ -90,99 +108,77 @@
     </nav>
 
     <main>
-      <!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DEMO PSB - Penerimaan Siswa Baru 2025/2026</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="min-h-screen">
-  
 
-    <!-- Main Hero Section -->
-    <section class="bg-gradient-to-br from-green-600 via-green-700 to-green-800 min-h-screen relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-r from-green-600/90 to-green-800/90"></div>
-        
-        <div class="relative max-w-7xl mx-auto px-4 py-12 min-h-screen flex items-center">
-            <div class="grid lg:grid-cols-2 gap-12 items-center w-full">
-                <div class="text-white space-y-8">
-                    <div>
-                        <div class="text-yellow-400 text-lg font-semibold mb-4 tracking-wide">Informasi</div>
-                        <h1 class="text-5xl lg:text-6xl font-bold leading-tight mb-6">
-                            <span class="block">Penerimaan</span>
-                            <span class="block">Siswa Baru</span>
-                            <span class="block text-4xl lg:text-5xl mt-2">2025/2026</span>
-                        </h1>
-                        <div class="text-xl text-green-100 font-medium">DEMO PSB</div>
-                    </div>
-                    
-                   <div class="flex flex-col sm:flex-row gap-4">
-    <a href="{{url('/enroll')}}" 
-       class="no-underline bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-4 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-300 text-center">
-        Daftar Sekarang
-    </a>
-    <a href="{{url('/ServiceLogin')}}" 
-       class="no-underline bg-blue-500 hover:bg-blue-400 text-white font-bold px-8 py-4 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-300 text-center">
-        Login Pendaftar
-    </a>
-</div>
-
+<section class="relative overflow-hidden">
+    <div class="overflow-hidden relative">
+        <div id="slider" class="flex transition-transform duration-700 ease-in-out">
+            @if(count($sliders) > 0)
+                <div class="w-full flex-shrink-0" style="position:relative; padding-top:56.25%;">
+                    <img src="{{ asset('storage/'.$sliders->last()->image) }}" 
+                         style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; border-radius:8px;">
                 </div>
-
-                <div class="relative flex justify-center lg:justify-end">
-                    <div class="relative">
-                        <div class="text-center mb-8 lg:text-right">
-                            <div class="text-4xl lg:text-5xl font-bold">
-                                <span class="text-white">LET'S </span>
-                                <span class="text-yellow-400">JOIN </span>
-                                <span class="text-white">US!</span>
-                            </div>
-                        </div>
-                        
-                        <div class="relative">
-                            <div class="w-80 h-80 lg:w-96 lg:h-96 bg-green-600 rounded-full relative overflow-hidden">
-                                <div class="absolute inset-0 bg-gradient-to-t from-yellow-500/20 to-transparent"></div>
-                                
-                                <img src="https://demo.pmb.smartpayment.co.id/images/media/hero_image_2.png" 
-                                     alt="Mahasiswa DEMO PMB" 
-                                     class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-80 h-auto object-contain z-10"
-                                     onerror="this.style.display='none'">
-                                
-                                <div class="absolute top-6 left-8 text-yellow-600 animate-bounce" style="animation-delay: 0.2s;">
-                                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                                    </svg>
-                                </div>
-                                
-                                <div class="absolute top-16 right-8 text-yellow-600 animate-bounce" style="animation-delay: 0.075s;">
-                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/>
-                                    </svg>
-                                </div>
-                                
-                                <div class="absolute bottom-24 left-6 text-yellow-600 animate-bounce" style="animation-delay: 0.2s;">
-                                    <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"/>
-                                    </svg>
-                                </div>
-                                
-                                <div class="absolute bottom-32 right-4 text-yellow-600 animate-bounce" style="animation-delay: 0.2s;">
-                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
+                @foreach($sliders as $s)
+                    <div class="w-full flex-shrink-0" style="position:relative; padding-top:56.25%;">
+                        <img src="{{ asset('storage/'.$s->image) }}" 
+                             style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; border-radius:8px;">
                     </div>
+                @endforeach
+                <div class="w-full flex-shrink-0" style="position:relative; padding-top:56.25%;">
+                    <img src="{{ asset('storage/'.$sliders->first()->image) }}" 
+                         style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; border-radius:8px;">
                 </div>
-            </div>
+            @endif
         </div>
 
-      
-    </section>
+        <button onclick="prevSlide()" 
+            class="absolute top-1/2 left-2 sm:left-6 -translate-y-1/2 bg-black/50 text-white p-2 sm:px-6 sm:py-5 rounded-full text-2xl sm:text-4xl">‹
+        </button>
 
+        <button onclick="nextSlide()" 
+            class="absolute top-1/2 right-2 sm:right-6 -translate-y-1/2 bg-black/50 text-white p-2 sm:px-6 sm:py-5 rounded-full text-2xl sm:text-4xl">›
+        </button>
+    </div>
+</section>
+
+
+<script>
+    const slider = document.getElementById('slider')
+    const slides = slider.children
+    let currentSlide = 1
+    const totalSlides = slides.length
+    slider.style.transform = `translateX(-${currentSlide * 100}%)`
+
+    function updateSlide() {
+        slider.style.transition = 'transform 0.7s ease-in-out'
+        slider.style.transform = `translateX(-${currentSlide * 100}%)`
+    }
+
+    function nextSlide() {
+        currentSlide++
+        updateSlide()
+        if (currentSlide === totalSlides - 1) {
+            setTimeout(() => {
+                slider.style.transition = 'none'
+                currentSlide = 1
+                slider.style.transform = `translateX(-${currentSlide * 100}%)`
+            }, 700)
+        }
+    }
+
+    function prevSlide() {
+        currentSlide--
+        updateSlide()
+        if (currentSlide === 0) {
+            setTimeout(() => {
+                slider.style.transition = 'none'
+                currentSlide = totalSlides - 2
+                slider.style.transform = `translateX(-${currentSlide * 100}%)`
+            }, 700)
+        }
+    }
+
+    setInterval(nextSlide, 5500)
+</script>
 
         <section class="bg-gray-50 py-20">
             <div class="max-w-7xl mx-auto px-4">
@@ -248,6 +244,59 @@
                 </div>
             </div>
         </section>
+<section class="max-w-7xl mx-auto mt-6 px-4 mb-5">
+    <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl shadow-lg border border-green-100 overflow-hidden">
+        <div class="bg-gradient-to-r from-green-600 to-emerald-600 px-8 py-5">
+            <h2 class="text-2xl font-bold text-white flex items-center gap-3">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                Informasi Terbaru
+            </h2>
+        </div>
+        
+        <div class="p-8">
+            @forelse($informasi as $item)
+                <div class="mb-5 last:mb-0 bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden hover:shadow-xl hover:border-green-300 transition-all duration-300 transform hover:-translate-y-1">
+                    <div class="p-8">
+                        <div class="flex items-start gap-6">
+                            <div class="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center shadow-lg">
+                                <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                </svg>
+                            </div>
+                            
+                            <div class="flex-1 min-w-0">
+                                <div class="prose max-w-none">
+                                    <p class="text-gray-700 text-base leading-relaxed whitespace-pre-line">{{ $item->informasi }}</p>
+                                </div>
+                                
+                                @if($item->created_at)
+                                    <div class="mt-5 pt-4 border-t border-gray-100 flex items-center gap-2 text-sm text-gray-500">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                        <span>{{ $item->created_at->diffForHumans() }}</span>
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @empty
+                <div class="text-center py-16">
+                    <div class="inline-flex items-center justify-center w-20 h-20 bg-gray-100 rounded-full mb-5">
+                        <svg class="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
+                        </svg>
+                    </div>
+                    <p class="text-gray-500 text-lg font-medium">Belum ada informasi tersedia</p>
+                    <p class="text-gray-400 text-base mt-2">Informasi akan ditampilkan di sini</p>
+                </div>
+            @endforelse
+        </div>
+    </div>
+</section>
 
       <section class="bg-pmb-green-700 py-24">
     <div class="max-w-6xl mx-auto px-6 text-center">
@@ -258,7 +307,7 @@
         <h2 class="text-5xl font-bold text-white mb-8">Visi</h2>
         <div class="bg-white/10 rounded-2xl p-8 mb-20 max-w-4xl mx-auto border border-white/20">
             <div class="text-2xl text-white leading-relaxed font-medium">
-                Menjadi Perguruan Tinggi Riset Berbasis Nilai-nilai Pesantren Tahun 2025
+                Mewujudkan generasi Qur'ani, cerdas, berakhlak mulia, dan berprestasi
             </div>
         </div>
         
@@ -274,7 +323,7 @@
                                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                             </svg>
                         </div>
-                        <div class="text-white text-lg leading-relaxed">Memperkuat transformasi keilmuan, tradisi dan moralitas</div>
+                        <div class="text-white text-lg leading-relaxed">Pembinaan karakter dan agama intensif</div>
                     </div>
                 </div>
                 
@@ -285,7 +334,7 @@
                                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                             </svg>
                         </div>
-                        <div class="text-white text-lg leading-relaxed">Melaksanakan pengabdian masyarakat</div>
+                        <div class="text-white text-lg leading-relaxed">Pengintegrasian IMTAQ dan IPTEK</div>
                     </div>
                 </div>
                 
@@ -296,7 +345,7 @@
                                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                             </svg>
                         </div>
-                        <div class="text-white text-lg leading-relaxed">Menjadi perguruan tinggi dengan budaya tata kelola yang baik</div>
+                        <div class="text-white text-lg leading-relaxed">Peningkatan kompetensi akademik dan non-akademik</div>
                     </div>
                 </div>
             </div>
@@ -309,7 +358,7 @@
                                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7-293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                             </svg>
                         </div>
-                        <div class="text-white text-lg leading-relaxed">Melaksanakan kegiatan pendidikan dan pembelajaran</div>
+                        <div class="text-white text-lg leading-relaxed">Pengembangan kemampuan berbahasa</div>
                     </div>
                 </div>
                 
@@ -368,87 +417,86 @@
                                 <div class="flex items-start space-x-4">
                                     <span class="text-pmb-green-600 font-bold text-lg flex-shrink-0">4.</span>
                                     <div class="text-gray-700 text-lg leading-relaxed">
-                                        Transaksi ke bank Muamalat baik teller, ATM, ibanking maupun sms banking, maka transaksinya (menu yang dipilih) adalah transaksi virtual akun. 
-                                        <span class="font-bold text-red-600">dibayarkan non-tunai (langsung ke nomor virtual akun)</span>
-                                    </div>
+    Transaksi ke bank Muamalat baik teller, ATM, e-banking maupun sms banking, maka transaksinya (menu yang dipilih) adalah transaksi virtual akun. 
+    <span class="font-bold text-red-600">Biaya Pendaftaran sebesar Rp. xxx dibayarkan non-tunai (langsung ke nomor virtual akun)</span>
+</div>
+
                                 </div>
                                 
                                 <div class="flex items-start space-x-4">
                                     <span class="text-pmb-green-600 font-bold text-lg flex-shrink-0">5.</span>
-                                    <div class="text-gray-700 text-lg leading-relaxed">
-                                        Transaksi melalui LINTAS BANK baik teller, ATM, ibanking maupun sms banking, maka transaksinya (menu yang dipilih) adalah transfer antar bank. 
-                                    </div>
+                                   <div class="text-gray-700 text-lg leading-relaxed">
+    Transaksi melalui LINTAS BANK baik teller, ATM, e-banking maupun sms banking, maka transaksinya (menu yang dipilih) adalah transfer antar bank. 
+    <span class="font-bold text-red-600">Biaya Pendaftaran menjadi Rp. xxx + biaya transfer antar bank Rp. 6.500</span>
+</div>
+
                                 </div>
                             </div>
                         </div>
 
                         <!-- Petunjuk Pembayaran -->
-                       <div id="content-pembayaran" class="tab-content hidden">
-    <div class="card card-body p-4 bg-white shadow-sm rounded">
-        <p class="pb-3 fw-bold fs-5">
-            Pembayaran melalui Payment Point / Teller Bank Muamalat:
-        </p>
-        <ol class="ps-3">
-            <li class="mb-2">Tunjukkan Nomor Pendaftaran / Virtual Akun (VA) Anda ke teller</li>
-            <li class="mb-2">
-                Isi form pembayaran 
-                <span class="text-danger fw-bold">
-                    (jumlah nominal pembayaran sesuai dengan informasi dari sistem PSB Online)
-                </span>
-            </li>
-            <li class="mb-2">Selesai</li>
-            <li class="mb-2">Simpan bukti struk sebagai bukti pembayaran yang sah</li>
-        </ol>
+                      <div id="content-pembayaran" class="tab-content hidden">
+  <div class="card card-body p-4 bg-white shadow-sm rounded">
 
-        <p class="pb-3 fw-bold fs-5 mt-4">Pembayaran melalui ATM Muamalat:</p>
-        <ol class="ps-3">
-            <li class="mb-2">Masukkan PIN</li>
-            <li class="mb-2">Pilih Menu "Pembayaran"</li>
-            <li class="mb-2">Pilih Menu "Sekolah/Institusi" kemudian cari kode PSB DEMO</li>
-            <li class="mb-2">
-                Masukkan "Nomor Pendaftaran / Virtual Akun (VA)" (10–11 digit angka)
-                <span class="text-danger fw-bold"> contoh: 12345678901 </span>
-            </li>
-            <li class="mb-2">Pilih daftar tagihan yang ingin dibayarkan (Tagihan Pendaftaran)</li>
-            <li class="mb-2">Selesai</li>
-            <li class="mb-2">Simpan bukti struk sebagai bukti pembayaran yang sah</li>
-        </ol>
+    <p class="pb-3 fw-bold fs-5">Revisi Redaksi Petunjuk Pembayaran</p>
 
-        <p class="pb-3 fw-bold fs-5 mt-4">
-            Pembayaran melalui Jaringan ATM BERSAMA, PRIMA (BCA, Mandiri, BNI, BRI, dll):
-        </p>
-        <ol class="ps-3">
-            <li class="mb-2">Masukkan PIN</li>
-            <li class="mb-2">Pilih Menu "Transaksi Lainnya"</li>
-            <li class="mb-2">Pilih Menu "Transfer"</li>
-            <li class="mb-2">Pilih Menu "Ke Rek Bank Lain / Antar Bank Online"</li>
-            <li class="mb-2 lh-lg">
-                Masukkan kode transaksi 751000 + Nomor Pendaftaran  
-                <span class="text-danger fw-bold"> contoh: 75100012345678901 </span>
-            </li>
-            <li class="mb-2">Masukkan jumlah sesuai tagihan</li>
-            <li class="mb-2">Selesai</li>
-            <li class="mb-2">Simpan bukti struk sebagai bukti pembayaran yang sah</li>
-        </ol>
+    <p class="pb-2 fw-bold fs-6 mt-3">Pembayaran melalui Payment Point / Teller Bank Muamalat:</p>
+    <ol class="ps-3">
+        <li class="mb-2">Tunjukkan Nomor Pendaftaran / Virtual Akun (VA) Anda ke teller</li>
+        <li class="mb-2">Isi form pembayaran (jumlah nominal pembayaran sesuai dengan informasi dari sistem PSB Online)</li>
+        <li class="mb-2">Simpan bukti struk sebagai bukti pembayaran yang sah</li>
+    </ol>
 
-        <p class="pb-3 fw-bold fs-5 mt-4">
-            Pembayaran melalui Internet Banking/Mobile Banking/SMS Banking (Realtime/Online Transfer):
-        </p>
-        <ol class="ps-3">
-            <li class="mb-2">Login ke Internet Banking</li>
-            <li class="mb-2">Pilih Menu "Transfer"</li>
-            <li class="mb-2">Pilih Menu "Ke Rek Bank Lain / Realtime Transfer"</li>
-            <li class="mb-2">Pilih “Seluruh Channel Bank” sebagai rekening tujuan</li>
-            <li class="mb-2 lh-lg">
-                Masukkan kode transaksi 751000 + Nomor Pendaftaran 
-                <span class="text-danger fw-bold"> contoh: 75100012345678901 </span>
-            </li>
-            <li class="mb-2">Masukkan jumlah sesuai tagihan</li>
-            <li class="mb-2">Selesai</li>
-            <li class="mb-2">Simpan bukti struk sebagai bukti pembayaran yang sah</li>
-        </ol>
-    </div>
+    <p class="pb-2 fw-bold fs-6 mt-4">Pembayaran melalui ATM Muamalat:</p>
+    <ol class="ps-3">
+        <li class="mb-2">Masukkan PIN</li>
+        <li class="mb-2">Pilih menu "PEMBAYARAN" lalu pilih menu "VIRTUAL ACCOUNT".</li>
+        <li class="mb-2">Masukkan "Nomor Pendaftaran / Virtual Akun (VA)" contoh: 7977xx12345678901</li>
+        <li class="mb-2">Periksa Informasi pembayaran pastikan VA sudah sesuai dengan informasi (cek info nama dan nama tagihan)</li>
+        <li class="mb-2">Tekan "YA" jika setuju dengan informasi pembayaran.</li>
+        <li class="mb-2">Masukkan nominal pembayaran sesuai dengan total bayar yang tertera.</li>
+        <li class="mb-2">Kemudian tekan "Benar".</li>
+        <li class="mb-2">Konfirmasi transaksi sukses.</li>
+        <li class="mb-2">Simpan struk ATM sebagai bukti pembayaran yang sah.</li>
+    </ol>
+
+    <p class="pb-2 fw-bold fs-6 mt-4">Pembayaran melalui Jaringan ATM BERSAMA, PRIMA (BCA, Mandiri, BNI, BRI, dll):</p>
+    <ol class="ps-3">
+        <li class="mb-2">Masukkan PIN</li>
+        <li class="mb-2">Pilih menu "Transaksi Lainnya " lalu pilih "TRANSFER"</li>
+        <li class="mb-2">Pilih Menu "KE REK BANK LAIN / ANTAR BANK ONLINE"</li>
+        <li class="mb-2">Masukkan Kode Bank Muamalat (147) dilanjut dengan 16 digit nomor Virtual Account (VA) contoh: 7977xx12345678901</li>
+        <li class="mb-2">Masukkan nominal pembayaran sesuai dengan total bayar yang tertera.</li>
+        <li class="mb-2">Periksa Informasi pembayaran pastikan VA sudah sesuai dengan informasi (cek info nama dan nama tagihan)</li>
+        <li class="mb-2">Jika data sudah benar maka lakukan konfirmasi pada data transfer.</li>
+        <li class="mb-2">Simpan struk ATM sebagai bukti pembayaran.</li>
+    </ol>
+
+    <p class="pb-2 fw-bold fs-6 mt-4">Pembayaran melalui M-Banking Muamalat:</p>
+    <ol class="ps-3">
+        <li class="mb-2">Login ke Mobile Banking Muamalat (Muamalat DIN).</li>
+        <li class="mb-2">Pilih menu "BELI atau BAYAR".</li>
+        <li class="mb-2">Pilih menu "VIRTUAL ACCOUNT".</li>
+        <li class="mb-2">Masukkan nomor "Virtual Account" contoh: 7977xx12345678901.</li>
+        <li class="mb-2">Periksa Informasi pembayaran pastikan VA sudah sesuai dengan informasi (cek info nama dan nama tagihan).</li>
+        <li class="mb-2">Masukkan nominal pembayaran sesuai dengan total bayar yang tertera.</li>
+        <li class="mb-2">Masukkan TIN mobile banking anda.</li>
+        <li class="mb-2">Simpan bukti transaksi sebagai bukti pembayaran.</li>
+    </ol>
+
+    <p class="pb-2 fw-bold fs-6 mt-4">Pembayaran melalui Internet Banking/Mobile Banking (Realtime/Online Transfer):</p>
+    <ol class="ps-3">
+        <li class="mb-2">Login ke Internet Banking</li>
+        <li class="mb-2">Pilih Menu "Transfer"</li>
+        <li class="mb-2">Pilih Menu "Ke Rek Bank Lain / Realtime Transfer"</li>
+        <li class="mb-2">Pilih “Seluruh Channel Bank” sebagai rekening tujuan</li>
+        <li class="mb-2">Masukkan Nomor Pendaftaran / Virtual Account. contoh: 75100012345678901</li>
+        <li class="mb-2">Masukkan jumlah sesuai tagihan.</li>
+        <li class="mb-2">Simpan bukti struk sebagai bukti pembayaran yang sah.</li>
+    </ol>
+  </div>
 </div>
+
 
                         <!-- Persyaratan Daftar Ulang -->
                         <div id="content-daftar-ulang" class="tab-content hidden">

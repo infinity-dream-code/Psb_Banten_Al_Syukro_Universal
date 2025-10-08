@@ -16,7 +16,16 @@ use Illuminate\Support\Facades\Log;
 
 class MasterHargaController extends Controller
 {
+   public function index()
+    {
+        $masterHarga = MasterHarga::with(['jalur', 'gelombang', 'fakultas', 'prodi'])
+            ->orderBy('id')
+            ->get();
 
+        return view('dashboard.settings.master-harga.index', compact('masterHarga'));
+    }
+
+    
 public function create(Request $request)
 {
     $jalurs = MasterJalur::where('is_active', 1)->orderBy('nama')->get();

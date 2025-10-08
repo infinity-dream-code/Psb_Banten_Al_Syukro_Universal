@@ -19,8 +19,13 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PembayaranSekolahController;
 use App\Http\Controllers\MasterHargaController;
 use App\Http\Controllers\MasterUjianController;
+use App\Http\Controllers\MasterPotonganController;
+use App\Http\Controllers\TagihanController;
 use App\Http\Controllers\UjianController;
 use App\Http\Controllers\MasterAkademikController;
+use App\Http\Controllers\ImagesliderController;
+use App\Http\Controllers\InformasiController;
+use App\Http\Controllers\BrosurController;
 
 /*
 |--------------------------------------------------------------------------
@@ -136,6 +141,18 @@ Route::get('/PmbMstPendaftarans/cetak_info_enroll/{nama}/{no_pendaftaran}/{jalur
 
     Route::get('PmbMstPendaftarans/users/{id}/detail', [UserController::class, 'showuser']);
 
+Route::get('/PmbMstPendaftarans/master-potongan', [MasterPotonganController::class, 'index']);
+Route::get('/PmbMstPendaftarans/master-potongan/add', [MasterPotonganController::class, 'create']);
+Route::post('/PmbMstPendaftarans/master-potongan/store', [MasterPotonganController::class, 'store']);
+Route::delete('/PmbMstPendaftarans/master-potongan/delete/{id}', [MasterPotonganController::class, 'destroy']);
+Route::get('/PmbMstPendaftarans/master-potongan/edit/{id}', [MasterPotonganController::class, 'edit']);
+Route::put('/PmbMstPendaftarans/master-potongan/update/{id}', [MasterPotonganController::class, 'update']);
+Route::get('/PmbMstPendaftarans/master-potongan/up/{id}', [MasterPotonganController::class, 'up']);
+Route::get('/PmbMstPendaftarans/master-potongan/down/{id}', [MasterPotonganController::class, 'down']);
+Route::get('/PmbMstPendaftarans/master-potongan/toggle/{id}', [MasterPotonganController::class, 'index'])->name('master-potongan.toggle');
+
+Route::get('/PmbMstPendaftarans/tagihan_daful', [TagihanController::class, 'index']);
+
 //master unit/fakultas
 Route::get('/PmbMstPendaftarans/master-unit', [MasterBiayaPendaftaranController::class, 'index'])->name('master.unit');
 Route::get('/PmbMstPendaftarans/master-unit/add', [MasterBiayaPendaftaranController::class, 'create'])->name('master.unit.add');
@@ -189,7 +206,7 @@ Route::delete('/PmbMstPendaftarans/master-jalur/delete/{id}', [MasterJalurContro
         Route::get('/PmbMstPendaftarans/set_kelulusan/{status}', [UjianController::class, 'setKelulusanPeserta'])
     ->name('ujian.setKelulusan');
 
-
+Route::get('PmbMstPendaftarans/validate_tagihan', [UjianController::class, 'validateTagihan']);
 
     Route::get('PmbMstPendaftarans/edit_jadwal_ujian', [UjianController::class, 'editJadwalUjian'])
         ->name('ujian.editJadwalUjian');
@@ -203,7 +220,16 @@ Route::post('/master-harga/toggle-active/{id}', [MasterHargaController::class, '
     ->name('master-harga.toggle-active');
 
     // Settings
-    Route::get('PmbMstPendaftarans/setting', [SettingsController::class, 'index']);
+
+    Route::get('PmbMstPendaftarans/setting-gelombang', [MasterGelombangController::class, 'index2']);
+Route::get('PmbMstPendaftarans/setting-harga', [MasterHargaController::class, 'index']);
+Route::get('PmbMstPendaftarans/setting-pendaftaran', [MasterBiayaPendaftaranController::class, 'index2']);
+Route::resource('PmbMstPendaftarans/setting-slider',ImagesliderController::class);
+Route::resource('PmbMstPendaftarans/setting-informasi', InformasiController::class)
+    ->names('informasi');
+Route::resource('PmbMstPendaftarans/setting-brosur', BrosurController::class);
+
+
     Route::post('master_akademik/toggle/{id}', [SettingsController::class, 'toggleAkademik'])->name('master_akademik.toggle');
     Route::post('gelombang/toggle/{id}', [SettingsController::class, 'toggleGelombang'])->name('gelombang.toggle');
     Route::post('fakultas/toggle/{id}', [SettingsController::class, 'toggleFakultas'])->name('fakultas.toggle');
@@ -213,6 +239,7 @@ Route::post('/master-harga/toggle-active/{id}', [MasterHargaController::class, '
 
      Route::get('PmbMstPendaftarans/registrasi-cekstatus', [RegisterController::class, 'cekStatusIndex'])->name('registrasi.cekstatus.index');
 Route::post('PmbMstPendaftarans/registrasi-cekstatus', [RegisterController::class, 'cekStatus'])->name('registrasi.cekStatus');
+
 
     // Master Jalur
     Route::get('PmbRefJenispendaftarans/add', [MasterJalurController::class, 'create']);

@@ -7,11 +7,14 @@ use App\Models\DataPeserta;
 use App\Models\MasterGelombang;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use App\Models\ImageSlider;
+use App\Models\Brosur;
+use App\Models\Informasi;
 
 class DashboardController extends Controller
 {
 
-   public function index1()
+public function index1()
 {
     $today = Carbon::today();
     $tahunIni = Carbon::now()->year;
@@ -24,10 +27,12 @@ class DashboardController extends Controller
         ->orderBy('start', 'asc')
         ->get();
 
-    return view('index', compact('gelombangTahunIni'));
-}
+    $sliders = ImageSlider::orderByDesc('tanggal_upload')->get();
+    $brosurs = Brosur::orderByDesc('tanggal_upload')->get();
+    $informasi = Informasi::with('user')->latest()->get();
 
-
+    return view('index', compact('gelombangTahunIni', 'sliders', 'brosurs', 'informasi'));
+    }
 
     public function index()
     {

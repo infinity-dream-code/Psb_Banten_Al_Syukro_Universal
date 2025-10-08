@@ -287,7 +287,7 @@ public function cekStatus(Request $request)
 
     $token = \Firebase\JWT\JWT::encode($payload, $jwtKey, 'HS256');
 
-    $response = \Http::post("10.99.23.111/WS_PSB/WS_PSB_MASTER/index.php", [
+    $response = \Http::post("http://10.99.23.111/WS_PSB/WS_PSB_MASTER/index.php", [
         "token" => $token,
         "method" => "cekTagihanDibayar"
     ]);
@@ -303,20 +303,30 @@ public function cekStatus(Request $request)
     }
 
     $updatedCount = 0;
+
     foreach ($result['data'] as $tagihan) {
         if ($tagihan['StatusBayar'] == "1") {
-            $updated = \App\Models\DataPeserta::where('no_pendaftaran', $tagihan['NomorPendaftaran'])
-                ->where(function ($q) {
-                    $q->whereNull('status_pembayaran_registrasi')
-                      ->orWhere('status_pembayaran_registrasi', 0);
-                })
-                ->update([
-                    'status_pembayaran_registrasi' => 1,
-                    'tgl_bayar_regis' => $tagihan['TanggalBayar']
-                ]);
+            $peserta = \App\Models\DataPeserta::where('no_pendaftaran', $tagihan['NomorPendaftaran'])->first();
 
-            if ($updated) {
-                $updatedCount++;
+            if ($peserta) {
+                $updated = $peserta->where(function ($q) {
+                        $q->whereNull('status_pembayaran_registrasi')
+                          ->orWhere('status_pembayaran_registrasi', 0);
+                    })
+                    ->update([
+                        'status_pembayaran_registrasi' => 1,
+                        'tgl_bayar_regis' => $tagihan['TanggalBayar']
+                    ]);
+
+                if ($updated) {
+                    \App\Models\Tagihan::where('id_peserta', $peserta->id)
+                        ->update([
+                            'status' => 1,
+                            'tanggal_pembayaran_daful' => $tagihan['TanggalBayar']
+                        ]);
+
+                    $updatedCount++;
+                }
             }
         }
     }
@@ -327,6 +337,7 @@ public function cekStatus(Request $request)
 
     return back()->with('success', 'Berhasil cek status');
 }
+
 
 
 public function cekStatusIndex(Request $request)

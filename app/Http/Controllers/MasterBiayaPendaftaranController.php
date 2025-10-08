@@ -15,6 +15,13 @@ class MasterBiayaPendaftaranController extends Controller
         return view('dashboard.master-data.unit.index', compact('unit'));
     }
 
+      public function index2()
+    {
+        $fakultas = MasterFakultas::orderBy('id')->get();
+        return view('dashboard.settings.pendaftar.index', compact('fakultas'));
+    }
+
+
     public function create()
     {
         return view('dashboard.master-data.unit.create');

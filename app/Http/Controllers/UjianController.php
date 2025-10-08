@@ -45,59 +45,75 @@ class UjianController extends Controller
 
 
 public function setKelulusanPeserta(Request $request, $status)
-    {
-        $ids = explode(',', $request->get('ids'));
+{
+    $ids = explode(',', $request->get('ids'));
 
-        if ($status === 'gagal') {
-            DataPeserta::whereIn('id', $ids)->update([
-                'status_ujian' => 'gagal',
-                'batas_awal_registrasi' => null,
-                'batas_akhir_registrasi' => null,
-                'pembekalan' => null,
+    if ($status === 'gagal') {
+        DataPeserta::whereIn('id', $ids)->update([
+            'status_ujian' => 'gagal',
+            'batas_awal_registrasi' => null,
+            'batas_akhir_registrasi' => null,
+            'pembekalan' => null,
+        ]);
+    } elseif ($status === 'lulus') {
+        DataPeserta::whereIn('id', $ids)->update([
+            'status_ujian' => 'lulus',
+            'batas_awal_registrasi' => $request->awal,
+            'batas_akhir_registrasi' => $request->akhir,
+            'pembekalan' => $request->pembekalan,
+        ]);
+
+        $pesertaList = DataPeserta::with('masterHarga','relasiGelombang')
+            ->whereIn('id', $ids)
+            ->get();
+
+        $payloadData = [];
+
+        foreach ($pesertaList as $peserta) {
+            $detail = [];
+            $biayaDaful = 0;
+
+            if ($peserta->masterHarga && is_array($peserta->masterHarga->detail)) {
+                $detail = collect($peserta->masterHarga->detail)->map(function($d) {
+                    return [
+                        "nama_tagihan" => $d['nama_tagihan'],
+                        "kode_tagihan" => $d['no_akun'],
+                        "nominal"      => (int) $d['biaya'],
+                    ];
+                })->toArray();
+
+                $biayaDaful = array_sum(array_column($detail,'nominal'));
+            } else {
+                Log::warning('Peserta tanpa masterHarga', [
+                    'id_peserta' => $peserta->id,
+                    'id_master_harga' => $peserta->id_master_harga
+                ]);
+            }
+
+            Tagihan::create([
+                'id_peserta'              => $peserta->id,
+                'biaya_daful'             => $biayaDaful,
+                'detail'                  => $detail,
+                'status'                  => null,
+                'tanggal_pembayaran_daful'=> null,
             ]);
-        } elseif ($status === 'lulus') {
-            DataPeserta::whereIn('id', $ids)->update([
-                'status_ujian' => 'lulus',
-                'batas_awal_registrasi' => $request->awal,
-                'batas_akhir_registrasi' => $request->akhir,
-                'pembekalan' => $request->pembekalan,
-            ]);
 
-            $pesertaList = DataPeserta::with('masterHarga','relasiGelombang')
-                ->whereIn('id', $ids)
-                ->get();
+            $payloadData[] = [
+                "siswa" => [
+                    "nomor_pendaftaran" => $peserta->no_pendaftaran,
+                ],
+                "tagihan" => [
+                    "periode"        => now()->format('Ym'),
+                    "nama_tagihan"   => "TAGIHAN_PENDAFTARAN_ULANG",
+                    "tahun_akademik" => optional($peserta->relasiGelombang)->tahun_akademik,
+                    "detail_tagihan" => $detail
+                ]
+            ];
+        }
 
-            $data = $pesertaList->map(function($peserta) {
-                $detail = [];
-                if ($peserta->masterHarga && is_array($peserta->masterHarga->detail)) {
-                    $detail = collect($peserta->masterHarga->detail)->map(function($d) {
-                        return [
-                            "nama_tagihan" => $d['nama_tagihan'],
-                            "kode_tagihan" => $d['no_akun'],
-                            "nominal"      => (int) $d['biaya'],
-                        ];
-                    })->toArray();
-                } else {
-                    Log::warning('Peserta tanpa masterHarga', [
-                        'id_peserta' => $peserta->id,
-                        'id_master_harga' => $peserta->id_master_harga
-                    ]);
-                }
-                return [
-                    "siswa" => [
-                        "nomor_pendaftaran" => $peserta->no_pendaftaran,
-                    ],
-                    "tagihan" => [
-                        "periode"        => now()->format('Ym'),
-                        "nama_tagihan"   => "TAGIHAN_PENDAFTARAN_ULANG",
-                        "tahun_akademik" => optional($peserta->relasiGelombang)->tahun_akademik,
-                        "detail_tagihan" => $detail
-                    ]
-                ];
-            });
-
+        if (!empty($payloadData)) {
             $jwtToken = JWT::encode(
-                ['data' => $data->toArray()],
+                ['data' => $payloadData],
                 '53c2f9aace5478a11815c65fcdb1a3dc29b60c3e102489384e3c1701f4355fa4',
                 'HS256'
             );
@@ -109,10 +125,9 @@ public function setKelulusanPeserta(Request $request, $status)
 
             Log::info('CreateTagihanBulk payload', $payload);
 
-           $response = \Http::withHeaders([
-    'Content-Type' => 'application/json'
-])->post('10.99.23.111/WS_PSB/WS_PSB_MASTER/index.php', $payload);
-
+            $response = \Http::withHeaders([
+                'Content-Type' => 'application/json'
+            ])->post('http://10.99.23.111/WS_PSB/WS_PSB_MASTER/index.php', $payload);
 
             Log::info('CreateTagihanBulk response', [
                 'status' => $response->status(),
@@ -123,9 +138,10 @@ public function setKelulusanPeserta(Request $request, $status)
                 return redirect()->back()->with('error', 'Gagal membuat tagihan');
             }
         }
-
-        return redirect()->back()->with('success', 'Status ujian berhasil diperbarui');
     }
+
+    return redirect()->back()->with('success', 'Status ujian berhasil diperbarui');
+}
 
 
    public function setKelulusan(Request $request)
