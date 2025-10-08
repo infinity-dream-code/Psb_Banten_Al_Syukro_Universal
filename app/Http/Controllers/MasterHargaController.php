@@ -239,7 +239,7 @@ public function update(Request $request, $id)
         ]
     );
 
-    return redirect('PmbMstPendaftarans/setting')->with('success', 'Data berhasil diperbarui');
+    return redirect('PmbMstPendaftarans/setting-harga')->with('success', 'Data berhasil diperbarui');
 }
 
 
@@ -369,7 +369,7 @@ public function store(Request $request)
         ]
     );
 
-    return redirect('PmbMstPendaftarans/setting')->with('success', 'Data berhasil disimpan');
+    return redirect('PmbMstPendaftarans/setting-harga')->with('success', 'Data berhasil disimpan');
 }
 
 

@@ -144,7 +144,6 @@
 <a href="{{ url('/PmbMstPendaftarans/master-unit') }}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" data-menu="masterdata">Sekolah</a>
 <a href="{{ url('/PmbMstPendaftarans/master-sekolah') }}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" data-menu="masterdata">Jurusan</a>
 <a href="{{ url('/PmbMstPendaftarans/master-ujian') }}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" data-menu="masterdata">Ujian</a>
-  <a href="{{url('/PmbMstPendaftarans/master-potongan')}}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" data-menu="masterdata">Potongan</a>
 </div>
                         </li>
 <li>

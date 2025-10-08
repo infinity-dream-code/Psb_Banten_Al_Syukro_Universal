@@ -19,7 +19,6 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PembayaranSekolahController;
 use App\Http\Controllers\MasterHargaController;
 use App\Http\Controllers\MasterUjianController;
-use App\Http\Controllers\MasterPotonganController;
 use App\Http\Controllers\TagihanController;
 use App\Http\Controllers\UjianController;
 use App\Http\Controllers\MasterAkademikController;
@@ -140,16 +139,6 @@ Route::get('/PmbMstPendaftarans/cetak_info_enroll/{nama}/{no_pendaftaran}/{jalur
     ->name('peserta.update');
 
     Route::get('PmbMstPendaftarans/users/{id}/detail', [UserController::class, 'showuser']);
-
-Route::get('/PmbMstPendaftarans/master-potongan', [MasterPotonganController::class, 'index']);
-Route::get('/PmbMstPendaftarans/master-potongan/add', [MasterPotonganController::class, 'create']);
-Route::post('/PmbMstPendaftarans/master-potongan/store', [MasterPotonganController::class, 'store']);
-Route::delete('/PmbMstPendaftarans/master-potongan/delete/{id}', [MasterPotonganController::class, 'destroy']);
-Route::get('/PmbMstPendaftarans/master-potongan/edit/{id}', [MasterPotonganController::class, 'edit']);
-Route::put('/PmbMstPendaftarans/master-potongan/update/{id}', [MasterPotonganController::class, 'update']);
-Route::get('/PmbMstPendaftarans/master-potongan/up/{id}', [MasterPotonganController::class, 'up']);
-Route::get('/PmbMstPendaftarans/master-potongan/down/{id}', [MasterPotonganController::class, 'down']);
-Route::get('/PmbMstPendaftarans/master-potongan/toggle/{id}', [MasterPotonganController::class, 'index'])->name('master-potongan.toggle');
 
 Route::get('/PmbMstPendaftarans/tagihan_daful', [TagihanController::class, 'index']);
 

@@ -5,7 +5,7 @@
     <div class="bg-white shadow-lg rounded-lg">
         <div class="flex justify-between items-center px-6 py-4 border-b border-gray-200">
             <h3 class="text-xl font-semibold text-gray-800">Edit Master Harga</h3>
-            <a href="{{ url('PmbMstPendaftarans/setting') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition-colors flex items-center gap-2">
+            <a href="{{ url('PmbMstPendaftarans/setting-harga') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition-colors flex items-center gap-2">
                 <i class="fas fa-arrow-left"></i> Kembali
             </a>
         </div>
@@ -113,7 +113,7 @@
 
                 <div class="flex space-x-3 pt-4">
                     <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg flex items-center gap-2"><i class="fas fa-save"></i> Simpan</button>
-                    <a href="{{ url('PmbMstPendaftarans/setting') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg flex items-center gap-2"><i class="fas fa-times"></i> Batal</a>
+                    <a href="{{ url('PmbMstPendaftarans/setting-harga') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg flex items-center gap-2"><i class="fas fa-times"></i> Batal</a>
                 </div>
             </form>
         </div>

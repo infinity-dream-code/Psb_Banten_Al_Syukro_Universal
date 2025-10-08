@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\DataPeserta;
 use App\Models\MasterUjian;
 use App\Models\Ujian;
+use App\Models\Tagihan;
 use App\Models\MasterGelombang;
 use Firebase\JWT\JWT;
 use Illuminate\Support\Facades\Log;
