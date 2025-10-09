@@ -13,7 +13,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_peserta')->nullable();
             $table->decimal('biaya_daful', 15, 2)->nullable();
             $table->json('detail')->nullable();
-            $table->tinyInteger('status');
+            $table->tinyInteger('status')->nullable();
             $table->dateTime('tanggal_pembayaran_daful')->nullable();
             $table->timestamps();
         });
