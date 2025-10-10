@@ -1,11 +1,10 @@
-
 @extends('dashboard.template')
 
 @section('content')
 <div class="bg-white p-6 shadow rounded-lg">
     <h1 class="text-xl font-semibold mb-4">Data Pendaftar</h1>
 
-    <form method="GET" action="{{ url()->current() }}" class="mb-4 flex flex-wrap gap-2">
+    <form method="GET" action="{{ url()->current() }}" class="mb-4 flex flex-wrap gap-2 items-center">
        <select name="tahun_akademik" class="px-3 py-2 border rounded-lg" onchange="this.form.submit()">
     <option value="">--Pilih Tahun Akademik--</option>
     @foreach($tahunList as $th)
@@ -14,7 +13,6 @@
         </option>
     @endforeach
 </select>
-
 
         <select name="gelombang_id" class="px-3 py-2 border rounded-lg" onchange="this.form.submit()">
             <option value="">--Pilih Gelombang--</option>
@@ -32,6 +30,9 @@
 
         <button type="submit" 
             class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Cari</button>
+
+        <button type="submit" name="export" value="excel"
+            class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700">Export Excel</button>
     </form>
 
     <div class="overflow-x-auto">

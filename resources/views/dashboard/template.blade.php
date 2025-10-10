@@ -179,11 +179,7 @@
    data-menu="kelengkapan">
    Berkas & Pembayaran
 </a>
-  <a href="{{ url('/PmbMstPendaftarans/tagihan_daful') }}" 
-   class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" 
-   data-menu="kelengkapan">
-   Tagihan Daftar Ulang
-</a>
+
  </div>
                         </li>
                         <li>
@@ -237,8 +233,14 @@
                             <div id="registrasi-dropdown" class="dropdown-content bg-green-700">
                                 <a href="{{url('PmbMstPendaftarans/registrasi-lunas')}}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" data-menu="registrasi">Registrasi Daftar Ulang Lunas</a>
                                 <a href="{{url('PmbMstPendaftarans/registrasi-cekstatus')}}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" data-menu="registrasi">Cek Status</a>
+                                  <a href="{{ url('/PmbMstPendaftarans/tagihan_daful') }}" 
+   class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" 
+   data-menu="registrasi">
+   Tagihan Daftar Ulang
+</a>
                             </div>
                         </li>
+                        
                         <li>
                             <button class="menu-item w-full flex items-center justify-between px-6 py-3 text-white font-medium dropdown-toggle hover:bg-green-700 transition-colors" data-target="report-dropdown" data-menu="report">
                                 <div class="flex items-center">
