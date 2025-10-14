@@ -65,7 +65,7 @@
                 @empty
                     <tr>
                         <td colspan="5" class="px-6 py-4 text-center text-sm text-gray-500">
-                            Belum ada data program studi
+                            Belum ada data sekolah
                         </td>
                     </tr>
                 @endforelse
