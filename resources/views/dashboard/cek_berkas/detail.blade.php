@@ -174,7 +174,7 @@
 
 <tr class="hover:bg-gray-50">
     <td class="border border-gray-300 px-3 py-2">16</td>
-    <td class="border border-gray-300 px-3 py-2 font-medium">Upload AKTE</td>
+    <td class="border border-gray-300 px-3 py-2 font-medium">Upload Akta Kelahiran</td>
     <td class="border border-gray-300 px-3 py-2">
         @if($peserta->dokumen_akte_kelahiran)
             <a href="{{ asset(\Storage::url($peserta->dokumen_akte_kelahiran)) }}" 

@@ -26,7 +26,7 @@ public function store(Request $request)
 
     $request->validate([
         'id_fakultas' => 'required|exists:master_fakultas,id',
-        'nama' => 'required|string|max:255|unique:master_prodi,nama',
+        'nama' => 'required|string|max:255',
     ]);
 
     MasterProdi::create([
