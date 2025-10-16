@@ -159,8 +159,13 @@
                         <div class="flex gap-3">
                             <input type="datetime-local" name="ujian[{{ $ujian->id }}][tanggal]"
                                 class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                            <input type="text" name="ujian[{{ $ujian->id }}][ruang]" placeholder="Ruang"
+                            <select name="ujian[{{ $ujian->id }}][ruang]" 
                                 class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                                <option value="">--Pilih Ruang--</option>
+                                @foreach($masterRuangList as $r)
+                                    <option value="{{ $r->ruang }}">{{ $r->ruang }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                 @endforeach
@@ -180,94 +185,93 @@
 </div>
 
 <script>
-    function openModal(id) {
-        fetch(`/api/peserta/${id}`)
-            .then(res => res.text())
-            .then(html => {
-                document.getElementById('modalContent').innerHTML = html;
-                document.getElementById('detailModal').classList.remove('hidden');
-            });
-    }
-    function closeModal() {
-        document.getElementById('detailModal').classList.add('hidden');
-    }
-    function openParameterModal() {
-        const now = new Date();
-        const currentDateTime = now.toISOString().slice(0, 16);
-        document.querySelectorAll('#parameterModal input[type="datetime-local"]').forEach(input => {
-            input.value = currentDateTime;
+function openModal(id) {
+    fetch(`/api/peserta/${id}`)
+        .then(res => res.text())
+        .then(html => {
+            document.getElementById('modalContent').innerHTML = html;
+            document.getElementById('detailModal').classList.remove('hidden');
         });
-        document.getElementById('parameterModal').classList.remove('hidden');
-    }
-    function closeParameterModal() {
-        document.getElementById('parameterModal').classList.add('hidden');
-    }
-    function toggleAll() {
-        const selectAll = document.getElementById('selectAll');
+}
+function closeModal() {
+    document.getElementById('detailModal').classList.add('hidden');
+}
+function openParameterModal() {
+    const now = new Date();
+    const currentDateTime = now.toISOString().slice(0, 16);
+    document.querySelectorAll('#parameterModal input[type="datetime-local"]').forEach(input => {
+        input.value = currentDateTime;
+    });
+    document.getElementById('parameterModal').classList.remove('hidden');
+}
+function closeParameterModal() {
+    document.getElementById('parameterModal').classList.add('hidden');
+}
+function toggleAll() {
+    const selectAll = document.getElementById('selectAll');
+    const checkboxes = document.querySelectorAll('.peserta-checkbox');
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = selectAll.checked;
+    });
+}
+document.addEventListener('change', function(e) {
+    if (e.target.classList.contains('peserta-checkbox')) {
         const checkboxes = document.querySelectorAll('.peserta-checkbox');
-        checkboxes.forEach(checkbox => {
-            checkbox.checked = selectAll.checked;
-        });
-    }
-    document.addEventListener('change', function(e) {
-        if (e.target.classList.contains('peserta-checkbox')) {
-            const checkboxes = document.querySelectorAll('.peserta-checkbox');
-            const selectAll = document.getElementById('selectAll');
-            const checkedBoxes = document.querySelectorAll('.peserta-checkbox:checked');
-            selectAll.checked = checkboxes.length === checkedBoxes.length;
-        }
-    });
-    document.getElementById('parameterForm').addEventListener('submit', function(e) {
-        e.preventDefault();
+        const selectAll = document.getElementById('selectAll');
         const checkedBoxes = document.querySelectorAll('.peserta-checkbox:checked');
-        if (checkedBoxes.length === 0) {
-            alert('Silakan pilih minimal satu peserta');
-            return;
-        }
-        const selectedIds = Array.from(checkedBoxes).map(cb => cb.value);
-        const ujianData = {};
-        document.querySelectorAll('#parameterForm div').forEach(div => {
-            const datetime = div.querySelector('input[type="datetime-local"]');
-            const ruang = div.querySelector('input[name*="[ruang]"]');
-            if (datetime && ruang) {
-                const id = datetime.name.match(/\d+/)[0];
-                ujianData[id] = {
-                    tanggal: datetime.value,
-                    ruang: ruang.value
-                };
-            }
-        });
-        const parameterData = {
-            peserta_ids: selectedIds,
-            ujian: ujianData
-        };
-       fetch("{{ url('PmbMstPendaftarans/Set-Ujian') }}", {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-    },
-    body: JSON.stringify(parameterData)
-})
-
-        .then(res => res.json())
-        .then(data => {
-            alert('Parameter ujian berhasil disimpan!');
-            closeParameterModal();
-        })
-        .catch(err => {
-            alert('Terjadi kesalahan: ' + err.message);
-        });
-    });
-    window.addEventListener('click', function(e) {
-        const detailModal = document.getElementById('detailModal');
-        const parameterModal = document.getElementById('parameterModal');
-        if (e.target === detailModal) {
-            closeModal();
-        }
-        if (e.target === parameterModal) {
-            closeParameterModal();
+        selectAll.checked = checkboxes.length === checkedBoxes.length;
+    }
+});
+document.getElementById('parameterForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const checkedBoxes = document.querySelectorAll('.peserta-checkbox:checked');
+    if (checkedBoxes.length === 0) {
+        alert('Silakan pilih minimal satu peserta');
+        return;
+    }
+    const selectedIds = Array.from(checkedBoxes).map(cb => cb.value);
+    const ujianData = {};
+    document.querySelectorAll('#parameterForm div').forEach(div => {
+        const datetime = div.querySelector('input[type="datetime-local"]');
+        const ruang = div.querySelector('select[name*="[ruang]"]');
+        if (datetime && ruang) {
+            const id = datetime.name.match(/\d+/)[0];
+            ujianData[id] = {
+                tanggal: datetime.value,
+                ruang: ruang.value
+            };
         }
     });
+    const parameterData = {
+        peserta_ids: selectedIds,
+        ujian: ujianData
+    };
+    fetch("{{ url('PmbMstPendaftarans/Set-Ujian') }}", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify(parameterData)
+    })
+    .then(res => res.json())
+    .then(data => {
+        alert('Parameter ujian berhasil disimpan!');
+        closeParameterModal();
+    })
+    .catch(err => {
+        alert('Terjadi kesalahan: ' + err.message);
+    });
+});
+window.addEventListener('click', function(e) {
+    const detailModal = document.getElementById('detailModal');
+    const parameterModal = document.getElementById('parameterModal');
+    if (e.target === detailModal) {
+        closeModal();
+    }
+    if (e.target === parameterModal) {
+        closeParameterModal();
+    }
+});
 </script>
 @endsection

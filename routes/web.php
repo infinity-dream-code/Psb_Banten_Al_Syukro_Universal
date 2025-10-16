@@ -9,6 +9,7 @@ use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\MasterJalurController;
 use App\Http\Controllers\MasterBiayaPendaftaranController;
 use App\Http\Controllers\MasterProdiController;
+use App\Http\Controllers\MasterRuangController;
 use App\Http\Controllers\MasterGelombangController;
 use App\Http\Controllers\BayarController;
 use App\Http\Controllers\PembayaranController;
@@ -184,6 +185,13 @@ Route::post('/PmbMstPendaftarans/master-jalur/store', [MasterJalurController::cl
 Route::get('/PmbMstPendaftarans/master-jalur/edit/{id}', [MasterJalurController::class, 'edit'])->name('master.jalur.edit');
 Route::put('/PmbMstPendaftarans/master-jalur/update/{id}', [MasterJalurController::class, 'update'])->name('master.jalur.update');
 Route::delete('/PmbMstPendaftarans/master-jalur/delete/{id}', [MasterJalurController::class, 'destroy'])->name('master.jalur.delete');
+
+Route::get('/PmbMstPendaftarans/master-ruang', [MasterRuangController::class, 'index'])->name('master.ruang');
+Route::get('/PmbMstPendaftarans/master-ruang/add', [MasterRuangController::class, 'create'])->name('master.ruang.add');
+Route::post('/PmbMstPendaftarans/master-ruang/store', [MasterRuangController::class, 'store'])->name('master.ruang.store');
+Route::get('/PmbMstPendaftarans/master-ruang/edit/{id}', [MasterRuangController::class, 'edit'])->name('master.ruang.edit');
+Route::put('/PmbMstPendaftarans/master-ruang/update/{id}', [MasterRuangController::class, 'update'])->name('master.ruang.update');
+Route::delete('/PmbMstPendaftarans/master-ruang/delete/{id}', [MasterRuangController::class, 'destroy'])->name('master.ruang.delete');
 
 
        Route::get('PmbMstPendaftarans/cek_berkas_set_ujian', [UjianController::class, 'cekBerkasSetUjian'])

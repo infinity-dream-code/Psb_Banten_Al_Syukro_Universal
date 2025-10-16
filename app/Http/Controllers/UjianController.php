@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\DataPeserta;
 use App\Models\MasterUjian;
+use App\Models\MasterRuang;
 use App\Models\Ujian;
 use App\Models\Tagihan;
 use App\Models\MasterGelombang;
@@ -317,17 +318,20 @@ public function cekBerkasSetUjian(Request $request)
     );
 
     $masterUjianList = MasterUjian::all();
+    $masterRuangList = MasterRuang::all();
 
     return view('dashboard.ujian.cek_berkas_set_ujian', compact(
         'paginatedPeserta',
         'fieldWajib',
         'uploadWajib',
         'masterUjianList',
+        'masterRuangList',
         'gelombangList',
         'tahunAkademikList',
         'idGelombang'
     ));
 }
+
 
 
 
