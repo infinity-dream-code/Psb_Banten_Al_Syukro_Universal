@@ -87,9 +87,9 @@ $(function() {
     $('#id_fakultas').on('change', function() {
         let fakultasId = $(this).val();
         let prodiSelect = $('#id_prodi');
-        prodiSelect.empty().append('<option value="">-- Pilih Program Studi --</option>');
+        prodiSelect.empty().append('<option value="">-- Pilih Jurusan --</option>');
         if(fakultasId) {
-            $.get("{{ url('get-prodi-by-fakultas') }}/" + fakultasId, function(data) {
+           $.get(window.location.origin + "/get-prodi-by-fakultas/" + fakultasId, function(data) {
                 $.each(data, function(key, value) {
                     prodiSelect.append('<option value="'+ value.id +'">'+ value.nama +'</option>');
                 });

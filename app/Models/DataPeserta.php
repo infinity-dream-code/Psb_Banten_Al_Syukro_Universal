@@ -131,6 +131,25 @@ class DataPeserta extends Model
     return $prefix . $incrementStr;
 }
 
+public function relasiJalur()
+{
+    return $this->belongsTo(MasterJalur::class, 'id_jalur');
+}
+
+public function relasiProdi()
+{
+    return $this->belongsTo(MasterProdi::class, 'id_prodi');
+}
+
+public function relasiFakultas()
+{
+    return $this->belongsTo(MasterFakultas::class, 'id_fakultas');
+}
+
+public function tagihan()
+{
+    return $this->hasMany(Tagihan::class, 'id_peserta');
+}
 
     public function ujian()
     {

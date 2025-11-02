@@ -12,12 +12,27 @@ class User extends Authenticatable
 
     protected $table = 'user';
 
-    protected $fillable = ['nama','username','password','plain_password','role'];
+    protected $fillable = [
+        'nama',
+        'username',
+        'password',
+        'plain_password',
+        'role',
+        'prodi_id',
+    ];
 
-    protected $hidden = ['password','remember_token'];
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
 
     public function peserta()
     {
-        return $this->hasOne(DataPeserta::class,'id_user');
+        return $this->hasOne(DataPeserta::class, 'id_user');
+    }
+
+    public function prodi()
+    {
+        return $this->belongsTo(MasterProdi::class, 'prodi_id');
     }
 }

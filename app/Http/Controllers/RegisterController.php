@@ -9,6 +9,9 @@ use App\Models\MasterFakultas;
 use App\Models\MasterProdi;
 use App\Models\MasterProvinsi;
 use App\Models\MasterKabupaten;
+use App\Models\MasterRole;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use App\Exports\PesertaRegistrasiExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\MasterKecamatan;
@@ -184,7 +187,7 @@ $peserta = DataPeserta::where('no_pendaftaran', $noDaftar)
 
     $response = Http::withHeaders([
     'Content-Type' => 'application/json'
-])->post("10.99.23.111/WS_PSB/WS_PSB_MASTER/index.php", [
+])->post("http:/103.23.103.43/WS_PSB/WS_PSB_MASTER/index.php", [
     "token"  => $jwtToken,
     "method" => "CreateTagihan"
 ]);
@@ -203,7 +206,7 @@ public function cekTagihan($no_pendaftaran)
 
    $response = Http::withHeaders([
     'Content-Type' => 'application/json'
-])->post("10.99.23.111/WS_PSB/WS_PSB_MASTER/index.php", [
+])->post("http:/103.23.103.43/WS_PSB/WS_PSB_MASTER/index.php", [
     "token"  => $token,
     "method" => "CekTagihan"
 ]);
@@ -235,7 +238,7 @@ public function cekStatusRegis(Request $request)
 
     \Log::info('Cek Status Regis - Payload', $payload);
 
-    $response = \Http::post("10.99.23.111/WS_PSB/WS_PSB_MASTER/index.php", [
+    $response = \Http::post("http:/103.23.103.43/WS_PSB/WS_PSB_MASTER/index.php", [
         "token" => $token,
         "method" => "cekTagihanDibayar"
     ]);
@@ -287,7 +290,7 @@ public function cekStatus(Request $request)
 
     $token = \Firebase\JWT\JWT::encode($payload, $jwtKey, 'HS256');
 
-    $response = \Http::post("http://10.99.23.111/WS_PSB/WS_PSB_MASTER/index.php", [
+    $response = \Http::post("http:/103.23.103.43/WS_PSB/WS_PSB_MASTER/index.php", [
         "token" => $token,
         "method" => "cekTagihanDibayar"
     ]);
@@ -303,7 +306,6 @@ public function cekStatus(Request $request)
     }
 
     $updatedCount = 0;
-
     foreach ($result['data'] as $tagihan) {
         if ($tagihan['StatusBayar'] == "1") {
             $peserta = \App\Models\DataPeserta::where('no_pendaftaran', $tagihan['NomorPendaftaran'])->first();
@@ -319,12 +321,13 @@ public function cekStatus(Request $request)
                     ]);
 
                 if ($updated) {
-                    \App\Models\Tagihan::where('id_peserta', $peserta->id)
+                    \DB::table('tagihan')
+                        ->where('id_peserta', $peserta->id)
                         ->update([
                             'status' => 1,
-                            'tanggal_pembayaran_daful' => $tagihan['TanggalBayar']
+                            'tanggal_pembayaran_daful' => $tagihan['TanggalBayar'],
+                            'updated_at' => now()
                         ]);
-
                     $updatedCount++;
                 }
             }
@@ -338,6 +341,145 @@ public function cekStatus(Request $request)
     return back()->with('success', 'Berhasil cek status');
 }
 
+public function cekStatus1(Request $request)
+{
+    $noPendaftaranList = json_decode($request->no_pendaftaran, true) ?? [];
+
+    if (empty($noPendaftaranList)) {
+        return back()->with('error', 'Pilih minimal satu peserta');
+    }
+
+    $jwtKey = "53c2f9aace5478a11815c65fcdb1a3dc29b60c3e102489384e3c1701f4355fa4";
+    $payload = [
+        "nomor_pendaftaran" => $noPendaftaranList,
+        "nama_tagihan" => "TAGIHAN_PENDAFTARAN_ULANG"
+    ];
+
+    $token = \Firebase\JWT\JWT::encode($payload, $jwtKey, 'HS256');
+
+    $response = \Http::post("http:/103.23.103.43/WS_PSB/WS_PSB_MASTER/index.php", [
+        "token" => $token,
+        "method" => "cekTagihanDibayar"
+    ]);
+
+    if (!$response->successful()) {
+        return back()->with('error', 'WS gagal diakses');
+    }
+
+    $result = $response->json();
+
+    if (($result['status'] ?? 422) !== 200) {
+        return back()->with('error', $result['message'] ?? 'Gagal cek tagihan');
+    }
+
+    $updatedCount = 0;
+    foreach ($result['data'] as $tagihan) {
+        if ($tagihan['StatusBayar'] == "1") {
+            $peserta = \App\Models\DataPeserta::where('no_pendaftaran', $tagihan['NomorPendaftaran'])->first();
+
+            if ($peserta) {
+                $updated = $peserta->where(function ($q) {
+                        $q->whereNull('status_pembayaran_registrasi')
+                          ->orWhere('status_pembayaran_registrasi', 0);
+                    })
+                    ->update([
+                        'status_pembayaran_registrasi' => 1,
+                        'tgl_bayar_regis' => $tagihan['TanggalBayar']
+                    ]);
+
+                if ($updated) {
+                    \DB::table('tagihan')
+                        ->where('id_peserta', $peserta->id)
+                        ->update([
+                            'status' => 1,
+                            'tanggal_pembayaran_daful' => $tagihan['TanggalBayar'],
+                            'updated_at' => now()
+                        ]);
+                    $updatedCount++;
+                }
+            }
+        }
+    }
+
+    if ($updatedCount > 0) {
+        return back()->with('success', "Berhasil update status {$updatedCount} peserta");
+    }
+
+    return back()->with('success', 'Berhasil cek status');
+}
+
+public function cekStatusIndex1(Request $request)
+{
+    $user = Auth::user();
+    $role = $user->role;
+
+    $normalizedRole = Str::of($role)->replace('-', ' ')->__toString();
+    $roleData = MasterRole::whereRaw('LOWER(nama_role) = ?', [strtolower($normalizedRole)])->first();
+
+    $menus = [];
+    if ($roleData && $roleData->menu) {
+        if (is_array($roleData->menu)) {
+            $menus = array_map(fn($m) => strtolower(trim($m)), $roleData->menu);
+        } else {
+            $decoded = json_decode($roleData->menu, true);
+            if (is_array($decoded)) {
+                $menus = array_map(fn($m) => strtolower(trim($m)), $decoded);
+            } else {
+                $menus = explode(',', strtolower($roleData->menu));
+            }
+        }
+    }
+
+    $tahunList = MasterGelombang::select('tahun_akademik')->distinct()->get();
+
+    $tahun = $request->get('tahun_akademik');
+    $gelombangId = $request->get('gelombang_id');
+    $jalurId = $request->get('jalur_id', 'all');
+
+    $gelombangList = collect();
+    if ($tahun) {
+        $gelombangList = MasterGelombang::where('tahun_akademik', $tahun)
+            ->orderBy('gelombang')
+            ->get();
+    }
+
+    $jalurList = MasterJalur::orderBy('id')->get();
+
+    $query = DataPeserta::query()->where('status_ujian', 'lulus');
+
+    if ($tahun) {
+        $query->whereHas('relasiGelombang', function ($q) use ($tahun) {
+            $q->where('tahun_akademik', $tahun);
+        });
+    }
+
+    if ($gelombangId) {
+        $query->where('id_gelombang', $gelombangId);
+    }
+
+    if ($jalurId !== 'all') {
+        $query->where('id_jalur', $jalurId);
+    }
+
+    if ($user->prodi_id) {
+        $prodiIds = is_array($user->prodi_id) ? $user->prodi_id : explode(',', $user->prodi_id);
+        $query->whereIn('id_prodi', $prodiIds);
+    }
+
+    $pesertaList = $query->orderBy('id')->paginate(15)->withQueryString();
+
+    return view('dashboard-unit.registrasi-lunas.cek-status', compact(
+        'tahunList',
+        'gelombangList',
+        'tahun',
+        'gelombangId',
+        'jalurList',
+        'jalurId',
+        'pesertaList',
+        'menus',
+        'role'
+    ));
+}
 
 
 public function cekStatusIndex(Request $request)
@@ -386,6 +528,92 @@ public function cekStatusIndex(Request $request)
         ));
     }
 
+public function registrasiLunas1(Request $request)
+{
+    $user = Auth::user();
+    $role = $user->role;
+
+    $normalizedRole = Str::of($role)->replace('-', ' ')->__toString();
+    $roleData = MasterRole::whereRaw('LOWER(nama_role) = ?', [strtolower($normalizedRole)])->first();
+
+    $menus = [];
+    if ($roleData && $roleData->menu) {
+        if (is_array($roleData->menu)) {
+            $menus = array_map(fn($m) => strtolower(trim($m)), $roleData->menu);
+        } else {
+            $decoded = json_decode($roleData->menu, true);
+            if (is_array($decoded)) {
+                $menus = array_map(fn($m) => strtolower(trim($m)), $decoded);
+            } else {
+                $menus = explode(',', strtolower($roleData->menu));
+            }
+        }
+    }
+
+    $tahunList = MasterGelombang::select('tahun_akademik')->distinct()->get();
+
+    $tahun = $request->get('tahun_akademik'); 
+    $gelombangId = $request->get('gelombang_id');
+    $jalurId = $request->get('jalur_id', 'all');
+
+    $gelombangList = collect();
+    if ($tahun) {
+        $gelombangList = MasterGelombang::where('tahun_akademik', $tahun)
+            ->orderBy('gelombang')
+            ->get();
+    }
+
+    $jalurList = MasterJalur::orderBy('id')->get();
+
+    $query = DataPeserta::with('masterHarga')
+        ->where('status_ujian', 'lulus')
+        ->where('status_pembayaran_registrasi', 1);
+
+    if ($tahun) {
+        $query->whereHas('relasiGelombang', function ($q) use ($tahun) {
+            $q->where('tahun_akademik', $tahun);
+        });
+    }
+
+    if ($gelombangId) {
+        $query->where('id_gelombang', $gelombangId);
+    }
+
+    if ($jalurId !== 'all') {
+        $query->where('id_jalur', $jalurId);
+    }
+
+    if ($user->prodi_id) {
+        $prodiIds = is_array($user->prodi_id) ? $user->prodi_id : explode(',', $user->prodi_id);
+        $query->whereIn('id_prodi', $prodiIds);
+    }
+
+    if ($request->get('export') === 'excel') {
+        return Excel::download(
+            new PesertaRegistrasiExport($query->get()),
+            'data_psb_all_' . now()->format('d-m-y_H_i_s') . '.xlsx'
+        );
+    }
+
+    $pesertaList = $query->orderBy('id')->paginate(15)->withQueryString();
+
+    $fieldWajib = ['alamat_lengkap', 'tanggal_lahir', 'ayah_nama', 'ibu_nama'];
+    $uploadWajib = ['dokumen_kk', 'dokumen_ijazah', 'dokumen_akte_kelahiran'];
+
+    return view('dashboard-unit.registrasi-lunas.index', compact(
+        'tahunList',
+        'gelombangList',
+        'tahun',
+        'gelombangId',
+        'jalurList',
+        'jalurId',
+        'pesertaList',
+        'fieldWajib',
+        'uploadWajib',
+        'menus',
+        'role'
+    ));
+}
 
 
     public function registrasiLunas(Request $request)

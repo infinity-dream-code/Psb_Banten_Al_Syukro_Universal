@@ -17,7 +17,8 @@ return new class extends Migration
         $table->string('username')->unique();
         $table->string('password');
         $table->string('plain_password', 30);
-        $table->enum('role', ['admin', 'peserta']);
+        $table->string('prodi_id')->nullable();
+        $table->string('role');
         $table->timestamp('created_at')->nullable();
         $table->timestamp('updated_at')->nullable();
     });

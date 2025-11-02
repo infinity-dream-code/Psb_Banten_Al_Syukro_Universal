@@ -56,17 +56,18 @@
     <button class="no-underline text-gray-600 hover:text-pmb-green-700 transition-colors font-medium">
         Brosur
     </button>
-    <div class="absolute hidden group-hover:block hover:block bg-white border border-gray-200 shadow-lg rounded mt-2 min-w-[180px] z-50">
-        @forelse($brosurs as $b)
-            <a href="{{ asset('storage/'.$b->brosur) }}" 
-               download="{{ basename($b->brosur) }}"
-               class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 no-underline">
-               {{ basename($b->brosur) }}
-            </a>
-        @empty
-            <span class="block px-4 py-2 text-sm text-gray-400">Belum ada brosur</span>
-        @endforelse
-    </div>
+   <div class="absolute hidden group-hover:block hover:block bg-white border border-gray-200 shadow-lg rounded mt-2 min-w-[180px] z-50">
+    @forelse($brosurs as $b)
+        <a href="{{ asset('storage/'.$b->brosur) }}"
+           download
+           class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 no-underline">
+           {{ basename($b->brosur) }}
+        </a>
+    @empty
+        <span class="block px-4 py-2 text-sm text-gray-400">Belum ada brosur</span>
+    @endforelse
+</div>
+
 </div>
 
 
@@ -523,50 +524,7 @@
             </div>
         </section>
 
-        <section class="bg-white py-20">
-            <div class="max-w-7xl mx-auto px-4">
-                <div class="text-pmb-green-600 font-semibold mb-4 text-lg">Testimonial</div>
-                <h2 class="text-4xl font-bold text-pmb-green-800 mb-16">Pesan & Kesan</h2>
-                
-                <div class="grid lg:grid-cols-2 gap-12">
-                    <div class="bg-gray-50 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow">
-                        <div class="text-pmb-green-500 text-6xl mb-6 leading-none">"</div>
-                        <p class="text-gray-700 text-lg leading-relaxed mb-8">
-                            Di DEMO PSB tidak hanya belajar ilmu agama, mengaji, dan menghafal Al-Qur'an saja, tapi juga belajar ilmu umum layaknya kampus biasa. DEMO PSB juga tempat untuk melatih mental, kedisiplinan, kemandirian, dan kreativitas kita. Di sini jugalah saya mendapatkan teman-teman yang baik dan saling mensupport, para asatidzah yang sabar dan memiliki banyak ilmu, karyawan yang ramah-tamah, dan lingkungan yang baik, kondusif untuk menghafal Al-Qur'an, dan jauh dari hiruk-pikuk duniawi. Dan suatu kebanggaan tersendiri bagi saya karena bisa menjadi Siswa DEMO PSB. Alhamdulillah 'alaa kulli haal.
-                        </p>
-                        <div class="flex items-center space-x-4">
-                            <div class="w-16 h-16 bg-pmb-green-100 rounded-full flex items-center justify-center">
-                                <svg class="w-8 h-8 text-pmb-green-600" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <div class="font-bold text-gray-800 text-lg">Ahmad Naufal Tsani</div>
-                                <div class="text-gray-600">Manager Bisnis - PT. Inti Dana Mandiri</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="bg-gray-50 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow">
-                        <div class="text-pmb-green-500 text-6xl mb-6 leading-none">"</div>
-                        <p class="text-gray-700 text-lg leading-relaxed mb-8">
-                            Sebuah pengalaman berarti bagi saya bisa mendapatkan kesempatan untuk menuntut ilmu di DEMO PSB. Ilmu akademik serta agama digali secara bersamaan dengan hafalan Al-Qur'an. Hal itu menjadi daya tarik tersendiri yang membantu saya berkembang untuk menjadi pribadi Qur'aniy dan berintelektual. Dengan banyak cerita dan pengalaman yang saya dapatkan di DEMO PSB, saya menjadi sadar bahwa ihtirom terhadap asatidz ialah kunci keberhasilan. Selain itu, DEMO PSB juga berhasil mengantarkan saya meraih impian-impian yang saya idamkan sejak dulu. Syukur Alhamdulillah, Allah telah menjadikan saya salah satu orang yang diberi kesempatan belajar di DEMO PSB, saya sangat bangga.
-                        </p>
-                        <div class="flex items-center space-x-4">
-                            <div class="w-16 h-16 bg-pmb-green-100 rounded-full flex items-center justify-center">
-                                <svg class="w-8 h-8 text-pmb-green-600" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <div class="font-bold text-gray-800 text-lg">Ahmad Yusuf Farhat</div>
-                                <div class="text-gray-600">DIRUT - PT. BERKAH PRIMA</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+       
     </main>
 
 @include('footer')

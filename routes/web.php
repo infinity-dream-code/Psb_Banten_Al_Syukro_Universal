@@ -10,6 +10,7 @@ use App\Http\Controllers\MasterJalurController;
 use App\Http\Controllers\MasterBiayaPendaftaranController;
 use App\Http\Controllers\MasterProdiController;
 use App\Http\Controllers\MasterRuangController;
+use App\Http\Controllers\MasterRoleController;
 use App\Http\Controllers\MasterGelombangController;
 use App\Http\Controllers\BayarController;
 use App\Http\Controllers\PembayaranController;
@@ -63,11 +64,118 @@ Route::middleware(['auth', 'role:peserta'])->group(function () {
     Route::post('/peserta/simpan-bantuan', [PesertaController::class, 'simpan_bantuan'])->name('peserta.simpan_bantuan');
 });
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/pages/display/home/{role}', [DashboardController::class, 'role']);
+
+    Route::get('/PmbMstPendaftarans/cek_berkas_pembayaran/{role}', [PembayaranController::class, 'cekBerkas1']);
+  
+    Route::get('/api/pesertaku/{id}', [PembayaranController::class, 'detail2'])
+    ->name('peserta.detail2');
+
+ Route::get('PmbMstPendaftarans/cek_berkas_set_ujian/{role}', [UjianController::class, 'cekBerkasSetUjian2'])
+        ->name('ujian.cekBerkasSetUjian1');
+
+  Route::post('PmbMstPendaftarans/Set-Ujiann', [UjianController::class, 'simpan1'])->name('ujian.simpan1');
+
+    Route::get('PmbMstPendaftarans/cetak_kartu_ujian_reguler/{role}', [UjianController::class, 'cetakKartuUjian1'])
+        ->name('ujian.cetakKartuUjianReguler1');
+
+  Route::get('PmbMstPendaftarans/cetak_kartu/{role}/{no_pendaftaran}',[UjianController::class, 'CetakKartu1'])->name('ujian.showKartu1');
+
+   Route::get('PmbMstPendaftarans/edit_jadwal_ujian/{role}', [UjianController::class, 'editJadwalUjian1'])
+        ->name('ujian.editJadwalUjian1');
+
+Route::post('/PmbMstPendaftarans/update_jadwal_ujian/{role}', [UjianController::class, 'updateJadwalUjian1'])
+    ->name('pmb.updateJadwalUjian1');
+
+    Route::get('/PmbMstPendaftarans/tagihan_daful/{role}', [TagihanController::class, 'index1']);
+ 
+    Route::get('/PmbMstPendaftarans/registrasi-lunas/{role}', [RegisterController::class, 'registrasiLunas1'])
+     ->name('registrasi.lunas1');
+
+     Route::get('PmbMstPendaftarans/registrasi-cekstatus/{role}', [RegisterController::class, 'cekStatusIndex1'])->name('registrasi.cekstatus.index1');
+
+     Route::post('PmbMstPendaftarans/registrasi-cekstatuss', [RegisterController::class, 'cekStatus1'])->name('registrasi.cekStatus1');
+
+Route::get('/PmbMstPendaftarans/rekap-jumlah-pendaftar/{role}', [ReportController::class, 'rekapJumlahPendaftar1'])->name('report.rekapJumlahPendaftar1');
+Route::get('/PmbMstPendaftarans/rekap-lunas-pendaftaran/{role}', [ReportController::class, 'rekapLunasPendaftaran1'])->name('report.rekapLunasPendaftaran1');
+Route::get('/PmbMstPendaftarans/rekap-lunas-registrasi/{role}', [ReportController::class, 'rekapLunasRegistrasi1'])->name('report.rekapLunasRegistrasi1');
+Route::get('/PmbMstPendaftarans/siswa-per-provinsi/{role}', [ReportController::class, 'siswaPerProvinsi1'])->name('report.siswaProvinsi1');
+Route::get('/PmbMstPendaftarans/siswa-per-kota/{role}', [ReportController::class, 'siswaPerKota1'])->name('report.siswaKota1');
+Route::get('/PmbMstPendaftarans/siswa-per-prodi/{role}', [ReportController::class, 'siswaPerProdi1'])->name('report.siswaProdi1');
+Route::get('/PmbMstPendaftarans/siswa-per-sekolah/{role}', [ReportController::class, 'siswaPerSekolah1'])->name('report.siswaSekolah1');
+Route::get('/PmbMstPendaftarans/export-detail-biaya/{role}', [ReportController::class, 'exportDetailBiaya1'])->name('report.exportDetailBiaya1');
+Route::get('/PmbMstPendaftarans/export-all/{role}', [ReportController::class, 'exportAll1'])->name('report.exportAll1');
+Route::get('/PmbMstPendaftarans/print_lp003/{role}/{ids}', [ReportController::class, 'printLp0031'])->name('report.printLp0031');
+Route::get('/PmbMstPendaftarans/print_lp004/{role}/{ids}', [ReportController::class, 'printLp0041'])->name('report.printLp0041');
+Route::get('/PmbMstPendaftarans/print_lp007/{role}/{ids}', [ReportController::class, 'printLp0071'])->name('report.printLp0071');
+Route::get('/PmbMstPendaftarans/export-all-psb/{role}', [ReportController::class, 'exportAllpsb1'])->name('report.exportAllpsb1');
+
+Route::get('PmbMstPendaftarans/list-user/{role}', [UserController::class, 'userlist1'])
+    ->name('users.list1');
+
+     Route::get('PmbMstPendaftarans/users/{id}/detail1', [UserController::class, 'showuser1']);
+
+         Route::get('PmbMstPendaftarans/{role}/peserta/edit/{id}', [UserController::class, 'editpeserta1'])->name('peserta.edit1');
+
+    Route::put('PmbMstPendaftarans/{role}/peserta/update/{id}', [UserController::class, 'updatepeserta1'])
+    ->name('peserta.update1');
+
+Route::get('/PmbMstPendaftarans/master-sekolah/{role}', [MasterProdiController::class, 'index1'])->name('master.sekolah1');
+Route::get('/PmbMstPendaftarans/master-sekolah/add/{role}', [MasterProdiController::class, 'create1'])->name('master.sekolah.add1');
+Route::post('/PmbMstPendaftarans/master-sekolah/store/{role}', [MasterProdiController::class, 'store1'])->name('master.sekolah.store1');
+Route::delete('/PmbMstPendaftarans/master-sekolah/delete/{role}/{id}', [MasterProdiController::class, 'destroy1'])->name('master.sekolah.delete1');
+Route::get('/PmbMstPendaftarans/master-sekolah/edit/{role}/{id}', [MasterProdiController::class, 'edit1'])->name('master.sekolah.edit1');
+Route::put('/PmbMstPendaftarans/master-sekolah/update/{role}/{id}', [MasterProdiController::class, 'update1'])->name('master.sekolah.update1');
+
+Route::get('PmbMstPendaftarans/setting-harga/{role}', [MasterHargaController::class, 'index1']);
+Route::get('PmbRefMasterHargaPendaftarans/{role}/edit/{id}', [MasterHargaController::class, 'edit1'])->name('master-harga.edit1');
+Route::put('PmbRefMasterHargaPendaftarans/{role}/update/{id}', [MasterHargaController::class, 'update1'])->name('master-harga.update1');
+
+Route::get('PmbMstPendaftarans/setting-pendaftaran/{role}', [MasterBiayaPendaftaranController::class, 'index3']);
+ Route::get('PmbMstPendaftarans/set_kelulusan/{role}', [UjianController::class, 'setKelulusan1'])
+    ->name('pmb.set_kelulusan1');
+
+      Route::get('/PmbMstPendaftarans/set_kelulusanku/{status}', [UjianController::class, 'setKelulusanPeserta1'])
+    ->name('ujian.setKelulusan1');
+
+
+    Route::get('PmbMstPendaftarans/users/{role}', [UserController::class, 'index1'])->name('users.index1');
+Route::get('PmbMstPendaftarans/users/{role}/{id}/edit', [UserController::class, 'edit1'])->name('users.edit1');
+Route::put('PmbMstPendaftarans/users/{role}/{id}', [UserController::class, 'update1'])->name('users.update1');
+    
+
+});
+
+   
+
+Route::get('/get-prodi-by-fakultas/{id}', [MasterHargaController::class, 'getProdiByFakultas']);
+
+Route::get('PmbMstPendaftarans/validate_tagihan', [UjianController::class, 'validateTagihan']);
+
 /*
 |--------------------------------------------------------------------------
 | Admin Routes
 |--------------------------------------------------------------------------
 */
+
+ Route::post('fakultas/toggle/{id}', [SettingsController::class, 'toggleFakultas'])->name('fakultas.toggle');
+
+
+Route::post('/master-harga/toggle-active/{id}', [MasterHargaController::class, 'toggleActive'])
+    ->name('master-harga.toggle-active');
+
+Route::get('/detailRegistrasi/{encoded}', [UserController::class, 'detailRegistrasi'])
+    ->name('detail.registrasi');
+
+Route::get('/PmbMstPendaftarans/cetak_formulir/{encoded}', [UserController::class, 'cetakFormulir'])
+    ->name('cetak.formulir');
+
+Route::get('/PmbMstPendaftarans/cetak_info_enroll/{nama}/{no_pendaftaran}/{jalur}', [UserController::class, 'cetakInfoEnroll'])
+    ->name('cetak.info.enroll');
+
+    Route::get('/api/peserta/{id}', [PembayaranController::class, 'detail'])
+        ->name('peserta.detail');
 
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
@@ -120,19 +228,14 @@ Route::get('PmbMstPendaftarans/users', [UserController::class, 'index'])->name('
 Route::get('PmbMstPendaftarans/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
 Route::put('PmbMstPendaftarans/users/{id}', [UserController::class, 'update'])->name('users.update');
 Route::delete('PmbMstPendaftarans/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+Route::get('PmbMstPendaftarans/usersku/tambah', [UserController::class, 'tambahuser'])->name('users.adduser');
+Route::post('PmbMstPendaftarans/users/store', [UserController::class, 'store'])->name('users.store');
+Route::get('/api/get-prodi-by-fakultas/{id}', [UserController::class, 'getProdiByFakultas']);
 
 
 Route::get('PmbMstPendaftarans/list-user', [UserController::class, 'userlist'])
     ->name('users.list');
 
-Route::get('/detailRegistrasi/{encoded}', [UserController::class, 'detailRegistrasi'])
-    ->name('detail.registrasi');
-
-Route::get('/PmbMstPendaftarans/cetak_formulir/{encoded}', [UserController::class, 'cetakFormulir'])
-    ->name('cetak.formulir');
-
-Route::get('/PmbMstPendaftarans/cetak_info_enroll/{nama}/{no_pendaftaran}/{jalur}', [UserController::class, 'cetakInfoEnroll'])
-    ->name('cetak.info.enroll');
 
     Route::get('PmbMstPendaftarans/peserta/edit/{id}', [UserController::class, 'editpeserta'])->name('peserta.edit');
 
@@ -140,6 +243,20 @@ Route::get('/PmbMstPendaftarans/cetak_info_enroll/{nama}/{no_pendaftaran}/{jalur
     ->name('peserta.update');
 
     Route::get('PmbMstPendaftarans/users/{id}/detail', [UserController::class, 'showuser']);
+
+    Route::get('/PmbMstPendaftarans/master-ruang', [MasterRuangController::class, 'index'])->name('master.ruang');
+Route::get('/PmbMstPendaftarans/master-ruang/add', [MasterRuangController::class, 'create'])->name('master.ruang.add');
+Route::post('/PmbMstPendaftarans/master-ruang/store', [MasterRuangController::class, 'store'])->name('master.ruang.store');
+Route::get('/PmbMstPendaftarans/master-ruang/edit/{id}', [MasterRuangController::class, 'edit'])->name('master.ruang.edit');
+Route::put('/PmbMstPendaftarans/master-ruang/update/{id}', [MasterRuangController::class, 'update'])->name('master.ruang.update');
+Route::delete('/PmbMstPendaftarans/master-ruang/delete/{id}', [MasterRuangController::class, 'destroy'])->name('master.ruang.delete');
+
+Route::get('/PmbMstPendaftarans/master-role', [MasterRoleController::class, 'index'])->name('master.role');
+Route::get('/PmbMstPendaftarans/master-role/add', [MasterRoleController::class, 'create'])->name('master.role.add');
+Route::post('/PmbMstPendaftarans/master-role/store', [MasterRoleController::class, 'store'])->name('master.role.store');
+Route::get('/PmbMstPendaftarans/master-role/edit/{id}', [MasterRoleController::class, 'edit'])->name('master.role.edit');
+Route::put('/PmbMstPendaftarans/master-role/update/{id}', [MasterRoleController::class, 'update'])->name('master.role.update');
+Route::delete('/PmbMstPendaftarans/master-role/delete/{id}', [MasterRoleController::class, 'destroy'])->name('master.role.delete');
 
 Route::get('/PmbMstPendaftarans/tagihan_daful', [TagihanController::class, 'index']);
 
@@ -153,7 +270,7 @@ Route::put('/PmbMstPendaftarans/master-unit/update/{id}', [MasterBiayaPendaftara
 
 //master sekolah/prodi
 Route::get('/PmbMstPendaftarans/master-sekolah', [MasterProdiController::class, 'index'])->name('master.sekolah');
-Route::get('/PmbMstPendaftarans/master-sekolah/add', [MasterProdiController::class, 'create'])->name('master.sekolah.add');
+Route::get('/PmbMstPendaftarans/master-sekolahh/add', [MasterProdiController::class, 'create'])->name('master.sekolah.add2');
 Route::post('/PmbMstPendaftarans/master-sekolah/store', [MasterProdiController::class, 'store'])->name('master.sekolah.store');
 Route::delete('/PmbMstPendaftarans/master-sekolah/delete/{id}', [MasterProdiController::class, 'destroy'])->name('master.sekolah.delete');
 Route::get('/PmbMstPendaftarans/master-sekolah/edit/{id}', [MasterProdiController::class, 'edit'])->name('master.sekolah.edit');
@@ -186,13 +303,6 @@ Route::get('/PmbMstPendaftarans/master-jalur/edit/{id}', [MasterJalurController:
 Route::put('/PmbMstPendaftarans/master-jalur/update/{id}', [MasterJalurController::class, 'update'])->name('master.jalur.update');
 Route::delete('/PmbMstPendaftarans/master-jalur/delete/{id}', [MasterJalurController::class, 'destroy'])->name('master.jalur.delete');
 
-Route::get('/PmbMstPendaftarans/master-ruang', [MasterRuangController::class, 'index'])->name('master.ruang');
-Route::get('/PmbMstPendaftarans/master-ruang/add', [MasterRuangController::class, 'create'])->name('master.ruang.add');
-Route::post('/PmbMstPendaftarans/master-ruang/store', [MasterRuangController::class, 'store'])->name('master.ruang.store');
-Route::get('/PmbMstPendaftarans/master-ruang/edit/{id}', [MasterRuangController::class, 'edit'])->name('master.ruang.edit');
-Route::put('/PmbMstPendaftarans/master-ruang/update/{id}', [MasterRuangController::class, 'update'])->name('master.ruang.update');
-Route::delete('/PmbMstPendaftarans/master-ruang/delete/{id}', [MasterRuangController::class, 'destroy'])->name('master.ruang.delete');
-
 
        Route::get('PmbMstPendaftarans/cek_berkas_set_ujian', [UjianController::class, 'cekBerkasSetUjian'])
         ->name('ujian.cekBerkasSetUjian');
@@ -200,10 +310,9 @@ Route::delete('/PmbMstPendaftarans/master-ruang/delete/{id}', [MasterRuangContro
     Route::get('PmbMstPendaftarans/cetak_kartu_ujian_reguler', [UjianController::class, 'cetakKartuUjian'])
         ->name('ujian.cetakKartuUjianReguler');
 
-        Route::get('/PmbMstPendaftarans/set_kelulusan/{status}', [UjianController::class, 'setKelulusanPeserta'])
+       Route::get('/PmbMstPendaftarans/proses_kelulusan/{status}', [UjianController::class, 'setKelulusanPeserta'])
     ->name('ujian.setKelulusan');
 
-Route::get('PmbMstPendaftarans/validate_tagihan', [UjianController::class, 'validateTagihan']);
 
     Route::get('PmbMstPendaftarans/edit_jadwal_ujian', [UjianController::class, 'editJadwalUjian'])
         ->name('ujian.editJadwalUjian');
@@ -213,8 +322,7 @@ Route::post('/PmbMstPendaftarans/update_jadwal_ujian', [UjianController::class, 
     Route::get('PmbMstPendaftarans/set_kelulusan', [UjianController::class, 'setKelulusan'])
     ->name('pmb.set_kelulusan');
 
-Route::post('/master-harga/toggle-active/{id}', [MasterHargaController::class, 'toggleActive'])
-    ->name('master-harga.toggle-active');
+
 
     // Settings
 
@@ -229,8 +337,7 @@ Route::resource('PmbMstPendaftarans/setting-brosur', BrosurController::class);
 
     Route::post('master_akademik/toggle/{id}', [SettingsController::class, 'toggleAkademik'])->name('master_akademik.toggle');
     Route::post('gelombang/toggle/{id}', [SettingsController::class, 'toggleGelombang'])->name('gelombang.toggle');
-    Route::post('fakultas/toggle/{id}', [SettingsController::class, 'toggleFakultas'])->name('fakultas.toggle');
-
+   
     Route::get('/PmbMstPendaftarans/registrasi-lunas', [RegisterController::class, 'registrasiLunas'])
      ->name('registrasi.lunas');
 
@@ -266,11 +373,9 @@ Route::put('PmbRefMasterHargaPendaftarans/update/{id}', [MasterHargaController::
     Route::get('/PmbMstPendaftarans/cek_berkas_pembayaran', [PembayaranController::class, 'cekBerkas'])
         ->name('pembayaran.cekBerkas');
         
-Route::get('/api/peserta/{id}', [PembayaranController::class, 'detail'])
-        ->name('peserta.detail');
 
-    // API internal (untuk admin)
-    Route::get('/get-prodi-by-fakultas/{id}', [MasterHargaController::class, 'getProdiByFakultas']);
+
+
 });
 
 /*

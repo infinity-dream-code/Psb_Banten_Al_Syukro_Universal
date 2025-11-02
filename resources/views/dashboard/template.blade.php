@@ -145,6 +145,7 @@
 <a href="{{ url('/PmbMstPendaftarans/master-sekolah') }}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" data-menu="masterdata">Jurusan</a>
 <a href="{{ url('/PmbMstPendaftarans/master-ujian') }}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" data-menu="masterdata">Ujian</a>
 <a href="{{ url('/PmbMstPendaftarans/master-ruang') }}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" data-menu="masterdata">Ruang</a>
+ <a href="{{ url('/PmbMstPendaftarans/master-role') }}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" data-menu="masterdata">Role</a>
 
 </div>
                         </li>
@@ -279,7 +280,7 @@
                             <button class="menu-item w-full flex items-center justify-between px-6 py-3 text-white font-medium dropdown-toggle hover:bg-green-700 transition-colors" data-target="edit-dropdown" data-menu="edit">
                                 <div class="flex items-center">
                                     <i class="fas fa-edit mr-3 w-4 text-center"></i>
-                                    <span class="text-sm font-semibold">EDIT</span>
+                                    <span class="text-sm font-semibold">Kelola Peserta</span>
                                 </div>
                                 <i class="fas fa-chevron-down text-xs transition-transform dropdown-arrow"></i>
                             </button>

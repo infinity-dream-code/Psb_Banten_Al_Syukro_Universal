@@ -5,7 +5,8 @@
     <div class="bg-white shadow-lg rounded-lg">
         <div class="flex justify-between items-center px-6 py-4 border-b border-gray-200">
             <h3 class="text-xl font-semibold text-gray-800">Edit Master Harga</h3>
-            <a href="{{ url('PmbMstPendaftarans/setting-harga') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition-colors flex items-center gap-2">
+            <a href="{{ url('PmbMstPendaftarans/setting-harga') }}" 
+               class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition-colors flex items-center gap-2">
                 <i class="fas fa-arrow-left"></i> Kembali
             </a>
         </div>
@@ -23,7 +24,8 @@
                 </div>
             @endif
 
-            <form action="{{ route('master-harga.update', $masterHarga->id) }}" method="POST" class="space-y-6">
+            <form action="{{ route('master-harga.update', ['role' => str_replace(' ', '-', $role ?? 'admin'), 'id' => $masterHarga->id]) }}" 
+                  method="POST" class="space-y-6">
                 @csrf
                 @method('PUT')
 
@@ -73,7 +75,9 @@
                     <label class="block text-sm font-medium text-gray-700 mb-2">Biaya Registrasi</label>
                     <div class="relative">
                         <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">Rp</span>
-                        <input type="text" name="harga_final" value="{{ number_format($masterHarga->harga_final, 0, ',', '.') }}" required class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg">
+                        <input type="text" name="harga_final" id="harga_final"
+                               value="{{ number_format($masterHarga->harga_final, 0, ',', '.') }}" 
+                               required class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg">
                     </div>
                 </div>
 
@@ -112,13 +116,19 @@
                 <button type="button" id="add-detail" class="mt-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg flex items-center gap-2"><i class="fas fa-plus"></i> Tambah Tagihan Daful</button>
 
                 <div class="flex space-x-3 pt-4">
-                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg flex items-center gap-2"><i class="fas fa-save"></i> Simpan</button>
-                    <a href="{{ url('PmbMstPendaftarans/setting-harga') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg flex items-center gap-2"><i class="fas fa-times"></i> Batal</a>
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg flex items-center gap-2">
+                        <i class="fas fa-save"></i> Simpan
+                    </button>
+                    <a href="{{ url('PmbMstPendaftarans/setting-harga') }}" 
+                       class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg flex items-center gap-2">
+                        <i class="fas fa-times"></i> Batal
+                    </a>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 $(function() {
@@ -127,6 +137,10 @@ $(function() {
         if (number === '') return '';
         return new Intl.NumberFormat('id-ID').format(number);
     }
+
+    $('#harga_final').on('input', function() {
+        $(this).val(formatNumber($(this).val()));
+    });
 
     $(document).on('input', 'input[name^="detail"]', function() {
         $(this).val(formatNumber($(this).val()));
@@ -179,7 +193,7 @@ $(function() {
     });
 
     function loadProdi(fakultasId, prodiSelected) {
-        $.get("{{ url('get-prodi-by-fakultas') }}/" + fakultasId, function(data) {
+        $.get(`/get-prodi-by-fakultas/${fakultasId}`, function(data) {
             let prodiSelect = $('#id_prodi');
             prodiSelect.empty().append('<option value="">-- Pilih Program Studi --</option>');
             $.each(data, function(key, value) {

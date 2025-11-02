@@ -4,15 +4,96 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\DataPeserta;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Informasi;
 use App\Models\MasterGelombang;
+use App\Models\MasterRole;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use App\Models\ImageSlider;
 use App\Models\Brosur;
-use App\Models\Informasi;
 
 class DashboardController extends Controller
 {
+
+public function role($role)
+{
+    $user = Auth::user();
+    $normalizedRole = Str::of($role)->replace('-', ' ')->__toString();
+    $roleData = MasterRole::whereRaw('LOWER(nama_role) = ?', [strtolower($normalizedRole)])->first();
+
+    $menus = [];
+
+    $today = now();
+    $activeGelombang = MasterGelombang::where('start', '<=', $today)
+        ->where('end', '>=', $today)
+        ->where('is_active', true)
+        ->first();
+
+    if (!$activeGelombang) {
+        $activeGelombang = MasterGelombang::where('is_active', true)
+            ->orderBy('created_at', 'desc')
+            ->first();
+    }
+
+    $prodiIds = [];
+    if ($user->prodi_id) {
+        $prodiIds = is_array($user->prodi_id) ? $user->prodi_id : explode(',', $user->prodi_id);
+    }
+
+    $queryBase = DataPeserta::whereIn('id_prodi', $prodiIds)
+        ->where('id_gelombang', $activeGelombang->id);
+
+    $stats = [
+        'total_pendaftar' => (clone $queryBase)->count(),
+        'total_bayar' => (clone $queryBase)->where('status_paid', 1)->count(),
+        'total_lulus' => (clone $queryBase)->where('status_ujian', 'lulus')->count(),
+        'total_registrasi' => (clone $queryBase)->where('status_pembayaran_registrasi', 1)->count(),
+    ];
+
+    $stats['percent_bayar'] = $stats['total_pendaftar'] > 0 ? round(($stats['total_bayar'] / $stats['total_pendaftar']) * 100) : 0;
+    $stats['percent_lulus'] = $stats['total_pendaftar'] > 0 ? round(($stats['total_lulus'] / $stats['total_pendaftar']) * 100) : 0;
+    $stats['percent_registrasi'] = $stats['total_pendaftar'] > 0 ? round(($stats['total_registrasi'] / $stats['total_pendaftar']) * 100) : 0;
+
+    $year = date('Y');
+    $monthlyChart = [
+        'labels' => ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+        'pendaftar' => [],
+        'bayar' => []
+    ];
+
+    foreach (range(1, 12) as $m) {
+        $monthlyChart['pendaftar'][] = DataPeserta::whereIn('id_prodi', $prodiIds)
+            ->where('id_gelombang', $activeGelombang->id)
+            ->whereYear('created_at', $year)
+            ->whereMonth('created_at', $m)
+            ->count();
+
+        $monthlyChart['bayar'][] = DataPeserta::whereIn('id_prodi', $prodiIds)
+            ->where('id_gelombang', $activeGelombang->id)
+            ->whereYear('created_at', $year)
+            ->whereMonth('created_at', $m)
+            ->where('status_paid', 1)
+            ->count();
+    }
+
+    if ($roleData && $roleData->menu) {
+        if (is_array($roleData->menu)) {
+            $menus = array_map(fn($m) => strtolower(trim($m)), $roleData->menu);
+        } else {
+            $decoded = json_decode($roleData->menu, true);
+            if (is_array($decoded)) {
+                $menus = array_map(fn($m) => strtolower(trim($m)), $decoded);
+            } else {
+                $menus = explode(',', strtolower($roleData->menu));
+            }
+        }
+    }
+
+    return view('dashboard-unit.index', compact('menus', 'user', 'role', 'monthlyChart', 'stats', 'activeGelombang'));
+}
+
 
 public function index1()
 {
@@ -33,6 +114,8 @@ public function index1()
 
     return view('index', compact('gelombangTahunIni', 'sliders', 'brosurs', 'informasi'));
     }
+
+
 
     public function index()
     {

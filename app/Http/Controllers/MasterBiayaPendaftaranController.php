@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\MasterFakultas;
+use App\Models\MasterProdi;
 use Illuminate\Http\Request;
 use App\Models\MasterHarga;
+use App\Models\MasterRole;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class MasterBiayaPendaftaranController extends Controller
 {
@@ -20,6 +24,48 @@ class MasterBiayaPendaftaranController extends Controller
         $fakultas = MasterFakultas::orderBy('id')->get();
         return view('dashboard.settings.pendaftar.index', compact('fakultas'));
     }
+
+    public function index3(Request $request)
+{
+    $user = Auth::user();
+    $role = $user->role;
+
+    $normalizedRole = Str::of($role)->replace('-', ' ')->__toString();
+    $roleData = MasterRole::whereRaw('LOWER(nama_role) = ?', [strtolower($normalizedRole)])->first();
+
+    $menus = [];
+    if ($roleData && $roleData->menu) {
+        if (is_array($roleData->menu)) {
+            $menus = array_map(fn($m) => strtolower(trim($m)), $roleData->menu);
+        } else {
+            $decoded = json_decode($roleData->menu, true);
+            if (is_array($decoded)) {
+                $menus = array_map(fn($m) => strtolower(trim($m)), $decoded);
+            } else {
+                $menus = explode(',', strtolower($roleData->menu));
+            }
+        }
+    }
+
+    $prodiIds = [];
+    if ($user->prodi_id) {
+        $prodiIds = is_array($user->prodi_id) ? $user->prodi_id : explode(',', $user->prodi_id);
+    }
+
+    $fakultas = collect(); 
+    if (!empty($prodiIds)) {
+        $fakultasIds = MasterProdi::whereIn('id', $prodiIds)
+            ->pluck('id_fakultas')
+            ->unique()
+            ->toArray();
+
+        $fakultas = MasterFakultas::whereIn('id', $fakultasIds)
+            ->orderBy('id')
+            ->get();
+    }
+
+    return view('dashboard-unit.settings.pendaftar.index', compact('fakultas', 'menus', 'role'));
+}
 
 
     public function create()

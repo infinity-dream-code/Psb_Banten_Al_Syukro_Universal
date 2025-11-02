@@ -33,7 +33,7 @@
 
 <script>
 function toggleFakultas(id) {
-    fetch("{{ url('fakultas/toggle') }}/" + id, {
+    fetch("{{ secure_url('fakultas/toggle') }}/" + id, {
         method: "POST",
         headers: {
             "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute('content'),

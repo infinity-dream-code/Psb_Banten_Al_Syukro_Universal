@@ -65,7 +65,7 @@ function toggleHargaActive(id) {
     const currentProdi = currentRow.getAttribute('data-prodi');
     const isActive = currentCheckbox.checked;
 
-    fetch("{{ url('master-harga/toggle-active') }}/" + id, {
+    fetch("{{ secure_url('master-harga/toggle-active') }}/" + id, {
         method: "POST",
         headers: {
             "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute('content'),

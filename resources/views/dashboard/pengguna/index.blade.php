@@ -4,15 +4,22 @@
 <div class="bg-white p-6 shadow rounded-lg">
     <h1 class="text-2xl font-bold mb-6 text-gray-800">User & Password</h1>
 
-    <form method="GET" action="{{ url()->current() }}" class="mb-4 flex gap-2">
-        <input type="text" name="search" value="{{ $search ?? '' }}" 
-               placeholder="Cari nama atau no pendaftaran"
-               class="border px-3 py-2 rounded-lg w-64">
-        <button type="submit" 
-                class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
-            Cari
-        </button>
-    </form>
+    <div class="flex justify-between items-center mb-4">
+        <form method="GET" action="{{ url()->current() }}" class="flex gap-2 items-center">
+            <input type="text" name="search" value="{{ $search ?? '' }}" 
+                   placeholder="Cari nama atau no pendaftaran"
+                   class="border px-3 py-2 rounded-lg w-64">
+            <button type="submit" 
+                    class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                Cari
+            </button>
+        </form>
+
+        <a href="{{ url('PmbMstPendaftarans/usersku/tambah') }}" 
+           class="inline-flex items-center bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium">
+            <i class="fas fa-plus mr-2"></i> Tambah User
+        </a>
+    </div>
 
     <div class="overflow-x-auto">
         <table class="w-full border border-gray-300 text-sm">

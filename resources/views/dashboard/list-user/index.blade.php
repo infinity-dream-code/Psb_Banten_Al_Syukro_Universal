@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="bg-white p-6 shadow rounded-lg">
-    <h1 class="text-xl font-semibold mb-4">List Pendaftar</h1>
+    <h1 class="text-xl font-semibold mb-4">List Peserta</h1>
 
     <form method="GET" action="{{ url()->current() }}" class="mb-4 flex flex-wrap gap-2">
         <select name="tahun_akademik" class="px-3 py-2 border rounded-lg" onchange="this.form.submit()">

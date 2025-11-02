@@ -4,7 +4,7 @@
 <div class="p-6">
     <div class="flex justify-between items-center mb-4">
         <h1 class="text-xl font-bold text-gray-800">Master Jurusan</h1>
-        <a href="{{ route('master.sekolah.add') }}" 
+        <a href="{{ route('master.sekolah.add2') }}" 
            class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium shadow">
             + Tambah Jurusan
         </a>
