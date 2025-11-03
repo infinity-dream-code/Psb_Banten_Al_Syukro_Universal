@@ -188,7 +188,7 @@ class UjianController extends Controller
 
             $response = Http::withHeaders([
                 'Content-Type' => 'application/json'
-            ])->post('http:/103.23.103.43/WS_PSB/WS_PSB_MASTER/index.php', $payload);
+            ])->post('10.99.23.111/WS_PSB/WS_PSB_MASTER/index.php', $payload);
 
             Log::info('CreateTagihanBulk response', [
                 'status' => $response->status(),
@@ -761,7 +761,7 @@ public function setKelulusanPeserta(Request $request, $status)
 
             $response = \Http::withHeaders([
                 'Content-Type' => 'application/json'
-            ])->post('http:/103.23.103.43/WS_PSB/WS_PSB_MASTER/index.php', $payload);
+            ])->post('10.99.23.111/WS_PSB/WS_PSB_MASTER/index.php', $payload);
 
             Log::info('CreateTagihanBulk response', [
                 'status' => $response->status(),
