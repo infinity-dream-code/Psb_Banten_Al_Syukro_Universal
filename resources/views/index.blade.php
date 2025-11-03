@@ -56,18 +56,17 @@
     <button class="no-underline text-gray-600 hover:text-pmb-green-700 transition-colors font-medium">
         Brosur
     </button>
-   <div class="absolute hidden group-hover:block hover:block bg-white border border-gray-200 shadow-lg rounded mt-2 min-w-[180px] z-50">
-    @forelse($brosurs as $b)
-        <a href="{{ asset('storage/'.$b->brosur) }}"
-           download
-           class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 no-underline">
-           {{ basename($b->brosur) }}
-        </a>
-    @empty
-        <span class="block px-4 py-2 text-sm text-gray-400">Belum ada brosur</span>
-    @endforelse
-</div>
-
+    <div class="absolute hidden group-hover:block hover:block bg-white border border-gray-200 shadow-lg rounded mt-2 min-w-[180px] z-50">
+        @forelse($brosurs as $b)
+            <a href="{{ asset('storage/'.$b->brosur) }}" 
+               download="{{ basename($b->brosur) }}"
+               class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 no-underline">
+               {{ basename($b->brosur) }}
+            </a>
+        @empty
+            <span class="block px-4 py-2 text-sm text-gray-400">Belum ada brosur</span>
+        @endforelse
+    </div>
 </div>
 
 
@@ -524,7 +523,6 @@
             </div>
         </section>
 
-       
     </main>
 
 @include('footer')
