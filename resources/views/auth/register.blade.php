@@ -196,7 +196,7 @@
                         
                         <div class="space-y-6">
                             <div>
-                                <label class="block label-text mb-2">Nama Calon Mahasiswa <span class="required">*</span></label>
+                                <label class="block label-text mb-2">Nama Calon Siswa <span class="required">*</span></label>
                                 <input type="text" name="nama" required placeholder="NAMA SESUAI DENGAN AKTA LAHIR" class="form-input">
                             </div>
 
