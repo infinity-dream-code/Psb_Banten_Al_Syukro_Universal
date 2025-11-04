@@ -222,7 +222,7 @@
                                 <i class="fas fa-chevron-down text-xs transition-transform dropdown-arrow"></i>
                             </button>
                             <div id="kelulusan-dropdown" class="dropdown-content bg-green-700">
-                                <a href="{{url('PmbMstPendaftarans/set_kelulusan')}}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" data-menu="kelulusan">Set Kelulusan</a>
+                                <a href="{{url('PmbMstPendaftarans/set_kelulusan-peserta')}}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" data-menu="kelulusan">Set Kelulusan</a>
                             </div>
                         </li>
                         <li>

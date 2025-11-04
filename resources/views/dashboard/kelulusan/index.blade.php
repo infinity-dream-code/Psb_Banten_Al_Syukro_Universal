@@ -211,7 +211,7 @@
             return;
         }
         const selectedIds = Array.from(checkedBoxes).map(cb => cb.value).join(',');
-        window.location.href = "{{ url('PmbMstPendaftarans/set_kelulusan') }}/" + status + "?ids=" + selectedIds;
+        window.location.href = "{{ url('PmbMstPendaftarans/proses_kelulusan') }}/" + status + "?ids=" + selectedIds;
     }
 
     function openLulusModal() {
@@ -234,14 +234,14 @@
         const awal = this.awal.value;
         const akhir = this.akhir.value;
         const pembekalan = this.pembekalan.value;
-
         window.location.href =
-            "{{ url('PmbMstPendaftarans/set_kelulusan/lulus') }}" +
+            "{{ url('PmbMstPendaftarans/proses_kelulusan/lulus') }}" +
             "?ids=" + selectedIds +
             "&awal=" + encodeURIComponent(awal) +
             "&akhir=" + encodeURIComponent(akhir) +
             "&pembekalan=" + encodeURIComponent(pembekalan);
     });
 </script>
+
 
 @endsection

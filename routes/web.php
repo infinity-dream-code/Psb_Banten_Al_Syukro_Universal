@@ -319,7 +319,7 @@ Route::delete('/PmbMstPendaftarans/master-jalur/delete/{id}', [MasterJalurContro
 Route::post('/PmbMstPendaftarans/update_jadwal_ujian', [UjianController::class, 'updateJadwalUjian'])
     ->name('pmb.updateJadwalUjian');
 
-    Route::get('PmbMstPendaftarans/set_kelulusan', [UjianController::class, 'setKelulusan'])
+    Route::get('PmbMstPendaftarans/set_kelulusan-peserta', [UjianController::class, 'setKelulusan'])
     ->name('pmb.set_kelulusan');
 
 

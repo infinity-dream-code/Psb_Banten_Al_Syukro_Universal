@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\DataPeserta;
 use App\Models\MasterUjian;
+use App\Models\Tagihan;
 use App\Models\MasterRuang;
 use App\Models\Ujian;
 use App\Models\MasterGelombang;
@@ -49,11 +50,10 @@ class UjianController extends Controller
         return response()->json(['success' => true, 'message' => 'Parameter ujian berhasil disimpan']);
     }
 
-   public function setKelulusanPeserta1(Request $request, $status)
+public function setKelulusanPeserta1(Request $request, $status)
 {
     $user = Auth::user();
     $role = $user->role;
-
     $normalizedRole = Str::of($role)->replace('-', ' ')->__toString();
     $roleData = MasterRole::whereRaw('LOWER(nama_role) = ?', [strtolower($normalizedRole)])->first();
 
@@ -71,8 +71,11 @@ class UjianController extends Controller
         }
     }
 
+    if (empty($request->get('ids'))) {
+        return redirect()->back()->with('error', 'Tidak ada peserta yang dipilih.');
+    }
+
     $ids = explode(',', $request->get('ids'));
-    $potonganIds = $request->get('potongan_ids') ? explode(',', $request->get('potongan_ids')) : [];
 
     if ($status === 'gagal') {
         DataPeserta::whereIn('id', $ids)->update([
@@ -89,7 +92,7 @@ class UjianController extends Controller
             'pembekalan' => $request->pembekalan,
         ]);
 
-        $pesertaList = DataPeserta::with(['masterHarga', 'relasiGelombang'])
+        $pesertaList = DataPeserta::with('masterHarga', 'relasiGelombang')
             ->whereIn('id', $ids)
             ->get();
 
@@ -100,7 +103,7 @@ class UjianController extends Controller
             $biayaDaful = 0;
 
             if ($peserta->masterHarga && is_array($peserta->masterHarga->detail)) {
-                $detail = collect($peserta->masterHarga->detail)->map(function ($d) {
+                $detail = collect($peserta->masterHarga->detail)->map(function($d) {
                     return [
                         "nama_tagihan" => $d['nama_tagihan'],
                         "kode_tagihan" => $d['no_akun'],
@@ -108,55 +111,15 @@ class UjianController extends Controller
                     ];
                 })->toArray();
 
-                $biayaDaful = array_sum(array_column($detail, 'nominal'));
+                $biayaDaful = array_sum(array_column($detail,'nominal'));
             }
 
-            $potonganList = [];
-            if (count($potonganIds) > 0) {
-                $potonganList = MasterPotongan::whereIn('id', $potonganIds)
-                    ->orderBy('priority', 'asc')
-                    ->get()
-                    ->map(function ($p) {
-                        return [
-                            'nama' => $p->nama,
-                            'nilai' => $p->nilai_potongan,
-                            'priority' => $p->priority
-                        ];
-                    })->toArray();
-            }
-
-            if ($biayaDaful > 0 && count($potonganList) > 0) {
-                foreach ($potonganList as $p) {
-                    if (strpos($p['nilai'], '%') !== false) {
-                        $angka = (float) str_replace('%', '', $p['nilai']);
-                        foreach ($detail as &$d) {
-                            $d['nominal'] = max(0, round($d['nominal'] - ($d['nominal'] * ($angka / 100))));
-                        }
-                        unset($d);
-                    } else {
-                        $angka = (float) str_replace('.', '', $p['nilai']);
-                        $persen = $angka / array_sum(array_column($detail, 'nominal')) * 100;
-                        foreach ($detail as &$d) {
-                            $d['nominal'] = max(0, round($d['nominal'] - ($d['nominal'] * ($persen / 100))));
-                        }
-                        unset($d);
-                    }
-                }
-            }
-
-            $finalTotal = array_sum(array_column($detail, 'nominal'));
-            $totalPotongan = $biayaDaful - $finalTotal;
-
-            DB::table('tagihan')->insert([
-                'id_peserta' => $peserta->id,
-                'potongan' => json_encode($potonganList),
-                'total_potongan' => $totalPotongan,
-                'biaya_daful' => $finalTotal,
-                'detail' => json_encode($detail),
-                'status' => null,
-                'tanggal_pembayaran_daful' => null,
-                'created_at' => now(),
-                'updated_at' => now(),
+            Tagihan::create([
+                'id_peserta'              => $peserta->id,
+                'biaya_daful'             => $biayaDaful,
+                'detail'                  => $detail,
+                'status'                  => null,
+                'tanggal_pembayaran_daful'=> null,
             ]);
 
             $payloadData[] = [
@@ -184,16 +147,9 @@ class UjianController extends Controller
                 "method" => "CreateTagihanBulk"
             ];
 
-            Log::info('CreateTagihanBulk payload', $payload);
-
             $response = Http::withHeaders([
                 'Content-Type' => 'application/json'
             ])->post('10.99.23.111/WS_PSB/WS_PSB_MASTER/index.php', $payload);
-
-            Log::info('CreateTagihanBulk response', [
-                'status' => $response->status(),
-                'body'   => $response->body(),
-            ]);
 
             if (!$response->successful()) {
                 return redirect()->back()->with('error', 'Gagal membuat tagihan');
@@ -203,6 +159,7 @@ class UjianController extends Controller
 
     return redirect()->back()->with('success', 'Status ujian berhasil diperbarui');
 }
+
 
 
     public function setKelulusan1(Request $request)
@@ -761,7 +718,7 @@ public function setKelulusanPeserta(Request $request, $status)
 
             $response = \Http::withHeaders([
                 'Content-Type' => 'application/json'
-            ])->post('10.99.23.111/WS_PSB/WS_PSB_MASTER/index.php', $payload);
+            ])->post('http:/103.23.103.43/WS_PSB/WS_PSB_MASTER/index.php', $payload);
 
             Log::info('CreateTagihanBulk response', [
                 'status' => $response->status(),
