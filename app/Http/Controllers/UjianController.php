@@ -84,7 +84,10 @@ public function setKelulusanPeserta1(Request $request, $status)
             'batas_akhir_registrasi' => null,
             'pembekalan' => null,
         ]);
-    } elseif ($status === 'lulus') {
+
+        Tagihan::whereIn('id_peserta', $ids)->delete();
+    } 
+    elseif ($status === 'lulus') {
         DataPeserta::whereIn('id', $ids)->update([
             'status_ujian' => 'lulus',
             'batas_awal_registrasi' => $request->awal,
@@ -149,7 +152,7 @@ public function setKelulusanPeserta1(Request $request, $status)
 
             $response = Http::withHeaders([
                 'Content-Type' => 'application/json'
-            ])->post('10.99.23.111/WS_PSB/WS_PSB_MASTER/index.php', $payload);
+            ])->post('http://10.99.23.111/WS_PSB/WS_PSB_MASTER/index.php', $payload);
 
             if (!$response->successful()) {
                 return redirect()->back()->with('error', 'Gagal membuat tagihan');
@@ -159,6 +162,7 @@ public function setKelulusanPeserta1(Request $request, $status)
 
     return redirect()->back()->with('success', 'Status ujian berhasil diperbarui');
 }
+
 
 
 
@@ -634,7 +638,6 @@ public function setKelulusanPeserta1(Request $request, $status)
         return response()->json(['success' => true, 'message' => 'Parameter ujian berhasil disimpan']);
     }
 
-
 public function setKelulusanPeserta(Request $request, $status)
 {
     $ids = explode(',', $request->get('ids'));
@@ -646,7 +649,10 @@ public function setKelulusanPeserta(Request $request, $status)
             'batas_akhir_registrasi' => null,
             'pembekalan' => null,
         ]);
-    } elseif ($status === 'lulus') {
+
+        Tagihan::whereIn('id_peserta', $ids)->delete();
+    } 
+    elseif ($status === 'lulus') {
         DataPeserta::whereIn('id', $ids)->update([
             'status_ujian' => 'lulus',
             'batas_awal_registrasi' => $request->awal,
@@ -718,7 +724,7 @@ public function setKelulusanPeserta(Request $request, $status)
 
             $response = \Http::withHeaders([
                 'Content-Type' => 'application/json'
-            ])->post('http:/103.23.103.43/WS_PSB/WS_PSB_MASTER/index.php', $payload);
+            ])->post('http://103.23.103.43/WS_PSB/WS_PSB_MASTER/index.php', $payload);
 
             Log::info('CreateTagihanBulk response', [
                 'status' => $response->status(),
