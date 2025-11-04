@@ -1006,61 +1006,65 @@ public function cetakKartuUjian(Request $request)
 
 
 public function editJadwalUjian(Request $request)
-{
-    $query = DataPeserta::with(['ujian.masterUjian'])
-        ->whereHas('ujian')
-        ->whereHas('relasiGelombang', function($q) {
-            $q->whereDate('end', '>=', now()->toDateString());
-        });
+    {
+        $query = DataPeserta::with(['ujian.masterUjian'])
+            ->whereHas('ujian')
+            ->whereHas('relasiGelombang', function($q) {
+                $q->whereDate('end', '>=', now()->toDateString());
+            });
 
-    if ($request->filled('search')) {
-        $search = $request->search;
-        $query->where(function($q) use ($search) {
-            $q->where('nama_peserta', 'like', "%$search%")
-              ->orWhere('no_pendaftaran', 'like', "%$search%")
-              ->orWhere('fakultas', 'like', "%$search%")
-              ->orWhere('prodi', 'like', "%$search%")
-              ->orWhere('jalur', 'like', "%$search%");
-        });
-    }
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('nama_peserta', 'like', "%$search%")
+                  ->orWhere('no_pendaftaran', 'like', "%$search%")
+                  ->orWhere('fakultas', 'like', "%$search%")
+                  ->orWhere('prodi', 'like', "%$search%")
+                  ->orWhere('jalur', 'like', "%$search%");
+            });
+        }
 
-    $today = now()->toDateString();
+        $today = now()->toDateString();
 
-    $tahunAkademikList = MasterGelombang::select('tahun_akademik')
-        ->distinct()
-        ->orderBy('tahun_akademik')
-        ->get();
+        $tahunAkademikList = MasterGelombang::select('tahun_akademik')
+            ->distinct()
+            ->orderBy('tahun_akademik')
+            ->get();
 
-    if ($request->filled('tahun_akademik')) {
-        $gelombangList = MasterGelombang::where('tahun_akademik', $request->tahun_akademik)
+        if ($request->filled('tahun_akademik')) {
+            $gelombangList = MasterGelombang::where('tahun_akademik', $request->tahun_akademik)
+                ->where('end', '>=', $today)
+                ->orderBy('gelombang')
+                ->get();
+        } else {
+            $gelombangList = MasterGelombang::where('end', '>=', $today)
+                ->orderBy('gelombang')
+                ->get();
+        }
+
+        $defaultGelombang = MasterGelombang::where('start', '<=', $today)
             ->where('end', '>=', $today)
-            ->orderBy('gelombang')
-            ->get();
-    } else {
-        $gelombangList = MasterGelombang::where('end', '>=', $today)
-            ->orderBy('gelombang')
-            ->get();
+            ->first();
+
+        $idGelombang = $request->get('gelombang_id', $defaultGelombang?->id);
+
+        if ($idGelombang) {
+            $query->where('id_gelombang', $idGelombang);
+        }
+
+        $pesertaList = $query->paginate(10)->appends($request->query());
+
+        $ruangList = MasterRuang::select('id','ruang')->orderBy('ruang')->pluck('ruang')->toArray();
+
+        return view('dashboard.ujian.edit-jadwal', compact(
+            'pesertaList',
+            'gelombangList',
+            'tahunAkademikList',
+            'idGelombang',
+            'ruangList'
+        ));
     }
 
-    $defaultGelombang = MasterGelombang::where('start', '<=', $today)
-        ->where('end', '>=', $today)
-        ->first();
-
-    $idGelombang = $request->get('gelombang_id', $defaultGelombang?->id);
-
-    if ($idGelombang) {
-        $query->where('id_gelombang', $idGelombang);
-    }
-
-    $pesertaList = $query->paginate(10)->appends($request->query());
-
-    return view('dashboard.ujian.edit-jadwal', compact(
-        'pesertaList',
-        'gelombangList',
-        'tahunAkademikList',
-        'idGelombang'
-    ));
-}
 
     public function updateJadwalUjian(Request $request)
     {

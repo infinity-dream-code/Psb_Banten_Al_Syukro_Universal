@@ -2,7 +2,6 @@
 @section('content')
 <div class="bg-white p-6 shadow rounded-lg">
     <h1 class="text-xl font-semibold mb-4">Edit Jadwal Ujian</h1>
-
     <form method="GET" action="{{ url()->current() }}" class="mb-4 flex flex-wrap gap-2 items-center">
         <select name="tahun_akademik" class="px-3 py-2 border rounded-lg" onchange="this.form.submit()">
             <option value="">--Pilih Tahun Akademik--</option>
@@ -12,7 +11,6 @@
                 </option>
             @endforeach
         </select>
-
         <select name="gelombang_id" class="px-3 py-2 border rounded-lg" onchange="this.form.submit()">
             <option value="">--Pilih Gelombang--</option>
             @foreach($gelombangList as $gel)
@@ -21,15 +19,12 @@
                 </option>
             @endforeach
         </select>
-
         <input type="text" name="search" value="{{ request('search') }}"
             class="w-64 px-3 py-2 border rounded-lg"
             placeholder="Cari nama atau no pendaftaran...">
-
         <button type="submit"
             class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Cari</button>
     </form>
-
     <div class="overflow-x-auto">
         <table class="w-full border-collapse border border-gray-300 text-sm">
             <thead class="bg-gray-100 text-gray-700">
@@ -67,17 +62,14 @@
             </tbody>
         </table>
     </div>
-
     <div class="mt-4">
         {{ $pesertaList->withQueryString()->links() }}
     </div>
-
     <div class="mt-4 flex justify-end">
         <button type="button" id="btnEdit"
             class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">Edit Jadwal Ujian</button>
     </div>
 </div>
-
 <div id="editModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
     <div class="bg-white w-full max-w-2xl rounded-xl shadow-xl p-6 relative">
         <div class="flex justify-between items-center border-b pb-3 mb-5">
@@ -96,8 +88,8 @@
         </form>
     </div>
 </div>
-
 <script>
+const ruangList = @json($ruangList);
 document.getElementById('checkAll').addEventListener('change', function() {
     const checkboxes = document.querySelectorAll('.ujian-checkbox');
     checkboxes.forEach(cb => cb.checked = this.checked);
@@ -119,24 +111,23 @@ document.getElementById('btnEdit').addEventListener('click', function() {
     selected.forEach(item => {
         item.ujian.forEach(uji => {
             html += `
-                <div>
-                     <label class="block text-sm font-medium text-gray-700 mb-2">
-                        nama peserta : ${item.nama} <br>
-                        ujian : ${uji.master_ujian?.nama ?? 'Ujian'}
-                    </label>
-                    <div class="flex gap-3">
-                        <input type="datetime-local" 
-                            name="jadwal[${item.id}][${uji.id}][tanggal]"
-                            value="${uji.tanggal ?? ''}"
-                            class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                        <input type="text" 
-                            name="jadwal[${item.id}][${uji.id}][ruang]" 
-                            value="${uji.ruang ?? ''}"
-                            placeholder="Ruang"
-                            class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                    </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    nama peserta : ${item.nama} <br>
+                    ujian : ${uji.master_ujian?.nama ?? 'Ujian'}
+                </label>
+                <div class="flex gap-3">
+                    <input type="datetime-local"
+                        name="jadwal[${item.id}][${uji.id}][tanggal]"
+                        value="${uji.tanggal ? uji.tanggal.replace(' ', 'T').slice(0,16) : ''}"
+                        class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    <select name="jadwal[${item.id}][${uji.id}][ruang]" 
+                        class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                        <option value="">--Pilih Ruang--</option>
+                        ${ruangList.map(r => `<option value="${r}" ${uji.ruang === r ? 'selected' : ''}>${r}</option>`).join('')}
+                    </select>
                 </div>
-            `;
+            </div>`;
         });
     });
     document.getElementById('editContent').innerHTML = html;
