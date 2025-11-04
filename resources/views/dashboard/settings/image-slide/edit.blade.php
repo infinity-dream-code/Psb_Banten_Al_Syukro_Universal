@@ -23,17 +23,13 @@
         @csrf
         @method('PUT')
 
-        {{-- Preview gambar saat ini --}}
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">Gambar Saat Ini</label>
             <div class="w-full h-40 bg-gray-50 border rounded-lg flex items-center justify-center overflow-hidden shadow-sm">
-                <img src="{{ asset('storage/'.$setting_slider->image) }}" 
-                     alt="Current Image" 
-                     class="max-h-40 object-contain">
+                <img src="{{ asset('storage/'.$setting_slider->image) }}" alt="Current Image" class="max-h-40 object-contain">
             </div>
         </div>
 
-        {{-- Upload gambar baru --}}
         <div>
             <label for="image" class="block text-sm font-medium text-gray-700 mb-2">Upload Gambar Baru</label>
             <input type="file" name="image" id="image"
@@ -41,9 +37,9 @@
                           file:rounded-md file:border-0 file:text-sm file:font-semibold
                           file:bg-green-50 file:text-green-700 hover:file:bg-green-100
                           focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500">
+            <p class="mt-2 text-xs text-gray-500">Rekomendasi ukuran gambar: <span class="font-semibold text-green-700">1920×768 px</span></p>
         </div>
 
-        {{-- Tombol aksi --}}
         <div class="flex items-center justify-between border-t pt-6">
             <a href="{{ route('setting-slider.index') }}"
                class="inline-flex items-center text-sm text-gray-600 hover:text-green-700 transition">

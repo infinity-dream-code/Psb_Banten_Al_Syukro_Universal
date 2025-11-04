@@ -28,6 +28,7 @@
                        file:rounded-md file:border-0 file:text-sm file:font-semibold
                        file:bg-green-50 file:text-green-700 hover:file:bg-green-100
                        focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500">
+            <p class="mt-2 text-xs text-gray-500">Rekomendasi ukuran gambar: <span class="font-semibold text-green-700">1920×768 px</span></p>
         </div>
 
         <div class="flex items-center justify-between border-t pt-6">
