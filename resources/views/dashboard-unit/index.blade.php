@@ -35,6 +35,9 @@
                         <span class="ml-2 text-green-500 text-xs lg:text-sm font-medium">+{{ $stats['percent_bayar'] }}%</span>
                     </div>
                     <p class="text-gray-600 text-xs lg:text-sm leading-tight">Total Membayar Pendaftaran</p>
+                @if($activeGelombang)
+        <p class="text-xs text-blue-600">Gelombang {{ $activeGelombang->gelombang }}</p>
+    @endif
                 </div>
             </div>
         </div>
@@ -58,6 +61,9 @@
                         </div>
                     </div>
                     <p class="text-gray-600 text-xs lg:text-sm leading-tight">Total Siswa di Nyatakan Lulus</p>
+                @if($activeGelombang)
+        <p class="text-xs text-blue-600">Gelombang {{ $activeGelombang->gelombang }}</p>
+    @endif
                 </div>
             </div>
         </div>
@@ -73,6 +79,9 @@
                         <span class="ml-2 text-gray-400 text-xs lg:text-sm font-medium">{{ $stats['percent_registrasi'] }}%</span>
                     </div>
                     <p class="text-gray-600 text-xs lg:text-sm leading-tight">Total Siswa Lunas Registrasi Daful</p>
+               @if($activeGelombang)
+        <p class="text-xs text-blue-600">Gelombang {{ $activeGelombang->gelombang }}</p>
+    @endif
                 </div>
             </div>
         </div>
