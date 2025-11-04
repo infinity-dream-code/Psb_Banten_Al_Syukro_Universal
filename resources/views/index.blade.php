@@ -109,75 +109,104 @@
 
     <main>
 
-<section class="relative overflow-hidden">
-    <div class="overflow-hidden relative">
-        <div id="slider" class="flex transition-transform duration-700 ease-in-out">
+<section class="relative overflow-hidden w-full">
+    <div class="relative w-full h-0" style="padding-bottom: 42%;">
+        <div id="slider" class="absolute top-0 left-0 w-full h-full flex transition-transform duration-700 ease-in-out">
             @if(count($sliders) > 0)
-                <div class="w-full flex-shrink-0" style="position:relative; padding-top:56.25%;">
+                <div class="w-full h-full flex-shrink-0">
                     <img src="{{ asset('storage/'.$sliders->last()->image) }}" 
-                         style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; border-radius:8px;">
+                         class="w-full h-full object-cover">
                 </div>
                 @foreach($sliders as $s)
-                    <div class="w-full flex-shrink-0" style="position:relative; padding-top:56.25%;">
+                    <div class="w-full h-full flex-shrink-0">
                         <img src="{{ asset('storage/'.$s->image) }}" 
-                             style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; border-radius:8px;">
+                             class="w-full h-full object-cover">
                     </div>
                 @endforeach
-                <div class="w-full flex-shrink-0" style="position:relative; padding-top:56.25%;">
+                <div class="w-full h-full flex-shrink-0">
                     <img src="{{ asset('storage/'.$sliders->first()->image) }}" 
-                         style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; border-radius:8px;">
+                         class="w-full h-full object-cover">
                 </div>
             @endif
         </div>
 
         <button onclick="prevSlide()" 
-            class="absolute top-1/2 left-2 sm:left-6 -translate-y-1/2 bg-black/50 text-white p-2 sm:px-6 sm:py-5 rounded-full text-2xl sm:text-4xl">‹
+            class="absolute top-1/2 left-4 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white w-10 h-10 sm:w-14 sm:h-14 rounded-full flex items-center justify-center text-2xl sm:text-3xl z-10 transition-all">‹
         </button>
 
         <button onclick="nextSlide()" 
-            class="absolute top-1/2 right-2 sm:right-6 -translate-y-1/2 bg-black/50 text-white p-2 sm:px-6 sm:py-5 rounded-full text-2xl sm:text-4xl">›
+            class="absolute top-1/2 right-4 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white w-10 h-10 sm:w-14 sm:h-14 rounded-full flex items-center justify-center text-2xl sm:text-3xl z-10 transition-all">›
         </button>
     </div>
 </section>
 
-
 <script>
-    const slider = document.getElementById('slider')
-    const slides = slider.children
-    let currentSlide = 1
-    const totalSlides = slides.length
-    slider.style.transform = `translateX(-${currentSlide * 100}%)`
+    const slider = document.getElementById('slider');
+    const slides = slider.children;
+    let currentSlide = 1;
+    const totalSlides = slides.length;
+    let isTransitioning = false;
+    
+    slider.style.transform = `translateX(-${currentSlide * 100}%)`;
 
     function updateSlide() {
-        slider.style.transition = 'transform 0.7s ease-in-out'
-        slider.style.transform = `translateX(-${currentSlide * 100}%)`
+        if(isTransitioning) return;
+        isTransitioning = true;
+        slider.style.transition = 'transform 0.7s ease-in-out';
+        slider.style.transform = `translateX(-${currentSlide * 100}%)`;
     }
 
     function nextSlide() {
-        currentSlide++
-        updateSlide()
-        if (currentSlide === totalSlides - 1) {
+        if(isTransitioning) return;
+        currentSlide++;
+        updateSlide();
+        if(currentSlide === totalSlides - 1) {
             setTimeout(() => {
-                slider.style.transition = 'none'
-                currentSlide = 1
-                slider.style.transform = `translateX(-${currentSlide * 100}%)`
-            }, 700)
+                slider.style.transition = 'none';
+                currentSlide = 1;
+                slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+                setTimeout(() => {
+                    isTransitioning = false;
+                }, 50);
+            }, 700);
+        } else {
+            setTimeout(() => {
+                isTransitioning = false;
+            }, 700);
         }
     }
 
     function prevSlide() {
-        currentSlide--
-        updateSlide()
-        if (currentSlide === 0) {
+        if(isTransitioning) return;
+        currentSlide--;
+        updateSlide();
+        if(currentSlide === 0) {
             setTimeout(() => {
-                slider.style.transition = 'none'
-                currentSlide = totalSlides - 2
-                slider.style.transform = `translateX(-${currentSlide * 100}%)`
-            }, 700)
+                slider.style.transition = 'none';
+                currentSlide = totalSlides - 2;
+                slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+                setTimeout(() => {
+                    isTransitioning = false;
+                }, 50);
+            }, 700);
+        } else {
+            setTimeout(() => {
+                isTransitioning = false;
+            }, 700);
         }
     }
 
-    setInterval(nextSlide, 5500)
+    let autoSlide = setInterval(nextSlide, 5500);
+
+    document.querySelector('button[onclick="prevSlide()"]').addEventListener('click', () => {
+        clearInterval(autoSlide);
+        autoSlide = setInterval(nextSlide, 5500);
+    });
+
+    document.querySelector('button[onclick="nextSlide()"]').addEventListener('click', () => {
+        clearInterval(autoSlide);
+        autoSlide = setInterval(nextSlide, 5500);
+    });
 </script>
 
         <section class="bg-gray-50 py-20">
