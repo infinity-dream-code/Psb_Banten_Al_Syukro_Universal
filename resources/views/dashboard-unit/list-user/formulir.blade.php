@@ -285,7 +285,7 @@
     <div class="page">
         <div class="header">
             <div class="form-title">FORMULIR</div>
- <div class="logo"><img src="{{ asset('icon.jpeg') }}" alt="Al Syukro Universal"></div>
+ <div class="logo"><img src="{{ asset('icon.png') }}" alt="Al Syukro Universal"></div>
             
             <div class="school-info">
                 <div class="school-title">AL SYUKRO UNIVERSAL</div>

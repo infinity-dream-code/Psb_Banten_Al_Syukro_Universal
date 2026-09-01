@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PSB Al Syukro Universal</title>
-    <link rel="icon" type="image/jpeg" href="{{ asset('icon.jpeg') }}">
+    <link rel="icon" type="image/png" href="{{ asset('icon.png') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -136,7 +136,7 @@
     <div id="sidebar" class="sidebar text-white">
         <div class="p-6 text-center border-b border-green-500">
             <div class="w-16 h-16 bg-white rounded-full mx-auto mb-3 flex items-center justify-center overflow-hidden">
-                <img src="{{ asset('icon.jpeg') }}" alt="Al Syukro Universal" class="w-14 h-14 object-contain">
+                <img src="{{ asset('icon.png') }}" alt="Al Syukro Universal" class="w-14 h-14 object-contain">
             </div>
             <h3 class="font-semibold text-lg">{{ ucwords(str_replace('-', ' ', $role ?? 'Admin')) }}</h3>
         </div>

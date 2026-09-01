@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Informasi Pendaftaran - Al Syukro Universal</title>
-    <link rel="icon" type="image/jpeg" href="{{ asset('icon.jpeg') }}">
+    <link rel="icon" type="image/png" href="{{ asset('icon.png') }}">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100">

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Invoice Daftar Ulang - {{ $peserta->nama_peserta }}</title>
-    <link rel="icon" type="image/jpeg" href="{{ asset('icon.jpeg') }}">
+    <link rel="icon" type="image/png" href="{{ asset('icon.png') }}">
     <style>
         body { font-family: Arial, sans-serif; margin: 0; padding: 24px; background: #f3f4f6; color: #111; }
         .sheet { max-width: 800px; margin: 0 auto; background: #fff; padding: 32px; box-shadow: 0 2px 10px rgba(0,0,0,.08); }
@@ -39,7 +39,7 @@
     </div>
     <div class="sheet">
         <div class="header">
-            <img src="{{ asset('icon.jpeg') }}" alt="Al Syukro Universal">
+            <img src="{{ asset('icon.png') }}" alt="Al Syukro Universal">
             <div>
                 <h1>Al Syukro Universal</h1>
                 <p>Penerimaan Siswa Baru</p>

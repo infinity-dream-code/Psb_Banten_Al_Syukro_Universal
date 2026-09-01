@@ -177,7 +177,7 @@
     <div class="container">
         <div class="content">
             <div class="header">
-                <div class="logo"><img src="{{ asset('icon.jpeg') }}" alt="Logo PSB Shine Al-Falah"></div>
+                <div class="logo"><img src="{{ asset('icon.png') }}" alt="Logo PSB Shine Al-Falah"></div>
                 <div class="school-info">
                     <div class="school-title">PANITIA PENERIMAAN SISWA BARU</div>
                     <div class="school-name">Al Syukro Universal</div>

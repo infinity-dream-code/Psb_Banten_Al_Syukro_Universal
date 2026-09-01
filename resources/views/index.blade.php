@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Al Syukro Universal - Penerimaan Siswa Baru</title>
-    <link rel="icon" type="image/jpeg" href="{{ asset('icon.jpeg') }}">
+    <link rel="icon" type="image/png" href="{{ asset('icon.png') }}">
     <script src="https://cdn.tailwindcss.com"></script>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -42,7 +42,7 @@
         <div class="max-w-7xl mx-auto px-4 py-4">
             <div class="flex justify-between items-center">
                 <div class="flex items-center space-x-3">
-                    <img src="{{ asset('icon.jpeg') }}" alt="Al Syukro Universal" class="w-12 h-12 object-contain">
+                    <img src="{{ asset('icon.png') }}" alt="Al Syukro Universal" class="w-12 h-12 object-contain">
                     <div>
                         <div class="text-2xl font-bold text-pmb-green-700 leading-tight">Al Syukro Universal</div>
                         <div class="text-xs text-gray-500">Kota Tangerang Selatan, Prov. Banten</div>

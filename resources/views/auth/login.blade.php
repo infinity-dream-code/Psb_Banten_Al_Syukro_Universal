@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Al Syukro Universal</title>
-  <link rel="icon" type="image/jpeg" href="{{ asset('icon.jpeg') }}">
+  <link rel="icon" type="image/png" href="{{ asset('icon.png') }}">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     * {
@@ -98,7 +98,7 @@
 
     <div class="w-1/2 gradient-bg flex items-center justify-center p-12 relative overflow-hidden left-panel">
       <div class="animate-slideInLeft">
-        <img src="{{ asset('icon.jpeg') }}"
+        <img src="{{ asset('icon.png') }}"
              alt="Al Syukro Universal"
              class="max-w-full max-h-96 object-contain animate-floatSmooth logo-img"
              onerror="this.style.display='none';">
