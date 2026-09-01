@@ -211,11 +211,11 @@
     <div class="container">
         <div class="content">
             <div class="header">
-                <div class="logo"><img src="{{ asset('logo.png') }}" alt="Logo PSB Shine Al-Falah"></div>
+                <div class="logo"><img src="{{ asset('icon.jpeg') }}" alt="Logo PSB Shine Al-Falah"></div>
                 <div class="school-info">
-                    <div class="school-title">PANITIA PENERIMAAN SISWA BARU (PSB)</div>
-                    <div class="school-name">{{ $peserta->fakultas }}</div>
-                    <div class="address">Kota Semarang</div>
+                    <div class="school-title">PANITIA PENERIMAAN SISWA BARU</div>
+                    <div class="school-name">Al Syukro Universal</div>
+                    <div class="address">Kota Tangerang Selatan, Prov. Banten</div>
                     <div class="website-email">Website : {{ url('/') }} || Email :</div>
                 </div>
             </div>

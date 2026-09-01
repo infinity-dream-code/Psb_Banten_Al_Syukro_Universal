@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DEMO PSB - Penerimaan Siswa Baru 2025/2026</title>
+    <title>Al Syukro Universal - Penerimaan Siswa Baru</title>
+    <link rel="icon" type="image/jpeg" href="{{ asset('icon.jpeg') }}">
     <script src="https://cdn.tailwindcss.com"></script>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -40,7 +41,13 @@
     <nav class="bg-white shadow-md sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 py-4">
             <div class="flex justify-between items-center">
-                <div class="text-3xl font-bold text-pmb-green-700">DEMO PSB</div>
+                <div class="flex items-center space-x-3">
+                    <img src="{{ asset('icon.jpeg') }}" alt="Al Syukro Universal" class="w-12 h-12 object-contain">
+                    <div>
+                        <div class="text-2xl font-bold text-pmb-green-700 leading-tight">Al Syukro Universal</div>
+                        <div class="text-xs text-gray-500">Kota Tangerang Selatan, Prov. Banten</div>
+                    </div>
+                </div>
                 <div class="hidden md:flex space-x-8">
                    <a href="{{url('/')}}" 
    class="no-underline text-pmb-green-700 font-semibold border-b-2 border-pmb-green-700 pb-1">
@@ -330,7 +337,7 @@
       <section class="bg-pmb-green-700 py-24">
     <div class="max-w-6xl mx-auto px-6 text-center">
         <!-- Header -->
-        <div class="text-yellow-400 font-semibold mb-8 text-lg">Kenapa harus DEMO PSB?</div>
+        <div class="text-yellow-400 font-semibold mb-8 text-lg">Kenapa harus Al Syukro Universal?</div>
         
         <!-- Visi Section -->
         <h2 class="text-5xl font-bold text-white mb-8">Visi</h2>
@@ -558,7 +565,7 @@
 
     <!-- WhatsApp Floating Button -->
     <div class="fixed bottom-6 right-6 z-50">
-    <a href="https://wa.me/6288233952051?text=Halo%20DEMO%20PMB,%20saya%20ingin%20bertanya%20tentang%20pendaftaran%20mahasiswa%20baru" 
+    <a href="https://wa.me/6288233952051?text=Halo%20Al%20Syukro%20Universal,%20saya%20ingin%20bertanya%20tentang%20pendaftaran%20siswa%20baru" 
        target="_blank" 
        class="bg-green-500 hover:bg-green-600 text-white w-16 h-16 flex items-center justify-center rounded-full shadow-2xl transform hover:scale-110 transition-all duration-300 animate-pulse hover:animate-none group relative">
         

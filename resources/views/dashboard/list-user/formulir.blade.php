@@ -274,18 +274,23 @@
             .page:last-child {
                 page-break-after: avoid;
             }
+            .no-print { display: none !important; }
         }
     </style>
 </head>
 <body>
+    <div class="no-print" style="text-align:center;margin:10px 0 16px;">
+        <button onclick="window.print()" style="background:#15803d;color:#fff;border:0;padding:10px 18px;border-radius:6px;cursor:pointer;font-weight:bold;">Cetak Formulir</button>
+    </div>
     <div class="page">
         <div class="header">
             <div class="form-title">FORMULIR</div>
- <div class="logo"><img src="{{ asset('logo.png') }}" alt="#"></div>
+ <div class="logo"><img src="{{ asset('icon.jpeg') }}" alt="Al Syukro Universal"></div>
             
             <div class="school-info">
-                <div class="school-title">PENERIMAAN SISWA BARU</div>
-                <div class="school-year">{{ $peserta->fakultas ?? '-' }} {{ $peserta->relasiGelombang->tahun_akademik ?? '-' }}</div>
+                <div class="school-title">AL SYUKRO UNIVERSAL</div>
+                <div class="school-year">PENERIMAAN SISWA BARU {{ $peserta->relasiGelombang->tahun_akademik ?? '' }}</div>
+                <div style="font-size:11px;margin-top:4px;">Kota Tangerang Selatan, Prov. Banten</div>
             </div>
         </div>
         <div class="section">
@@ -412,5 +417,6 @@
             </table>
         </div>
     </div>
+<script>window.addEventListener('load', function () { window.print(); });</script>
 </body>
 </html>

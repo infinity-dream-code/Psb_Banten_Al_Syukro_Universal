@@ -50,9 +50,9 @@
                 Created: {{ $createdAt }}<br>
                 Cetak: {{ $cetak }}
             </div>
-          <div class="logo"><img src="{{ asset('logo.png') }}" alt="Logo PSB Shine Al-Falah"></div>
+          <div class="logo"><img src="{{ asset('icon.jpeg') }}" alt="Logo PSB Shine Al-Falah"></div>
                 
-            <div class="address">kota semarang</div>
+            <div class="address">Kota Tangerang Selatan, Prov. Banten</div>
             <div class="school-title">PANITIA PENERIMAAN SISWA BARU PSB {{ $peserta->fakultas }}</div>
         </div>
         <div class="content">

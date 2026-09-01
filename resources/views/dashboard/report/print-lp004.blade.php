@@ -27,7 +27,7 @@
 @foreach($chunks as $page => $list)
 <div class="container {{ $page > 0 ? 'page-break' : '' }}">
     <div class="header">
-        <div class="logo"><img src="{{ asset('logo.png') }}" alt="Logo PSB Shine Al-Falah"></div>
+        <div class="logo"><img src="{{ asset('icon.jpeg') }}" alt="Logo PSB Shine Al-Falah"></div>
         </div>
 
     <div class="date-print">Cetak: {{ $today }}</div>

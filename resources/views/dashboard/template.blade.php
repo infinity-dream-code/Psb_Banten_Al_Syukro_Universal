@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PSB Dashboard</title>
+    <title>PSB Al Syukro Universal</title>
+    <link rel="icon" type="image/jpeg" href="{{ asset('icon.jpeg') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -113,9 +114,7 @@
         <div id="sidebar" class="sidebar w-64 bg-green-600 text-white">
             <div class="p-6 text-center border-b border-green-500">
                 <div class="w-16 h-16 bg-white rounded-full mx-auto mb-3 flex items-center justify-center overflow-hidden">
-                    <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                        <i class="fas fa-user text-green-600 text-lg"></i>
-                    </div>
+                    <img src="{{ asset('icon.jpeg') }}" alt="Al Syukro Universal" class="w-14 h-14 object-contain">
                 </div>
                 <h3 class="font-semibold text-lg">Admin</h3>
             </div>
@@ -139,10 +138,10 @@
                             </button>
                             <div id="masterdata-dropdown" class="dropdown-content bg-green-700">
                                <a href="{{ url('/PmbMstPendaftarans/master-tahun-akademik') }}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" data-menu="masterdata">Tahun Akademik</a>
-<a href="{{ url('/PmbMstPendaftarans/master-gelombang') }}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" data-menu="masterdata">Gelombang</a>
+<a href="{{ url('/PmbMstPendaftarans/master-gelombang') }}" class="hidden block px-12 py-2 text-sm hover:bg-green-800 transition-colors" data-menu="masterdata">Gelombang</a>
 <a href="{{ url('/PmbMstPendaftarans/master-jalur') }}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" data-menu="masterdata">Jalur</a>
 <a href="{{ url('/PmbMstPendaftarans/master-unit') }}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" data-menu="masterdata">Sekolah</a>
-<a href="{{ url('/PmbMstPendaftarans/master-sekolah') }}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" data-menu="masterdata">Jurusan</a>
+<a href="{{ url('/PmbMstPendaftarans/master-sekolah') }}" class="hidden block px-12 py-2 text-sm hover:bg-green-800 transition-colors" data-menu="masterdata">Jurusan</a>
 <a href="{{ url('/PmbMstPendaftarans/master-ujian') }}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" data-menu="masterdata">Ujian</a>
 <a href="{{ url('/PmbMstPendaftarans/master-ruang') }}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" data-menu="masterdata">Ruang</a>
  <a href="{{ url('/PmbMstPendaftarans/master-role') }}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" data-menu="masterdata">Role</a>
@@ -158,7 +157,7 @@
         <i class="fas fa-chevron-down text-xs transition-transform dropdown-arrow"></i>
     </button>
     <div id="psb-dropdown" class="dropdown-content bg-green-700">
-        <a href="{{ url('/PmbMstPendaftarans/setting-gelombang') }}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" data-menu="psb">Gelombang PSB</a>
+        <a href="{{ url('/PmbMstPendaftarans/setting-gelombang') }}" class="hidden block px-12 py-2 text-sm hover:bg-green-800 transition-colors" data-menu="psb">Gelombang PSB</a>
         <a href="{{ url('/PmbMstPendaftarans/setting-harga') }}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" data-menu="psb">Master Harga</a>
         <a href="{{ url('/PmbMstPendaftarans/setting-pendaftaran') }}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" data-menu="psb">On/Off Pendaftaran</a>
         <a href="{{ url('/PmbMstPendaftarans/setting-slider') }}" class="block px-12 py-2 text-sm hover:bg-green-800 transition-colors" data-menu="psb">Image Slider</a>

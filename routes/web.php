@@ -62,6 +62,7 @@ Route::middleware(['auth', 'role:peserta'])->group(function () {
     Route::post('/PmbMstPendaftarans/lengkapi_data', [PesertaController::class, 'simpan_data']);
 
     Route::post('/peserta/simpan-bantuan', [PesertaController::class, 'simpan_bantuan'])->name('peserta.simpan_bantuan');
+    Route::get('/peserta/invoice-daftar-ulang', [PesertaController::class, 'invoiceDaftarUlang'])->name('peserta.invoice');
 });
 
 Route::middleware(['auth'])->group(function () {
@@ -170,6 +171,10 @@ Route::get('/detailRegistrasi/{encoded}', [UserController::class, 'detailRegistr
 
 Route::get('/PmbMstPendaftarans/cetak_formulir/{encoded}', [UserController::class, 'cetakFormulir'])
     ->name('cetak.formulir');
+
+Route::post('/PmbMstPendaftarans/upload-psikotes/{id}', [UserController::class, 'uploadPsikotes'])
+    ->middleware('auth')
+    ->name('peserta.uploadPsikotes');
 
 Route::get('/PmbMstPendaftarans/cetak_info_enroll/{nama}/{no_pendaftaran}/{jalur}', [UserController::class, 'cetakInfoEnroll'])
     ->name('cetak.info.enroll');

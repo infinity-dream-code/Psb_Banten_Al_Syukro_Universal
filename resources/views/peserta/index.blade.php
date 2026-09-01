@@ -248,14 +248,83 @@
     <h3 class="font-semibold text-lg">Pengumuman Kelulusan</h3>
 </div>
 <div class="bg-white p-5 border border-gray-200 rounded-b-lg shadow-sm">
-    @if($peserta && $peserta->ujian)
-        @if($peserta->status_ujian == 'lulus')
-            <p class="text-green-600 font-semibold">Selamat, Anda dinyatakan LULUS 🎉</p>
-        @elseif($peserta->status_ujian == 'gagal')
-            <p class="text-red-600 font-semibold">Maaf, Anda dinyatakan TIDAK LULUS.</p>
+    @if($peserta && $peserta->status_ujian == 'lulus')
+        @php
+            $tagihanDaful = $peserta->tagihan?->sortByDesc('created_at')->first();
+            $rincianDaful = [];
+            $totalDaful = 0;
+            if ($tagihanDaful && is_array($tagihanDaful->detail)) {
+                $rincianDaful = $tagihanDaful->detail;
+                $totalDaful = (int) ($tagihanDaful->biaya_daful ?? 0);
+            } elseif ($peserta->masterHarga && is_array($peserta->masterHarga->detail)) {
+                $rincianDaful = $peserta->masterHarga->detail;
+                $totalDaful = collect($rincianDaful)->sum(fn ($row) => (int) ($row['biaya'] ?? $row['nominal'] ?? 0));
+            }
+        @endphp
+        <p class="text-green-600 font-semibold mb-4">Selamat, Ananda dinyatakan <strong>LULUS</strong> seleksi PSB Al Syukro Universal.</p>
+        <p class="text-gray-700 mb-4 leading-relaxed">
+            Silakan unduh form kelulusan dan segera lakukan registrasi daftar ulang sesuai rincian biaya di bawah.
+            Pembayaran hanya melalui Virtual Account <strong>{{ $peserta->va_number }}</strong>.
+        </p>
+
+        <div class="flex flex-wrap gap-2 mb-5">
+            <a href="{{ route('detail.registrasi', base64_encode($peserta->no_pendaftaran)) }}"
+               target="_blank"
+               class="inline-flex items-center px-4 py-2 bg-purple-600 text-white text-sm font-semibold rounded-lg shadow hover:bg-purple-700">
+               <i class="fas fa-file-alt mr-2"></i> Form Kelulusan
+            </a>
+            <a href="{{ route('peserta.invoice') }}"
+               target="_blank"
+               class="inline-flex items-center px-4 py-2 bg-green-600 text-white text-sm font-semibold rounded-lg shadow hover:bg-green-700">
+               <i class="fas fa-download mr-2"></i> Unduh Invoice Daftar Ulang
+            </a>
+            @if($peserta->hasil_psikotes)
+                <a href="{{ asset('storage/'.$peserta->hasil_psikotes) }}"
+                   target="_blank"
+                   class="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-lg shadow hover:bg-blue-700">
+                   <i class="fas fa-file-pdf mr-2"></i> Hasil Psikotes
+                </a>
+            @endif
+        </div>
+
+        <h4 class="font-semibold text-gray-800 mb-2">Info Biaya Daftar Ulang</h4>
+        <div class="overflow-x-auto rounded-lg border border-gray-200 mb-4">
+            <table class="w-full text-sm">
+                <thead>
+                    <tr class="bg-gray-50">
+                        <th class="px-3 py-2 text-left">No</th>
+                        <th class="px-3 py-2 text-left">Nama Pembayaran</th>
+                        <th class="px-3 py-2 text-left">Nominal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($rincianDaful as $i => $row)
+                        <tr class="border-t">
+                            <td class="px-3 py-2">{{ $i + 1 }}</td>
+                            <td class="px-3 py-2">{{ $row['nama_tagihan'] ?? '-' }}</td>
+                            <td class="px-3 py-2">Rp {{ number_format((int)($row['biaya'] ?? $row['nominal'] ?? 0), 0, ',', '.') }}</td>
+                        </tr>
+                    @empty
+                        <tr><td colspan="3" class="px-3 py-2 text-gray-500">Rincian biaya belum tersedia.</td></tr>
+                    @endforelse
+                    <tr class="border-t font-semibold bg-green-50">
+                        <td colspan="2" class="px-3 py-2 text-right">Total</td>
+                        <td class="px-3 py-2">Rp {{ number_format($totalDaful, 0, ',', '.') }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        @if($peserta->status_pembayaran_registrasi == 1)
+            <p class="text-green-700 font-medium">Status pembayaran daftar ulang: <strong>LUNAS</strong></p>
         @else
-            <p class="text-gray-700">Menunggu Pengumuman.</p>
+            <p class="text-red-600 font-medium">Status pembayaran daftar ulang: <strong>BELUM LUNAS</strong>. Segera lakukan pembayaran ke VA di atas.</p>
         @endif
+        @if($peserta->batas_akhir_registrasi)
+            <p class="text-gray-600 text-sm mt-2">Batas daftar ulang: {{ \Carbon\Carbon::parse($peserta->batas_akhir_registrasi)->translatedFormat('d F Y') }}</p>
+        @endif
+    @elseif($peserta && $peserta->status_ujian == 'gagal')
+        <p class="text-red-600 font-semibold">Maaf, Ananda dinyatakan TIDAK LULUS.</p>
     @else
         <p class="text-gray-700">Menunggu Pengumuman.</p>
     @endif

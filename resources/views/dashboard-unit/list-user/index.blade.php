@@ -32,6 +32,12 @@
 
 <div class="bg-white p-6 shadow rounded-lg">
     <h1 class="text-xl font-semibold mb-4">List Pendaftar</h1>
+    @if(session('success'))
+        <div class="mb-4 p-3 rounded bg-green-100 text-green-700 text-sm">{{ session('success') }}</div>
+    @endif
+    @if(session('error'))
+        <div class="mb-4 p-3 rounded bg-red-100 text-red-700 text-sm">{{ session('error') }}</div>
+    @endif
 
     <form method="GET" action="{{ url()->current() }}" class="mb-4 flex flex-wrap gap-2">
         <select name="tahun_akademik" class="px-3 py-2 border rounded-lg" onchange="this.form.submit()">
@@ -108,9 +114,20 @@
                                 @endif
 
                                 <a href="{{ route('cetak.formulir', base64_encode($p->no_pendaftaran)) }}"
+                                   target="_blank"
                                    class="bg-green-600 text-white hover:bg-green-700">
                                    Formulir
                                 </a>
+
+                                @if(strtolower((string) $p->status_ujian) === 'lulus')
+                                    <button type="button"
+                                            class="psikotes-btn bg-teal-600 text-white hover:bg-teal-700"
+                                            data-id="{{ $p->id }}"
+                                            data-nama="{{ $p->nama_peserta }}"
+                                            data-file="{{ $p->hasil_psikotes ? asset('storage/'.$p->hasil_psikotes) : '' }}">
+                                        Psikotes
+                                    </button>
+                                @endif
 
                                 <a href="{{ route('cetak.info.enroll', [$p->nama_peserta, $p->no_pendaftaran, $p->jalur]) }}"
                                    class="bg-gray-600 text-white hover:bg-gray-700">
@@ -145,6 +162,26 @@
     </div>
 </div>
 
+<div id="psikotesModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+    <div class="bg-white w-11/12 md:w-96 mx-auto my-24 p-6 rounded shadow-lg">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="font-semibold text-lg">Lampiran Hasil Psikotes</h3>
+            <button type="button" id="closePsikotes" class="text-gray-500 hover:text-gray-700">✖</button>
+        </div>
+        <p id="psikotesNama" class="text-sm text-gray-600 mb-3"></p>
+        <p id="psikotesExisting" class="text-sm mb-3 hidden">
+            Sudah ada file —
+            <a id="psikotesLink" href="#" target="_blank" class="text-blue-600 underline">Lihat PDF</a>
+        </p>
+        <form id="psikotesForm" method="POST" enctype="multipart/form-data">
+            @csrf
+            <input type="file" name="hasil_psikotes" accept="application/pdf" required
+                   class="w-full text-sm border rounded px-3 py-2 mb-4">
+            <p class="text-xs text-gray-500 mb-4">Format PDF, maksimal 5MB. Hanya untuk peserta yang sudah lulus.</p>
+            <button type="submit" class="w-full px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-700">Unggah PDF</button>
+        </form>
+    </div>
+</div>
 <script>
 const baseUrl = window.location.origin;
 document.querySelectorAll('.lihat-btn').forEach(btn => {
@@ -163,6 +200,25 @@ document.querySelectorAll('.lihat-btn').forEach(btn => {
 });
 document.getElementById('closeModal').addEventListener('click', function() {
     document.getElementById('detailModal').classList.add('hidden');
+});
+document.querySelectorAll('.psikotes-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        document.getElementById('psikotesNama').textContent = this.dataset.nama;
+        document.getElementById('psikotesForm').action = "{{ url('PmbMstPendaftarans/upload-psikotes') }}/" + this.dataset.id;
+        const existing = document.getElementById('psikotesExisting');
+        const link = document.getElementById('psikotesLink');
+        if (this.dataset.file) {
+            existing.classList.remove('hidden');
+            link.href = this.dataset.file;
+        } else {
+            existing.classList.add('hidden');
+            link.href = '#';
+        }
+        document.getElementById('psikotesModal').classList.remove('hidden');
+    });
+});
+document.getElementById('closePsikotes').addEventListener('click', function() {
+    document.getElementById('psikotesModal').classList.add('hidden');
 });
 </script>
 

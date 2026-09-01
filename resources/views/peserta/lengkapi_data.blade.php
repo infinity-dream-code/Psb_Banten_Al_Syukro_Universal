@@ -701,6 +701,12 @@
                     </div>
                     <span class="text-green-800 font-semibold">Rp {{ number_format($total,0,',','.') }}</span>
                 </div>
+                <div class="mt-4 text-right">
+                    <a href="{{ route('peserta.invoice') }}" target="_blank"
+                       class="inline-flex items-center px-4 py-2 bg-green-600 text-white text-sm font-semibold rounded-lg hover:bg-green-700">
+                        <i class="fas fa-download mr-2"></i> Unduh Invoice Daftar Ulang
+                    </a>
+                </div>
             @else
                 <div class="flex items-center justify-between bg-red-50 border border-red-300 rounded-lg p-4">
                     <div class="flex items-center gap-3">
@@ -711,6 +717,12 @@
                         </div>
                     </div>
                     <span class="text-red-800 font-semibold">Rp {{ number_format($total,0,',','.') }}</span>
+                </div>
+                <div class="mt-4 text-right">
+                    <a href="{{ route('peserta.invoice') }}" target="_blank"
+                       class="inline-flex items-center px-4 py-2 bg-green-600 text-white text-sm font-semibold rounded-lg hover:bg-green-700">
+                        <i class="fas fa-download mr-2"></i> Unduh Invoice Daftar Ulang
+                    </a>
                 </div>
             @endif
         </div>

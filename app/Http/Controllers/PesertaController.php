@@ -25,9 +25,32 @@ class PesertaController extends Controller
     
 public function index()
 {
-    $peserta = auth()->user()->peserta()->with(['relasiGelombang', 'ujian'])->first();
+    $peserta = auth()->user()->peserta()->with(['relasiGelombang', 'ujian', 'masterHarga', 'tagihan'])->first();
 
     return view('peserta.index', compact('peserta'));
+}
+
+public function invoiceDaftarUlang()
+{
+    $peserta = auth()->user()->peserta()->with(['relasiGelombang', 'masterHarga', 'tagihan'])->firstOrFail();
+
+    if (strtolower((string) $peserta->status_ujian) !== 'lulus') {
+        abort(403, 'Invoice daftar ulang hanya tersedia setelah dinyatakan lulus.');
+    }
+
+    $tagihan = $peserta->tagihan()->latest()->first();
+    $detail = [];
+    $total = 0;
+
+    if ($tagihan && is_array($tagihan->detail)) {
+        $detail = $tagihan->detail;
+        $total = (int) ($tagihan->biaya_daful ?? 0);
+    } elseif ($peserta->masterHarga && is_array($peserta->masterHarga->detail)) {
+        $detail = $peserta->masterHarga->detail;
+        $total = collect($detail)->sum(fn ($row) => (int) ($row['biaya'] ?? $row['nominal'] ?? 0));
+    }
+
+    return view('peserta.invoice', compact('peserta', 'tagihan', 'detail', 'total'));
 }
 
 public function lengkapi_data()

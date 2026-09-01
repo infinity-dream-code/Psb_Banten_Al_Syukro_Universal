@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Pendaftaran Siswa Baru - DEMO PSB</title>
+    <title>Form Pendaftaran Siswa Baru - Al Syukro Universal</title>
+    <link rel="icon" type="image/jpeg" href="{{ asset('icon.jpeg') }}">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
@@ -118,8 +119,9 @@
         <div class="container mx-auto px-4 max-w-6xl">
             <div class="form-section mb-8 overflow-hidden">
                 <div class="section-header text-white px-8 py-8 text-center">
-                    <h1 class="text-3xl font-bold mb-2">DEMO PSB</h1>
+                    <h1 class="text-3xl font-bold mb-2">Al Syukro Universal</h1>
                     <p class="text-green-100 text-lg">Form Pendaftaran Siswa Baru</p>
+                    <p class="text-green-100 text-sm mt-1">Kota Tangerang Selatan, Prov. Banten</p>
                     <div class="mt-4 w-20 h-1 bg-white/30 mx-auto rounded-full"></div>
                 </div>
             </div>

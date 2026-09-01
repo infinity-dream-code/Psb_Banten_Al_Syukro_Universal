@@ -87,6 +87,7 @@ class DataPeserta extends Model
         'dokumen_kk',
         'dokumen_ktp_ortu',
         'dokumen_akte_kelahiran',
+        'hasil_psikotes',
         'va_number',
         'status_paid',
         'status_pembayaran_registrasi',

@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PSB DEMO</title>
+  <title>Al Syukro Universal</title>
+  <link rel="icon" type="image/jpeg" href="{{ asset('icon.jpeg') }}">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     * {
@@ -97,8 +98,8 @@
 
     <div class="w-1/2 gradient-bg flex items-center justify-center p-12 relative overflow-hidden left-panel">
       <div class="animate-slideInLeft">
-        <img src="https://demo.pmb.smartpayment.co.id/images/bg-logo.png"
-             alt="PSB Demo Logo"
+        <img src="{{ asset('icon.jpeg') }}"
+             alt="Al Syukro Universal"
              class="max-w-full max-h-96 object-contain animate-floatSmooth logo-img"
              onerror="this.style.display='none';">
       </div>
@@ -137,7 +138,8 @@
           </div>
         @endif
 
-        <h1 class="text-3xl lg:text-4xl font-bold text-center text-gray-800 mb-2 form-title">DEMO PSB</h1>
+        <h1 class="text-3xl lg:text-4xl font-bold text-center text-gray-800 mb-2 form-title">Al Syukro Universal</h1>
+        <p class="text-center text-gray-400 mb-2 text-sm">Kota Tangerang Selatan, Prov. Banten</p>
         <p class="text-center text-gray-400 mb-8 text-sm font-medium tracking-wider">FORM LOGIN</p>
 
         <form class="space-y-6 animate-fadeIn" method="POST" action="{{ route('login') }}">

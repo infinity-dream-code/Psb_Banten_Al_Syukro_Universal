@@ -108,6 +108,33 @@ public function cetakFormulir($encoded)
     ));
 }
 
+public function uploadPsikotes(Request $request, $id)
+{
+    $request->validate([
+        'hasil_psikotes' => 'required|mimes:pdf|max:5120',
+    ]);
+
+    if (auth()->user()->role === 'peserta') {
+        abort(403);
+    }
+
+    $peserta = DataPeserta::findOrFail($id);
+
+    if (strtolower((string) $peserta->status_ujian) !== 'lulus') {
+        return back()->with('error', 'Lampiran psikotes hanya dapat diunggah setelah peserta dinyatakan lulus.');
+    }
+
+    if ($peserta->hasil_psikotes && \Storage::disk('public')->exists($peserta->hasil_psikotes)) {
+        \Storage::disk('public')->delete($peserta->hasil_psikotes);
+    }
+
+    $tahun = optional($peserta->relasiGelombang)->tahun ?? date('Y');
+    $peserta->hasil_psikotes = $request->file('hasil_psikotes')->store("uploads/psikotes/psikotes-{$tahun}", 'public');
+    $peserta->save();
+
+    return back()->with('success', 'Hasil psikotes berhasil diunggah.');
+}
+
 public function updatepeserta(Request $request, $id)
 {
     $peserta = DataPeserta::findOrFail($id);

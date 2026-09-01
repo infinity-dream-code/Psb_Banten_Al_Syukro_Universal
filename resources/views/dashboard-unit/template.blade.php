@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PSB Dashboard</title>
+    <title>PSB Al Syukro Universal</title>
+    <link rel="icon" type="image/jpeg" href="{{ asset('icon.jpeg') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -135,9 +136,7 @@
     <div id="sidebar" class="sidebar text-white">
         <div class="p-6 text-center border-b border-green-500">
             <div class="w-16 h-16 bg-white rounded-full mx-auto mb-3 flex items-center justify-center overflow-hidden">
-                <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                    <i class="fas fa-user text-green-600 text-lg"></i>
-                </div>
+                <img src="{{ asset('icon.jpeg') }}" alt="Al Syukro Universal" class="w-14 h-14 object-contain">
             </div>
             <h3 class="font-semibold text-lg">{{ ucwords(str_replace('-', ' ', $role ?? 'Admin')) }}</h3>
         </div>
@@ -155,7 +154,7 @@
                     @endif
 
                     @if(in_array('master data', $menus ?? []))
-                    <li>
+                    <li class="hidden">
                         <button class="menu-item w-full flex items-center justify-between px-6 py-3 text-white font-medium dropdown-toggle hover:bg-green-700 transition-colors" data-target="masterdata-dropdown" data-menu="masterdata">
                             <div class="flex items-center">
                                 <i class="fas fa-database mr-3 w-4 text-center"></i>
