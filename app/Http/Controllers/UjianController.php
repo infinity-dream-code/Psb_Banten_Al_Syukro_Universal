@@ -152,7 +152,7 @@ public function setKelulusanPeserta1(Request $request, $status)
 
             $response = Http::withHeaders([
                 'Content-Type' => 'application/json'
-            ])->post('http://10.99.23.111/WS_PSB/Banten_Al_Syukro_Universal/index.php', $payload);
+            ])->post('http://103.23.103.43/WS_PSB/Banten_Al_Syukro_Universal/index.php', $payload);
 
             if (!$response->successful()) {
                 return redirect()->back()->with('error', 'Gagal membuat tagihan');
@@ -724,7 +724,7 @@ public function setKelulusanPeserta(Request $request, $status)
 
             $response = \Http::withHeaders([
                 'Content-Type' => 'application/json'
-            ])->post('10.99.23.111/WS_PSB/Banten_Al_Syukro_Universal/index.php', $payload);
+            ])->post('103.23.103.43/WS_PSB/Banten_Al_Syukro_Universal/index.php', $payload);
 
             Log::info('CreateTagihanBulk response', [
                 'status' => $response->status(),

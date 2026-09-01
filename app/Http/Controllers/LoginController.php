@@ -51,7 +51,7 @@ class LoginController extends Controller
                 try {
                     $response = Http::withHeaders([
                         'Content-Type' => 'application/json'
-                    ])->post("10.99.23.111/WS_PSB/Banten_Al_Syukro_Universal/index.php", [
+                    ])->post("103.23.103.43/WS_PSB/Banten_Al_Syukro_Universal/index.php", [
                         "token"  => $tokenCek,
                         "method" => "CekTagihan"
                     ]);

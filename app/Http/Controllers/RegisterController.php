@@ -187,7 +187,7 @@ $peserta = DataPeserta::where('no_pendaftaran', $noDaftar)
 
     $response = Http::withHeaders([
     'Content-Type' => 'application/json'
-])->post("10.99.23.111/WS_PSB/Banten_Al_Syukro_Universal/index.php", [
+])->post("103.23.103.43/WS_PSB/Banten_Al_Syukro_Universal/index.php", [
     "token"  => $jwtToken,
     "method" => "CreateTagihan"
 ]);
@@ -206,7 +206,7 @@ public function cekTagihan($no_pendaftaran)
 
    $response = Http::withHeaders([
     'Content-Type' => 'application/json'
-])->post("10.99.23.111/WS_PSB/Banten_Al_Syukro_Universal/index.php", [
+])->post("103.23.103.43/WS_PSB/Banten_Al_Syukro_Universal/index.php", [
     "token"  => $token,
     "method" => "CekTagihan"
 ]);
@@ -238,7 +238,7 @@ public function cekStatusRegis(Request $request)
 
     \Log::info('Cek Status Regis - Payload', $payload);
 
-    $response = \Http::post("10.99.23.111/WS_PSB/Banten_Al_Syukro_Universal/index.php", [
+    $response = \Http::post("103.23.103.43/WS_PSB/Banten_Al_Syukro_Universal/index.php", [
         "token" => $token,
         "method" => "cekTagihanDibayar"
     ]);
@@ -290,7 +290,7 @@ public function cekStatus(Request $request)
 
     $token = \Firebase\JWT\JWT::encode($payload, $jwtKey, 'HS256');
 
-    $response = \Http::post("10.99.23.111/WS_PSB/Banten_Al_Syukro_Universal/index.php", [
+    $response = \Http::post("103.23.103.43/WS_PSB/Banten_Al_Syukro_Universal/index.php", [
         "token" => $token,
         "method" => "cekTagihanDibayar"
     ]);
@@ -357,7 +357,7 @@ public function cekStatus1(Request $request)
 
     $token = \Firebase\JWT\JWT::encode($payload, $jwtKey, 'HS256');
 
-    $response = \Http::post("10.99.23.111/WS_PSB/Banten_Al_Syukro_Universal/index.php", [
+    $response = \Http::post("103.23.103.43/WS_PSB/Banten_Al_Syukro_Universal/index.php", [
         "token" => $token,
         "method" => "cekTagihanDibayar"
     ]);
