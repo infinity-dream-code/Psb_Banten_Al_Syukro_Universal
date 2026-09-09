@@ -218,7 +218,7 @@
 
         <section class="bg-gray-50 py-20">
             <div class="max-w-7xl mx-auto px-4">
-                <div class="grid lg:grid-cols-2 gap-16">
+                <div class="max-w-3xl mx-auto">
                     <div>
                         <div class="text-pmb-green-600 font-semibold mb-4 text-lg">Alur</div>
                         <h2 class="text-4xl font-bold text-pmb-green-800 mb-10">Pendaftaran</h2>
@@ -253,6 +253,8 @@
                         </div>
                     </div>
 
+                    {{-- Bagian Tanggal Gelombang Penerimaan Siswa Baru di-hidden sesuai request --}}
+                    {{--
                     <div>
                         <div class="text-pmb-green-600 font-semibold mb-4 text-lg text-right">Tanggal</div>
                         <h2 class="text-4xl font-bold text-pmb-green-800 mb-10 text-right leading-tight">
@@ -277,6 +279,7 @@
 </div>
 
                     </div>
+                    --}}
                 </div>
             </div>
         </section>
@@ -437,122 +440,114 @@
                             <div class="space-y-6">
                                 <div class="flex items-start space-x-4">
                                     <span class="text-pmb-green-600 font-bold text-lg flex-shrink-0">1.</span>
-                                    <div class="text-gray-700 text-lg">Scan foto berseragam sekolah</div>
+                                    <div class="text-gray-700 text-lg">Mengisi formulir pendaftaran secara online</div>
                                 </div>
                                 
                                 <div class="flex items-start space-x-4">
                                     <span class="text-pmb-green-600 font-bold text-lg flex-shrink-0">2.</span>
-                                    <div class="text-gray-700 text-lg">Mengisi formulir pendaftaran online</div>
+                                    <div class="text-gray-700 text-lg">Membayar biaya pendaftaran melalui Virtual Account</div>
                                 </div>
                                 
                                 <div class="flex items-start space-x-4">
                                     <span class="text-pmb-green-600 font-bold text-lg flex-shrink-0">3.</span>
-                                    <div class="text-gray-700 text-lg">Membayar biaya pendaftaran</div>
+                                    <div class="text-gray-700 text-lg leading-relaxed">
+                                        Transaksi ke BCA Syariah baik melalui teller, ATM, M-Banking menu yang dipilih adalah "Transaksi Virtual Account".<br>
+                                        <span class="font-bold text-red-600">Biaya Pendaftaran sebesar Rp. xxx + biaya VA Rp 2000 dibayarkan secara non tunai (melalui Virtual Account)</span>
+                                    </div>
                                 </div>
                                 
                                 <div class="flex items-start space-x-4">
                                     <span class="text-pmb-green-600 font-bold text-lg flex-shrink-0">4.</span>
                                     <div class="text-gray-700 text-lg leading-relaxed">
-    Transaksi ke bank Muamalat baik teller, ATM, e-banking maupun sms banking, maka transaksinya (menu yang dipilih) adalah transaksi virtual akun. 
-    <span class="font-bold text-red-600">Biaya Pendaftaran sebesar Rp. xxx dibayarkan non-tunai (langsung ke nomor virtual akun)</span>
-</div>
-
-                                </div>
-                                
-                                <div class="flex items-start space-x-4">
-                                    <span class="text-pmb-green-600 font-bold text-lg flex-shrink-0">5.</span>
-                                   <div class="text-gray-700 text-lg leading-relaxed">
-    Transaksi melalui LINTAS BANK baik teller, ATM, e-banking maupun sms banking, maka transaksinya (menu yang dipilih) adalah transfer antar bank. 
-    <span class="font-bold text-red-600">Biaya Pendaftaran menjadi Rp. xxx + biaya transfer antar bank Rp. 6.500</span>
-</div>
-
+                                        Transaksi melalui Bank lain maupun Dompet Digital (E-Wallet) menu transaksi yang dipilih adalah "Transfer Antar Bank".<br>
+                                        <span class="font-bold text-red-600">Biaya Pendaftaran sebesar Rp. xxx + biaya VA Rp 2000 + biaya transfer antar bank (Rp 6.500/Rp 2.500) dibayarkan secara non tunai (melalui Virtual Account)</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Petunjuk Pembayaran -->
-                      <div id="content-pembayaran" class="tab-content hidden">
-  <div class="card card-body p-4 bg-white shadow-sm rounded">
+                        <div id="content-pembayaran" class="tab-content hidden">
+                            <div class="card card-body p-4 bg-white shadow-sm rounded">
+                                <p class="pb-3 fw-bold fs-5">Petunjuk Pembayaran</p>
 
-    <p class="pb-3 fw-bold fs-5">Petunjuk Pembayaran</p>
+                                <p class="pb-2 fw-bold fs-6 mt-3">Pembayaran Melalui Mobile Banking Selain BCA Syariah</p>
+                                <ol class="ps-3">
+                                    <li class="mb-2">Login ke Mobile Banking.</li>
+                                    <li class="mb-2">Pilih menu "TRANSFER".</li>
+                                    <li class="mb-2">Pilih "Transfer Antar Bank" dengan Bank tujuan "BCA Syariah". Masukkan nomor "Virtual Account" pada kolom Nomor Rekening VA PEMBAYARAN xxxxx XXXXXXXXXX</li>
+                                    <li class="mb-2">Periksa Informasi pembayaran pastikan VA sudah sesuai dengan informasi (cek info nama dan nama tagihan), kesalahan transfer ke Virtual Account lain bukan tanggung jawab bagian keuangan.</li>
+                                    <li class="mb-2">Masukkan nominal sesuai dengan nominal yang ingin dibayarkan ditambah biaya VA (Nominal Pembayaran+2.000)</li>
+                                    <li class="mb-2">Masukkan PIN mobile banking anda.</li>
+                                    <li class="mb-2">Konfirmasi Pembayaran.</li>
+                                    <li class="mb-2">Simpan BUKTI TRANSAKSI SEBAGAI BUKTI PEMBAYARAN.</li>
+                                </ol>
 
-    <p class="pb-2 fw-bold fs-6 mt-3">Pembayaran melalui Payment Point / Teller Bank Muamalat:</p>
-    <ol class="ps-3">
-        <li class="mb-2">Tunjukkan Nomor Pendaftaran / Virtual Akun (VA) Anda ke teller</li>
-        <li class="mb-2">Isi form pembayaran (jumlah nominal pembayaran sesuai dengan informasi dari sistem PSB Online)</li>
-        <li class="mb-2">Simpan bukti struk sebagai bukti pembayaran yang sah</li>
-    </ol>
+                                <p class="pb-2 fw-bold fs-6 mt-4">Pembayaran Melalui ATM LAIN SELAIN BCA</p>
+                                <ol class="ps-3">
+                                    <li class="mb-2">Masukkan kartu atm, lalu ketik pin anda.</li>
+                                    <li class="mb-2">Pilih menu "TRANSFER BANK LAIN"</li>
+                                    <li class="mb-2">Masukkan Kode BCA Syariah (536) dilanjut dengan 16 digit nomor "Virtual Account" VA PEMBAYARAN xxxxx XXXXXXXXXX</li>
+                                    <li class="mb-2">Periksa Informasi pembayaran pastikan VA sudah sesuai dengan informasi (cek info nama dan nama tagihan), kesalahan transfer ke Virtual Account lain bukan tanggung jawab bagian keuangan.</li>
+                                    <li class="mb-2">Tekan "YA" jika setuju dengan informasi pembayaran.</li>
+                                    <li class="mb-2">Masukkan nominal sesuai dengan nominal yang ingin dibayarkan ditambah biaya VA (Nominal Pembayaran+2.000).</li>
+                                    <li class="mb-2">Kemudian tekan "BENAR".</li>
+                                    <li class="mb-2">Konfirmasi transaksi sukses.</li>
+                                    <li class="mb-2">SIMPAN STRUK ATM SEBAGAI BUKTI PEMBAYARAN.</li>
+                                </ol>
 
-    <p class="pb-2 fw-bold fs-6 mt-4">Pembayaran melalui ATM Muamalat:</p>
-    <ol class="ps-3">
-        <li class="mb-2">Masukkan PIN</li>
-        <li class="mb-2">Pilih menu "PEMBAYARAN" lalu pilih menu "VIRTUAL ACCOUNT".</li>
-        <li class="mb-2">Masukkan "Nomor Pendaftaran / Virtual Akun (VA)" contoh: 7977xx12345678901</li>
-        <li class="mb-2">Periksa Informasi pembayaran pastikan VA sudah sesuai dengan informasi (cek info nama dan nama tagihan)</li>
-        <li class="mb-2">Tekan "YA" jika setuju dengan informasi pembayaran.</li>
-        <li class="mb-2">Masukkan nominal pembayaran sesuai dengan total bayar yang tertera.</li>
-        <li class="mb-2">Kemudian tekan "Benar".</li>
-        <li class="mb-2">Konfirmasi transaksi sukses.</li>
-        <li class="mb-2">Simpan struk ATM sebagai bukti pembayaran yang sah.</li>
-    </ol>
+                                <p class="pb-2 fw-bold fs-6 mt-4">Pembayaran Melalui E-Wallet (Flip, Dana, OVO, Gopay, Shopee Pay)</p>
+                                <ol class="ps-3">
+                                    <li class="mb-2">Login ke E-Wallet.</li>
+                                    <li class="mb-2">Pilih menu "TRANSFER".</li>
+                                    <li class="mb-2">Pilih "Transfer Antar Bank" dengan Bank tujuan "BCA Syariah".</li>
+                                    <li class="mb-2">Masukkan nomor "Virtual Account" pada kolom Nomor Rekening VA PEMBAYARAN xxxxx XXXXXXXXXX</li>
+                                    <li class="mb-2">Periksa Informasi pembayaran pastikan VA sudah sesuai dengan informasi (cek info nama dan nama tagihan), kesalahan transfer ke Virtual Account lain bukan tanggung jawab bagian keuangan.</li>
+                                    <li class="mb-2">Masukkan nominal sesuai dengan nominal yang ingin dibayarkan ditambah biaya VA (Nominal Pembayaran+2.000).</li>
+                                    <li class="mb-2">Masukkan PIN E-Wallet anda.</li>
+                                    <li class="mb-2">Konfirmasi Pembayaran.</li>
+                                    <li class="mb-2">Simpan BUKTI TRANSAKSI SEBAGAI BUKTI PEMBAYARAN.</li>
+                                </ol>
 
-    <p class="pb-2 fw-bold fs-6 mt-4">Pembayaran melalui Jaringan ATM BERSAMA, PRIMA (BCA, Mandiri, BNI, BRI, dll):</p>
-    <ol class="ps-3">
-        <li class="mb-2">Masukkan PIN</li>
-        <li class="mb-2">Pilih menu "Transaksi Lainnya " lalu pilih "TRANSFER"</li>
-        <li class="mb-2">Pilih Menu "KE REK BANK LAIN / ANTAR BANK ONLINE"</li>
-        <li class="mb-2">Masukkan Kode Bank Muamalat (147) dilanjut dengan 16 digit nomor Virtual Account (VA) contoh: 7977xx12345678901</li>
-        <li class="mb-2">Masukkan nominal pembayaran sesuai dengan total bayar yang tertera.</li>
-        <li class="mb-2">Periksa Informasi pembayaran pastikan VA sudah sesuai dengan informasi (cek info nama dan nama tagihan)</li>
-        <li class="mb-2">Jika data sudah benar maka lakukan konfirmasi pada data transfer.</li>
-        <li class="mb-2">Simpan struk ATM sebagai bukti pembayaran.</li>
-    </ol>
-
-    <p class="pb-2 fw-bold fs-6 mt-4">Pembayaran melalui M-Banking Muamalat:</p>
-    <ol class="ps-3">
-        <li class="mb-2">Login ke Mobile Banking Muamalat (Muamalat DIN).</li>
-        <li class="mb-2">Pilih menu "BELI atau BAYAR".</li>
-        <li class="mb-2">Pilih menu "VIRTUAL ACCOUNT".</li>
-        <li class="mb-2">Masukkan nomor "Virtual Account" contoh: 7977xx12345678901.</li>
-        <li class="mb-2">Periksa Informasi pembayaran pastikan VA sudah sesuai dengan informasi (cek info nama dan nama tagihan).</li>
-        <li class="mb-2">Masukkan nominal pembayaran sesuai dengan total bayar yang tertera.</li>
-        <li class="mb-2">Masukkan TIN mobile banking anda.</li>
-        <li class="mb-2">Simpan bukti transaksi sebagai bukti pembayaran.</li>
-    </ol>
-
-    <p class="pb-2 fw-bold fs-6 mt-4">Pembayaran melalui Internet Banking/Mobile Banking (Realtime/Online Transfer):</p>
-    <ol class="ps-3">
-        <li class="mb-2">Login ke Internet Banking</li>
-        <li class="mb-2">Pilih Menu "Transfer"</li>
-        <li class="mb-2">Pilih Menu "Ke Rek Bank Lain / Realtime Transfer"</li>
-        <li class="mb-2">Pilih “Seluruh Channel Bank” sebagai rekening tujuan</li>
-        <li class="mb-2">Masukkan Nomor Pendaftaran / Virtual Account. contoh: 75100012345678901</li>
-        <li class="mb-2">Masukkan jumlah sesuai tagihan.</li>
-        <li class="mb-2">Simpan bukti struk sebagai bukti pembayaran yang sah.</li>
-    </ol>
-  </div>
-</div>
-
+                                <p class="pb-2 fw-bold fs-6 mt-4">Pembayaran Melalui BCA Syariah Mobile Banking (BSya)</p>
+                                <ol class="ps-3">
+                                    <li class="mb-2">Login ke Mobile Banking BCA Syariah (BSYA).</li>
+                                    <li class="mb-2">Pilih menu "TRANSFER".</li>
+                                    <li class="mb-2">Pilih menu "TRANSFER KE VIRTUAL ACCOUNT".</li>
+                                    <li class="mb-2">Klik Transfer ke Tujuan Baru lalu Pilih BCA Syariah.</li>
+                                    <li class="mb-2">Masukkan nomor "Virtual Account" pada kolom Nomor Virtual Account VA PEMBAYARAN xxxxx XXXXXXXXXX</li>
+                                    <li class="mb-2">Periksa Informasi pembayaran pastikan VA sudah sesuai dengan informasi (cek info nama dan nama tagihan), kesalahan transfer ke Virtual Account lain bukan tanggung jawab bagian keuangan.</li>
+                                    <li class="mb-2">Masukkan nominal sesuai dengan nominal yang ingin dibayarkan ditambah biaya VA (Nominal Pembayaran+2.000).</li>
+                                    <li class="mb-2">Masukkan PIN mobile banking anda.</li>
+                                    <li class="mb-2">Konfirmasi Pembayaran.</li>
+                                    <li class="mb-2">Simpan BUKTI TRANSAKSI SEBAGAI BUKTI PEMBAYARAN.</li>
+                                </ol>
+                            </div>
+                        </div>
 
                         <!-- Persyaratan Daftar Ulang -->
                         <div id="content-daftar-ulang" class="tab-content hidden">
-                           <div class="card card-body p-4 bg-white shadow-sm rounded">
-    <p class="pb-3 fw-bold fs-5">Syarat Daftar Ulang</p>
-    <ol class="ps-3">
-        <li class="mb-2">
-            Lulus tes seleksi dibuktikan dengan Surat Keputusan Panitia PSB
-        </li>
-        <li class="mb-2">
-            Membawa berkas sebagai berikut :
-            <ol type="a" class="ps-3 mt-2">
-                <li class="mb-1">Surat Keterangan Lulus dari Panitia PSB</li>
-                <li class="mb-1">Scan KTP/KK</li>
-                <li class="mb-1">Scan Ijazah SMA/SMK/MA beserta Transkrip Nilai</li>
-            </ol>
-        </li>
-    </ol>
-</div>
-
+                            <div class="card card-body p-4 bg-white shadow-sm rounded">
+                                <p class="pb-3 fw-bold fs-5">Syarat Daftar Ulang</p>
+                                <ol class="ps-3">
+                                    <li class="mb-2">
+                                        Dinyatakan lulus tes seleksi dibuktikan dengan Surat Keputusan Panitia PSB
+                                    </li>
+                                    <li class="mb-2">
+                                        Membawa berkas sebagai berikut:
+                                        <ul class="ps-3 mt-2 space-y-1" style="list-style-type: disc !important; margin-left: 1.5rem;">
+                                            <li class="mb-1">Surat Keterangan Lulus dari Panitia PSB</li>
+                                            <li class="mb-1">Pasfoto terbaru ukuran 3x4 (2 lembar)</li>
+                                            <li class="mb-1">Fotokopi Kartu Keluarga (KK) dan Akta Kelahiran</li>
+                                            <li class="mb-1">Fotokopi Ijazah atau Surat Keterangan Lulus (SKL) dari Sekolah Asal</li>
+                                            <li class="mb-1">KIP/PKH/Piagam/Sertifikat bagi yang memiliki</li>
+                                        </ul>
+                                    </li>
+                                    <li class="mb-2">
+                                        Berkas yang diperlukan dimasukkan ke map kertas warna biru yang diberi nama dengan huruf kapital
+                                    </li>
+                                </ol>
+                            </div>
                         </div>
                     </div>
                 </div>
