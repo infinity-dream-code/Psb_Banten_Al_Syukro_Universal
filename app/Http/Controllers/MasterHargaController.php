@@ -71,9 +71,9 @@ class MasterHargaController extends Controller
 public function create(Request $request)
 {
     $jalurs = MasterJalur::where('is_active', 1)->orderBy('nama')->get();
-    $gelombangs = MasterGelombang::whereDate('end', '>=', Carbon::today())
-        ->orderBy('tahun')
-        ->orderBy('gelombang')
+    $gelombangs = MasterGelombang::where('gelombang', 1)
+        ->whereDate('end', '>=', Carbon::today())
+        ->orderByDesc('id')
         ->get();
     $fakultas = MasterFakultas::where('aktif', 1)->orderBy('fakultas')->get();
 
@@ -188,6 +188,11 @@ public function edit($id)
 
 public function update(Request $request, $id)
 {
+    $gelombang1 = MasterGelombang::gelombangSatu();
+    if ($gelombang1) {
+        $request->merge(['id_gelombang' => $gelombang1->id]);
+    }
+
     $request->validate([
         'id_jalur' => 'required',
         'id_gelombang' => 'required',
@@ -350,6 +355,11 @@ public function edit1($role, $id)
 
 public function update1(Request $request, $role, $id)
 {
+    $gelombang1 = MasterGelombang::gelombangSatu();
+    if ($gelombang1) {
+        $request->merge(['id_gelombang' => $gelombang1->id]);
+    }
+
     $request->validate([
         'id_jalur' => 'required',
         'id_gelombang' => 'required',
@@ -491,6 +501,11 @@ public function toggleActive($id)
 
 public function store(Request $request)
 {
+    $gelombang1 = MasterGelombang::gelombangSatu();
+    if ($gelombang1) {
+        $request->merge(['id_gelombang' => $gelombang1->id]);
+    }
+
     $request->validate([
         'id_jalur' => 'required',
         'id_gelombang' => 'required',

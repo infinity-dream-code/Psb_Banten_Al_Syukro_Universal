@@ -48,4 +48,15 @@ class MasterGelombang extends Model
     return $this->belongsTo(MasterAkademik::class, 'tahun_akademik_id');
 }
 
+    public static function gelombangSatu()
+    {
+        $today = now()->toDateString();
+
+        return static::where('gelombang', 1)
+            ->whereDate('end', '>=', $today)
+            ->orderByDesc('id')
+            ->first()
+            ?? static::where('gelombang', 1)->orderByDesc('id')->first();
+    }
+
 }

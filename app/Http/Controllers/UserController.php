@@ -413,7 +413,8 @@ public function updatepeserta1(Request $request, $role, $id)
         $gelombangs = MasterHarga::with('gelombang')
             ->where('id_jalur', $id_jalur)
             ->whereHas('gelombang', function ($q) use ($today) {
-                $q->whereDate('start', '<=', $today)
+                $q->where('gelombang', 1)
+                  ->whereDate('start', '<=', $today)
                   ->whereDate('end', '>=', $today);
             })
             ->select('id_gelombang')

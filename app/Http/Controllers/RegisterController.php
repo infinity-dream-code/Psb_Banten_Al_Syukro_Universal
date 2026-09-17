@@ -34,6 +34,11 @@ class RegisterController extends Controller
 
   public function enroll(Request $request)
 {
+    $gelombang1 = MasterGelombang::gelombangSatu();
+    if ($gelombang1) {
+        $request->merge(['id_gelombang' => $gelombang1->id]);
+    }
+
     $request->validate([
         'nisn'              => 'nullable|digits:10|unique:data_peserta,nisn',
         'gender'            => 'required|in:L,P',

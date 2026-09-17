@@ -163,7 +163,7 @@
                 @endforeach
             </select>
         </div>
-        <div>
+        <div class="hidden">
             <label class="block label-text mb-2">Gelombang <span class="required">*</span></label>
             <select name="id_gelombang" id="gelombang" required class="form-input" disabled>
                 <option value="">PILIH GELOMBANG</option>
@@ -508,6 +508,10 @@ document.addEventListener('DOMContentLoaded', async function () {
                 .then(res => res.json())
                 .then(data => {
                     fillSelect(gelombangSelect, data, 'PILIH GELOMBANG', 'id_gelombang', 'nama_gelombang');
+                    if (data.length) {
+                        gelombangSelect.value = data[0].id_gelombang;
+                        gelombangSelect.dispatchEvent(new Event('change'));
+                    }
                 });
             }
         });

@@ -22,12 +22,12 @@
                             @endforeach
                         </select>
                     </div>
-                    <div>
+                    <div class="hidden">
                         <label for="id_gelombang" class="block text-sm font-medium text-gray-700 mb-2">Gelombang <span class="text-red-500">*</span></label>
                         <select id="id_gelombang" name="id_gelombang" required class="w-full px-3 py-2 border border-gray-300 rounded-lg">
                             <option value="">-- Pilih Gelombang --</option>
                             @foreach($gelombangs as $gelombang)
-                                <option value="{{ $gelombang->id }}">Gelombang {{ $gelombang->gelombang }} - {{ $gelombang->tahun_akademik }}</option>
+                                <option value="{{ $gelombang->id }}" selected>Gelombang {{ $gelombang->gelombang }} - {{ $gelombang->tahun_akademik }}</option>
                             @endforeach
                         </select>
                     </div>
