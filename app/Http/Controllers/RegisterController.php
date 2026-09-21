@@ -64,7 +64,11 @@ class RegisterController extends Controller
         ->where('id_gelombang', $request->id_gelombang)
         ->where('id_jalur', $request->id_jalur)
         ->where('id_prodi', $request->id_prodi)
-        ->firstOrFail();
+        ->first();
+
+    if (!$masterHarga) {
+        return back()->withInput()->with('error', 'Biaya pendaftaran belum diset. Silakan coba lagi.');
+    }
 
     $vaNumber = '751000' . $noDaftar;
 
@@ -181,7 +185,7 @@ $peserta = DataPeserta::where('no_pendaftaran', $noDaftar)
             [
                 "nama_tagihan" => "Biaya Pendaftaran",
                 "kode_tagihan" => "499",
-                "nominal" => $peserta->masterHarga->harga_final
+                "nominal" => $peserta->masterHarga->harga_final ?? 0
             ]
         ]
     ]
@@ -190,17 +194,21 @@ $peserta = DataPeserta::where('no_pendaftaran', $noDaftar)
 
     $jwtToken = JWT::encode($payload, $jwtKey, 'HS256');
 
-    $response = Http::withHeaders([
-    'Content-Type' => 'application/json'
-])->post("103.23.103.43/WS_PSB/Banten_Al_Syukro_Universal/index.php", [
-    "token"  => $jwtToken,
-    "method" => "CreateTagihan"
-]);
+    $wsResponse = null;
+    try {
+        $response = Http::timeout(8)->connectTimeout(5)->withHeaders([
+            'Content-Type' => 'application/json'
+        ])->post("http://103.23.103.43/WS_PSB/Banten_Al_Syukro_Universal/index.php", [
+            "token"  => $jwtToken,
+            "method" => "CreateTagihan"
+        ]);
+        $wsResponse = $response->json();
+        \Log::info('WS CreateTagihan raw', [$response->body()]);
+    } catch (\Throwable $e) {
+        \Log::warning('WS CreateTagihan gagal', ['error' => $e->getMessage()]);
+    }
 
-
-    \Log::info('WS CreateTagihan raw', [$response->body()]);
-
-    return view('pmb.success', compact('peserta', 'passwordPlain'))->with('ws_response', $response->json());
+    return view('pmb.success', compact('peserta', 'passwordPlain'))->with('ws_response', $wsResponse);
 }
 
 public function cekTagihan($no_pendaftaran)
@@ -209,17 +217,21 @@ public function cekTagihan($no_pendaftaran)
     $payload = ["nomor_pendaftaran" => $no_pendaftaran];
     $token = JWT::encode($payload, $jwtKey, 'HS256');
 
-   $response = Http::withHeaders([
-    'Content-Type' => 'application/json'
-])->post("103.23.103.43/WS_PSB/Banten_Al_Syukro_Universal/index.php", [
-    "token"  => $token,
-    "method" => "CekTagihan"
-]);
+    try {
+        $response = Http::timeout(8)->connectTimeout(5)->withHeaders([
+            'Content-Type' => 'application/json'
+        ])->post("http://103.23.103.43/WS_PSB/Banten_Al_Syukro_Universal/index.php", [
+            "token"  => $token,
+            "method" => "CekTagihan"
+        ]);
 
+        \Log::info('WS CekTagihan raw', [$response->body()]);
 
-    \Log::info('WS CekTagihan raw', [$response->body()]);
-
-    return response()->json($response->json());
+        return response()->json($response->json());
+    } catch (\Throwable $e) {
+        \Log::warning('WS CekTagihan gagal', ['error' => $e->getMessage()]);
+        return response()->json(['message' => 'Gagal cek tagihan']);
+    }
 }
 
 public function cekStatusRegis(Request $request)
@@ -243,7 +255,7 @@ public function cekStatusRegis(Request $request)
 
     \Log::info('Cek Status Regis - Payload', $payload);
 
-    $response = \Http::post("103.23.103.43/WS_PSB/Banten_Al_Syukro_Universal/index.php", [
+    $response = \Http::post("http://103.23.103.43/WS_PSB/Banten_Al_Syukro_Universal/index.php", [
         "token" => $token,
         "method" => "cekTagihanDibayar"
     ]);
@@ -295,7 +307,7 @@ public function cekStatus(Request $request)
 
     $token = \Firebase\JWT\JWT::encode($payload, $jwtKey, 'HS256');
 
-    $response = \Http::post("103.23.103.43/WS_PSB/Banten_Al_Syukro_Universal/index.php", [
+    $response = \Http::post("http://103.23.103.43/WS_PSB/Banten_Al_Syukro_Universal/index.php", [
         "token" => $token,
         "method" => "cekTagihanDibayar"
     ]);
@@ -362,7 +374,7 @@ public function cekStatus1(Request $request)
 
     $token = \Firebase\JWT\JWT::encode($payload, $jwtKey, 'HS256');
 
-    $response = \Http::post("103.23.103.43/WS_PSB/Banten_Al_Syukro_Universal/index.php", [
+    $response = \Http::post("http://103.23.103.43/WS_PSB/Banten_Al_Syukro_Universal/index.php", [
         "token" => $token,
         "method" => "cekTagihanDibayar"
     ]);

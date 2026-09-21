@@ -42,8 +42,10 @@ public function role($role)
         $prodiIds = is_array($user->prodi_id) ? $user->prodi_id : explode(',', $user->prodi_id);
     }
 
-    $queryBase = DataPeserta::whereIn('id_prodi', $prodiIds)
-        ->where('id_gelombang', $activeGelombang->id);
+    $queryBase = DataPeserta::whereIn('id_prodi', $prodiIds ?: [0]);
+    if ($activeGelombang) {
+        $queryBase->where('id_gelombang', $activeGelombang->id);
+    }
 
     $stats = [
         'total_pendaftar' => (clone $queryBase)->count(),
@@ -64,18 +66,19 @@ public function role($role)
     ];
 
     foreach (range(1, 12) as $m) {
-        $monthlyChart['pendaftar'][] = DataPeserta::whereIn('id_prodi', $prodiIds)
-            ->where('id_gelombang', $activeGelombang->id)
+        $pendaftarQuery = DataPeserta::whereIn('id_prodi', $prodiIds ?: [0])
+            ->whereYear('created_at', $year)
+            ->whereMonth('created_at', $m);
+        $bayarQuery = DataPeserta::whereIn('id_prodi', $prodiIds ?: [0])
             ->whereYear('created_at', $year)
             ->whereMonth('created_at', $m)
-            ->count();
-
-        $monthlyChart['bayar'][] = DataPeserta::whereIn('id_prodi', $prodiIds)
-            ->where('id_gelombang', $activeGelombang->id)
-            ->whereYear('created_at', $year)
-            ->whereMonth('created_at', $m)
-            ->where('status_paid', 1)
-            ->count();
+            ->where('status_paid', 1);
+        if ($activeGelombang) {
+            $pendaftarQuery->where('id_gelombang', $activeGelombang->id);
+            $bayarQuery->where('id_gelombang', $activeGelombang->id);
+        }
+        $monthlyChart['pendaftar'][] = $pendaftarQuery->count();
+        $monthlyChart['bayar'][] = $bayarQuery->count();
     }
 
     if ($roleData && $roleData->menu) {

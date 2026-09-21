@@ -46,7 +46,7 @@ Route::get('/PmbMstPendaftarans/success_enroll/{token}', [RegisterController::cl
 Route::get('/PmbMstPendaftarans/cek_tagihan/{no_pendaftaran}', [RegisterController::class, 'cekTagihan'])->name('pmb.cekTagihan');
 
 // Login & Logout
-Route::get('/ServiceLogin', [LoginController::class, 'index']);
+Route::get('/ServiceLogin', [LoginController::class, 'index'])->name('login.form');
 Route::post('/ServiceLogin', [LoginController::class, 'login'])->name('login');
 Route::get('/ServiceLogout', [LoginController::class, 'logout'])->name('logout');
 

@@ -15,6 +15,10 @@ class LoginController extends Controller
 {
     public function index()
     {
+        if (Auth::check()) {
+            return redirect()->to(Auth::user()->homePath());
+        }
+
         return view('auth.login');
     }
 
@@ -49,9 +53,9 @@ class LoginController extends Controller
                 $tokenCek = JWT::encode($payload, $jwtKey, 'HS256');
     
                 try {
-                    $response = Http::withHeaders([
+                    $response = Http::timeout(8)->connectTimeout(5)->withHeaders([
                         'Content-Type' => 'application/json'
-                    ])->post("103.23.103.43/WS_PSB/Banten_Al_Syukro_Universal/index.php", [
+                    ])->post("http://103.23.103.43/WS_PSB/Banten_Al_Syukro_Universal/index.php", [
                         "token"  => $tokenCek,
                         "method" => "CekTagihan"
                     ]);

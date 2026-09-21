@@ -150,12 +150,16 @@ public function setKelulusanPeserta1(Request $request, $status)
                 "method" => "CreateTagihanBulk"
             ];
 
-            $response = Http::withHeaders([
-                'Content-Type' => 'application/json'
-            ])->post('http://103.23.103.43/WS_PSB/Banten_Al_Syukro_Universal/index.php', $payload);
+            try {
+                $response = Http::timeout(8)->connectTimeout(5)->withHeaders([
+                    'Content-Type' => 'application/json'
+                ])->post('http://103.23.103.43/WS_PSB/Banten_Al_Syukro_Universal/index.php', $payload);
 
-            if (!$response->successful()) {
-                return redirect()->back()->with('error', 'Gagal membuat tagihan');
+                if (!$response->successful()) {
+                    return redirect()->back()->with('error', 'Gagal membuat tagihan');
+                }
+            } catch (\Throwable $e) {
+                \Log::warning('WS CreateTagihanBulk gagal', ['error' => $e->getMessage()]);
             }
         }
     }
@@ -722,9 +726,9 @@ public function setKelulusanPeserta(Request $request, $status)
 
             Log::info('CreateTagihanBulk payload', $payload);
 
-            $response = \Http::withHeaders([
+            $response = \Http::timeout(8)->connectTimeout(5)->withHeaders([
                 'Content-Type' => 'application/json'
-            ])->post('103.23.103.43/WS_PSB/Banten_Al_Syukro_Universal/index.php', $payload);
+            ])->post('http://103.23.103.43/WS_PSB/Banten_Al_Syukro_Universal/index.php', $payload);
 
             Log::info('CreateTagihanBulk response', [
                 'status' => $response->status(),
@@ -735,6 +739,8 @@ public function setKelulusanPeserta(Request $request, $status)
                 return redirect()->back()->with('error', 'Gagal membuat tagihan');
             }
         }
+    } catch (\Throwable $e) {
+        Log::warning('WS CreateTagihanBulk gagal', ['error' => $e->getMessage()]);
     }
 
     return redirect()->back()->with('success', 'Status ujian berhasil diperbarui');

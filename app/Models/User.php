@@ -26,6 +26,19 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public function homePath(): string
+    {
+        if ($this->role === 'admin') {
+            return '/pages/display/home';
+        }
+
+        if ($this->role === 'peserta') {
+            return '/pages/dashboard';
+        }
+
+        return '/pages/display/home/' . \Illuminate\Support\Str::slug((string) $this->role, '-');
+    }
+
     public function peserta()
     {
         return $this->hasOne(DataPeserta::class, 'id_user');
